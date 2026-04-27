@@ -4,91 +4,84 @@ Query and set Raspberry Pi GPIO pin states
 
 # TLDR
 
-**Show all GPIO states**
+**Show all GPIO pin states**
 
 ```raspi-gpio get```
 
-**Get specific pin**
+**Get the state of a specific pin**
 
 ```raspi-gpio get [17]```
 
-**Set pin as output**
+**Configure a pin as output**
 
-```raspi-gpio set [17] op```
+```sudo raspi-gpio set [17] op```
 
-**Set pin high**
+**Drive a pin high**
 
-```raspi-gpio set [17] dh```
+```sudo raspi-gpio set [17] dh```
 
-**Set pin low**
+**Drive a pin low**
 
-```raspi-gpio set [17] dl```
+```sudo raspi-gpio set [17] dl```
+
+**Set as input with pull-up**
+
+```sudo raspi-gpio set [18] ip pu```
+
+**List alternate functions** for a pin
+
+```raspi-gpio funcs [17]```
+
+**Dump raw register values**
+
+```sudo raspi-gpio raw```
 
 # SYNOPSIS
 
-**raspi-gpio** _command_ [_options_]
+**raspi-gpio** _command_ [_pin_] [_options_]
 
-# PARAMETERS
+# COMMANDS
 
-**get** [_pin_]
-> Get pin state.
+**get** [_pin_|_pin1,pin2,..._]
+> Show pin states. Without a pin number, shows all GPIOs (0-53).
 
-**set** _pin_ _options_
-> Set pin configuration.
+**set** _pin_ _options..._
+> Configure pin direction, drive level, pull, or alternate function.
 
 **funcs** [_pin_]
-> Show available functions.
+> Print the BCM-defined alternate functions for the given pin (or all pins).
 
 **raw**
-> Show raw register values.
+> Print the raw GPIO register values.
 
 # OPTIONS FOR SET
 
 **ip** / **op**
-> Input / Output mode.
+> Set as input / output.
+
+**a0** ... **a5**
+> Select alternate function 0-5.
 
 **dl** / **dh**
-> Drive low / high.
+> Drive low / drive high (only meaningful when **op** is set).
 
 **pu** / **pd** / **pn**
-> Pull up / down / none.
+> Pull up / pull down / no pull.
 
 # DESCRIPTION
 
-**raspi-gpio** is a tool for directly manipulating GPIO pins on Raspberry Pi. It provides low-level access to GPIO configuration without libraries.
+**raspi-gpio** is a low-level tool for inspecting and manipulating GPIO pins on Raspberry Pi boards. It writes directly to the BCM GPIO controller registers via /dev/gpiomem (or /dev/mem when run as root), bypassing higher-level libraries like libgpiod.
 
-# EXAMPLES
-
-```bash
-# Show all pins
-raspi-gpio get
-
-# Get pin 17 state
-raspi-gpio get 17
-
-# Set pin 17 as output, drive high
-raspi-gpio set 17 op dh
-
-# Set pin 18 as input with pull-up
-raspi-gpio set 18 ip pu
-
-# Show available functions
-raspi-gpio funcs
-
-# Blink LED
-raspi-gpio set 17 op dh
-sleep 1
-raspi-gpio set 17 dl
-```
+The tool is mainly intended for debugging hardware setups, verifying that DT overlays applied the expected pin functions, and one-off scripting. For production use, the kernel **gpiod** interface (via **libgpiod**'s **gpioget**/**gpioset**) is recommended because it integrates with the kernel's GPIO subsystem and respects kernel-claimed lines.
 
 # CAVEATS
 
-Raspberry Pi specific. Requires appropriate permissions. Be careful with pin configurations to avoid damage.
+Raspberry Pi specific. **set** and **raw** require root because they write to the hardware. Writing the wrong direction or drive level on a pin connected to external hardware can damage the SoC. The numbering used is BCM (Broadcom) — not the physical board pin numbers.
 
 # HISTORY
 
-raspi-gpio is a utility included with **Raspberry Pi OS** for direct GPIO access, complementing the GPIO libraries.
+**raspi-gpio** is included with **Raspberry Pi OS** as a small utility maintained by the Raspberry Pi Foundation. It complements higher-level libraries like **wiringPi** (deprecated) and the kernel **gpiod** interface.
 
 # SEE ALSO
 
-[gpio](/man/gpio)(1), [pinctrl](/man/pinctrl)(1), [gpioset](/man/gpioset)(1)
+[gpio](/man/gpio)(1), [vcgencmd](/man/vcgencmd)(1)

@@ -27,13 +27,13 @@ Convert RPM packages to cpio archives
 
 # DESCRIPTION
 
-**rpm2cpio** converts an RPM (Red Hat Package Manager) package file to a cpio archive and writes it to standard output. This allows extracting the contents of an RPM package without installing it or using RPM tools.
+**rpm2cpio** strips the RPM lead, signature, and header sections from a `.rpm` file and writes the embedded cpio payload to standard output. This allows extracting the contents of an RPM package without installing it or relying on the `rpm` database.
 
-The output is a cpio archive containing the files that would be installed by the RPM package, preserving their intended directory structure. This is commonly piped to the **cpio** command for extraction or listing.
+The cpio archive is in `newc` format (or `xz`/`lzma`/`zstd`-compressed payload, decompressed transparently by recent rpm builds) and preserves owner, mode, and directory structure as the RPM would install them. It is almost always piped to **cpio** (or **bsdtar**, which understands the same format) for listing or extraction.
 
 # CAVEATS
 
-Does not execute any RPM scripts (pre/post install) or handle dependencies. The extracted files will not be registered in the RPM database. Useful for inspecting or extracting specific files from packages without full installation.
+Does not execute pre/post install scriptlets, run triggers, or update the rpm database. File capabilities, SELinux labels, and file digests stored in the RPM header are **not** applied to the extracted files — only what the cpio payload itself encodes. Extracted files land relative to the current directory; use `cpio -id` (no `-D`) carefully to avoid overwriting host files when paths are absolute.
 
 # SEE ALSO
 

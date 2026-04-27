@@ -26,18 +26,18 @@ Pass **arguments**
 
 # PARAMETERS
 
-**vmid**
-> The numeric ID of the container
+_VMID_
+> The numeric ID of the LXC container (100–999999999).
 
-**command**
-> The command to execute inside the container
+_COMMAND_
+> The command and any arguments to execute inside the container.
 
 **--**
-> Separator to pass arguments to the command
+> Separator that stops `pct` from interpreting subsequent flags, so they are passed through to the command.
 
 # CAVEATS
 
-The container must be running to execute commands. The command runs as root inside the container. For interactive sessions, use **pct enter** instead.
+The container must be running to execute commands. The command runs as **root** inside the container, regardless of the host user invoking `pct exec`. There is no TTY allocation by default — for interactive shells use **pct enter** instead. The command's exit status is returned to the caller, but pre-execution failures (container not running, etc.) yield Proxmox-specific error codes.
 
 # HISTORY
 

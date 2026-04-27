@@ -40,6 +40,49 @@ Minimalist command line knowledge base manager
 
 **kb** _command_ [_options_] [_arguments_]
 
+# SUBCOMMANDS
+
+**add**
+> Add a new note (from a file with `-t`, or open `$EDITOR`).
+
+**list**
+> List notes; filter with `-c` (category), `-t` (tags), or `-v` (verbose).
+
+**view**
+> Show a note's contents.
+
+**edit**
+> Open a note in `$EDITOR`.
+
+**grep**
+> Full-text search across notes.
+
+**delete**
+> Remove a note (use `--id` to target by numeric ID).
+
+**update**
+> Modify metadata (title, category, tags) of an existing note.
+
+**import** / **export**
+> Move notes in or out of the knowledge base as a `.kb.tar.gz` archive.
+
+**erase**
+> Wipe the entire knowledge base after confirmation.
+
+# COMMON OPTIONS
+
+**-c** _CATEGORY_
+> Category for the note.
+
+**-t** _TAGS_
+> Semicolon-separated tag list (e.g., `linux;networking`).
+
+**-g** _PATTERN_
+> Glob pattern (used with list).
+
+**--no-color**
+> Disable ANSI colors in output.
+
 # DESCRIPTION
 
 **kb** is a text-oriented minimalist command-line knowledge base manager designed for software developers, penetration testers, students, and anyone who needs to collect and organize notes efficiently. It supports categorization, tagging, and full-text search of notes.

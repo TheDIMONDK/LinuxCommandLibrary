@@ -14,11 +14,17 @@ Command-line tool for checking password safety
 
 # DESCRIPTION
 
-**pwdsafety** is a command-line tool that reads passwords from standard input and evaluates their safety. It checks if the password or its reverse is a known common password, verifies basic rules like uppercase, lowercase, numbers, and symbols, and calculates entropy. When the score is 68 or lower, it generates a random stronger password as a suggestion.
+**pwdsafety** is a command-line tool that reads a password from standard input and evaluates its safety. The score combines several checks: whether the password (or its reverse) appears in a built-in dictionary of known weak passwords, the presence of uppercase letters, lowercase letters, digits, and symbols, the password length, and a Shannon-entropy calculation.
+
+The tool prints the numeric score along with explanations of which rules passed or failed. When the score is 68 or lower, **pwdsafety** also suggests a random, stronger password.
+
+# EXIT STATUS
+
+Returns **0** when a password is evaluated successfully (regardless of score) and non-zero on input errors.
 
 # CAVEATS
 
-Does not store any password information. Reads only from standard input.
+Does not store, log, or transmit any password information — evaluation is fully local. Reads only from standard input, so passwords supplied on a shell command line will be visible in the process list and shell history; pipe from a secure source instead.
 
 # HISTORY
 

@@ -1,60 +1,89 @@
 # TAGLINE
 
-NuGet package dependency restorer
+Restore NuGet package dependencies for a .NET project
 
 # TLDR
 
-**Restore dependencies**
+**Restore** dependencies for the project in the current directory
 
 ```dotnet restore```
 
-**Restore specific project**
+**Restore a specific project**
 
 ```dotnet restore [project.csproj]```
 
-**Restore with specific source**
+**Restore from a specific NuGet source**
 
 ```dotnet restore --source [https://api.nuget.org/v3/index.json]```
 
-**Restore without cache**
+**Restore without using HTTP cache**
 
 ```dotnet restore --no-cache```
 
-**Restore for specific runtime**
+**Restore for a specific runtime** (RID)
 
 ```dotnet restore --runtime [linux-x64]```
 
+**Restore in lock-file mode** (fails if any package version drifts)
+
+```dotnet restore --locked-mode```
+
+**Restore with verbose logging**
+
+```dotnet restore --verbosity detailed```
+
 # SYNOPSIS
 
-**dotnet** **restore** [_project_] [_options_]
+**dotnet** **restore** [_project_|_solution_] [_options_]
 
 # PARAMETERS
 
-**-s**, **--source** _source_
-> NuGet package source.
+**-s**, **--source** _SOURCE_
+> NuGet package source to use during restore (overrides nuget.config).
 
-**--packages** _directory_
-> Directory for restored packages.
+**--packages** _DIR_
+> Directory in which to install the restored packages (default: ~/.nuget/packages).
 
 **--no-cache**
-> Don't cache packages and requests.
+> Don't cache HTTP requests; always re-fetch from the source.
 
-**--runtime** _rid_
-> Target runtime to restore for.
+**--no-dependencies**
+> Restore only the root project, ignoring project-to-project references.
 
-**--configfile** _file_
-> NuGet config file to use.
+**--force**
+> Force all dependencies to be re-resolved even if a cached lock exists.
+
+**--locked-mode**
+> Don't allow updates to **packages.lock.json** — fail if it would change.
+
+**--use-lock-file**
+> Generate or update **packages.lock.json**.
+
+**--runtime** _RID_
+> Target a specific runtime identifier (e.g. **linux-x64**, **win-x86**).
+
+**--configfile** _FILE_
+> NuGet config file to use instead of the default chain.
 
 **--disable-parallel**
-> Disable parallel restore.
+> Disable parallel downloads.
+
+**-v**, **--verbosity** _LEVEL_
+> Verbosity: q[uiet], m[inimal], n[ormal], d[etailed], diag[nostic].
+
+**-?**, **-h**, **--help**
+> Display help.
 
 # DESCRIPTION
 
-**dotnet restore** downloads and installs all NuGet package dependencies specified in project files. It resolves package versions, handles transitive dependencies, and caches packages locally for faster subsequent restores.
+**dotnet restore** downloads and installs all NuGet package dependencies declared in a project, solution, or **dotnet-tools.json**. It reads **PackageReference** entries from .csproj/.fsproj/.vbproj files, queries the configured NuGet sources, and writes restored assets to **obj/project.assets.json**.
 
-The command reads package references from .csproj/.fsproj files and nuget.config, then downloads packages from configured NuGet sources. Restore is typically automatic before build/run commands but can be run explicitly for troubleshooting or CI/CD pipelines.
+Other commands like **dotnet build** and **dotnet run** trigger an implicit restore by default, so explicit invocation is mainly useful in CI pipelines (where you want to cache the restore step), when troubleshooting package resolution, or when **--no-restore** is being used downstream.
+
+# CAVEATS
+
+Restore obeys the standard NuGet config chain: machine-wide, user, and per-directory **NuGet.config** files. **--source** replaces (not adds to) configured sources. Setting **--locked-mode** without an existing **packages.lock.json** fails immediately.
 
 # SEE ALSO
 
-[dotnet-build](/man/dotnet-build)(1), [dotnet-add-package](/man/dotnet-add-package)(1)
-
+[dotnet-build](/man/dotnet-build)(1), [dotnet-add-package](/man/dotnet-add-package)(1), [dotnet](/man/dotnet)(1)

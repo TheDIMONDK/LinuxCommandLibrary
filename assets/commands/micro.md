@@ -35,32 +35,44 @@ modern terminal text editor
 # PARAMETERS
 
 _FILES_
-> Files to edit.
+> Files to edit. Append `:LINE` or `:LINE:COL` to jump to a position. A `+LINE` argument also works.
 
-**-diff** _F1_ _F2_
-> Diff two files.
+**-clean**
+> Remove all configuration files (use with care).
+
+**-config-dir** _PATH_
+> Override the default config directory (`~/.config/micro`).
+
+**-options**
+> Print all available global options to stdout and exit.
+
+**-debug**
+> Open the editor with the log buffer (`Ctrl-E logbuffer`) shown.
 
 **-readonly**
 > Read-only mode.
 
-**-plugin** _CMD_
-> Plugin management.
+**-plugin** _CMD_ [_PLUGIN..._]
+> Manage plugins: `install`, `remove`, `update`, `list`, `available`, `search`.
+
+**-multiopen** _GLOB_
+> Open all files matching the glob pattern.
 
 **-version**
-> Show version.
+> Show version information and exit.
 
 **--help**
 > Display help information.
 
 # DESCRIPTION
 
-**micro** is a modern terminal text editor. It provides intuitive keybindings and mouse support.
+**micro** is a modern terminal text editor written in Go that aims for the ease-of-use of nano with the power of richer editors. It supports common shortcuts (`Ctrl-S`, `Ctrl-C`, `Ctrl-V`, `Ctrl-Z`), mouse selection, multiple cursors, split panes, syntax highlighting for over 130 file types, and a Lua-based plugin system.
 
-The tool is easy to use like nano but more powerful. Supports syntax highlighting and plugins.
+Settings are stored in `~/.config/micro/settings.json` and key bindings in `bindings.json` in the same directory. Most editor commands can also be invoked with `Ctrl-E` to open the command bar.
 
 # CAVEATS
 
-Go-based. Plugin system available. Different from vim/emacs.
+Single static binary; no external dependencies. Plugin system uses Lua and may not work for users who need vim-style modal editing.
 
 # HISTORY
 

@@ -43,6 +43,15 @@ By default, up to 10 results are returned, sorted by relevance. The `--limit` fl
 **-q**, **--quiet**
 > Suppress output
 
+**--color** _when_
+> Color output: auto, always, never.
+
+**--config** _KEY=VALUE_
+> Override Cargo configuration values.
+
+**--frozen**, **--locked**, **--offline**
+> Network/lockfile behavior; **--offline** prevents Cargo from contacting the registry index.
+
 # OUTPUT FORMAT
 
 Results display package name, version, and description:

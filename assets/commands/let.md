@@ -41,13 +41,13 @@ Operators:
 
 # DESCRIPTION
 
-**let** is a Bash built-in for arithmetic evaluation. It performs integer math and comparisons.
+**let** is a Bash (and ksh) built-in that evaluates one or more arithmetic expressions. Each expression is evaluated using the same rules as `$(( ... ))`: integer math, C-style operators, and shell variable references without the leading `$`.
 
-The command sets exit status based on expression result. Zero result returns exit code 1.
+The exit status is **0** if the value of the **last** evaluated expression is non-zero, and **1** if it is zero. This makes `let` usable in `if`/`while` conditions but is the inverse of typical command exit semantics — a successful arithmetic result of 0 (e.g., `let "x = 0"`) reports failure.
 
 # CAVEATS
 
-Bash built-in. Integer only. Use (( )) as alternative. Returns 1 if result is 0.
+Bash/ksh built-in; not available in POSIX `sh` or `dash`. Integer arithmetic only — use `bc` or `awk` for floating point. The `(( ... ))` arithmetic command is generally preferred in modern Bash because it does not require quoting and has cleaner exit semantics. Returns exit code 1 when the final expression evaluates to 0, which can trigger `set -e` exits unexpectedly.
 
 # HISTORY
 

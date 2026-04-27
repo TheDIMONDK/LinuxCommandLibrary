@@ -32,28 +32,48 @@ Modern Sequoia OpenPGP command-line tool
 
 **sq** _command_ [_options_] [_args_]
 
-# PARAMETERS
+# SUBCOMMANDS
 
 **key**
-> Key management.
+> Generate, modify, and inspect OpenPGP keys.
 
 **encrypt**
-> Encrypt data.
+> Encrypt data for one or more recipients.
 
 **decrypt**
-> Decrypt data.
+> Decrypt data using a secret key.
 
 **sign**
-> Create signature.
+> Create an OpenPGP signature (inline, detached, or cleartext).
 
 **verify**
-> Verify signature.
+> Verify an OpenPGP signature.
 
 **inspect**
-> Examine packets.
+> Examine the structure of OpenPGP packets without decrypting.
+
+**cert**
+> Manage TPKs (transferable public keys / certificates).
+
+**pki**
+> Authenticate and certify keys via a Web of Trust.
+
+# COMMON OPTIONS
 
 **--recipient-file** _FILE_
-> Recipient key.
+> Encrypt for the certificate(s) in _FILE_.
+
+**--signer-file** _FILE_
+> Use the secret key in _FILE_ to sign or verify with.
+
+**--output** _FILE_, **-o** _FILE_
+> Write output to _FILE_ instead of stdout.
+
+**--binary**
+> Emit binary OpenPGP data instead of ASCII-armored output.
+
+**--force**
+> Overwrite existing output files.
 
 # DESCRIPTION
 

@@ -22,22 +22,30 @@ sets or resets simulated GPS location on iOS devices
 
 # PARAMETERS
 
-**-u** _udid_
-> Target specific device.
+**-u** _udid_, **--udid** _udid_
+> Target a specific device by its UDID.
 
-**-n**
-> Connect over network.
+**-n**, **--network**
+> Connect to the device over the network instead of USB.
+
+**-d**, **--debug**
+> Enable verbose debug output.
+
+**-h**, **--help**
+> Display help information.
 
 **--**
-> Separator before coordinates (required for negative values).
+> Separator before positional coordinates (required when longitude is negative so the leading minus is not parsed as an option).
 
 # DESCRIPTION
 
-**idevicesetlocation** sets or resets simulated GPS location on iOS devices. Part of the libimobiledevice suite. Requires Developer Disk Image to be mounted. Use **reset** to return to actual GPS location. Use -- before coordinates when longitude is negative.
+**idevicesetlocation** sets or resets the simulated GPS location reported by an iOS device, useful for testing location-aware apps. It is part of the **libimobiledevice** suite and communicates with the device's developer services.
+
+Pass `reset` instead of coordinates to clear the simulated location and resume real GPS reporting. Coordinates are decimal degrees: positive for north/east, negative for south/west.
 
 # CAVEATS
 
-Requires Developer Disk Image mounted via ideviceimagemounter.
+Requires the Developer Disk Image (or, on iOS 17+, a Developer Mode tunnel) to be mounted on the target device — typically via **ideviceimagemounter**. The simulated location persists until the device is rebooted or reset is invoked.
 
 # SEE ALSO
 

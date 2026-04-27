@@ -20,9 +20,13 @@ converts JSON to ASCII tables for terminal display
 
 ```cat [data.json] | jtbl -m```
 
-**Wrap long text**
+**Wrap long text** at column count
 
-```cat [data.json] | jtbl -w```
+```cat [data.json] | jtbl -w [80]```
+
+**Rotate output** (one row per page, columns become rows)
+
+```cat [data.json] | jtbl -r```
 
 # SYNOPSIS
 
@@ -31,16 +35,28 @@ converts JSON to ASCII tables for terminal display
 # PARAMETERS
 
 **-t**, **--truncate**
-> Truncate long cell values.
+> Truncate long cell values to fit terminal width.
 
 **-n**, **--no-headers**
-> Don't print headers.
+> Don't print column headers.
 
 **-m**, **--markdown**
-> Output Markdown table.
+> Output as a Markdown table.
 
-**-w**, **--wrap**
-> Wrap text in cells.
+**-c**, **--csv**
+> Output as CSV.
+
+**-H**, **--html**
+> Output as an HTML table.
+
+**-r**, **--rotate**
+> Rotate output so columns become rows (useful for wide tables).
+
+**-w** _COLS_, **--wrap**=_COLS_
+> Wrap long cell values at the specified column count.
+
+**-q**, **--quiet**
+> Suppress warning messages.
 
 **-v**, **--version**
 > Show version.
@@ -64,4 +80,4 @@ jtbl was created by **Kelly Brazil** as a companion to jc for displaying JSON da
 
 # SEE ALSO
 
-[jc](/man/jc)(1), [jq](/man/jq)(1), [column](/man/column)(1), [tabulate](/man/tabulate)(1)
+[jc](/man/jc)(1), [jq](/man/jq)(1), [column](/man/column)(1)

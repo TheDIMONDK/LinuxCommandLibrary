@@ -32,13 +32,28 @@ Remove libvirt domain definition
 > Preserve NVRAM file.
 
 **--snapshots-metadata**
-> Remove snapshot metadata.
+> Remove all snapshot metadata associated with the domain.
+
+**--managed-save**
+> Remove any managed save image for the domain.
+
+**--storage** _volumes_
+> Comma-separated list of volume target names or source paths to remove.
+
+**--checkpoints-metadata**
+> Remove all checkpoint metadata for the domain.
 
 # DESCRIPTION
 
-**virsh undefine** removes a domain definition from libvirt. Domain must be shut off. By default keeps disk images; use --remove-all-storage to delete them.
+**virsh undefine** removes a persistent domain definition from libvirt. If the domain is running it becomes transient (running but no longer persistent); otherwise it is removed entirely. By default disk images are preserved; use **--remove-all-storage** to delete associated managed volumes as well.
+
+For domains using UEFI/NVRAM, the NVRAM file is removed by default; pass **--keep-nvram** to preserve it.
+
+# CAVEATS
+
+Removing storage with **--remove-all-storage** is irreversible. Domains with snapshots cannot be undefined unless **--snapshots-metadata** is supplied. Storage volumes managed outside of libvirt pools must be cleaned up manually.
 
 # SEE ALSO
 
-[virsh](/man/virsh)(1), [virsh-destroy](/man/virsh-destroy)(1), [virsh-define](/man/virsh-define)(1)
+[virsh](/man/virsh)(1), [virsh-list](/man/virsh-list)(1), [virsh-pool-undefine](/man/virsh-pool-undefine)(1)
 

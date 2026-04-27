@@ -89,4 +89,4 @@ Emscripten was created by **Alon Zakai** at Mozilla in **2011**, initially targe
 
 # SEE ALSO
 
-[clang](/man/clang)(1), [wasm-ld](/man/wasm-ld)(1), [wasm2wat](/man/wasm2wat)(1)
+[clang](/man/clang)(1), [wasm2wat](/man/wasm2wat)(1)

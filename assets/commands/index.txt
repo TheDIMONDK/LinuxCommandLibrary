@@ -881,6 +881,7 @@ bundler.md
 bundletool-dump.md
 bundletool-validate.md
 bundletool.md
+bunny.md
 bunx.md
 bunzip2.md
 bup.md
@@ -1840,6 +1841,7 @@ drupal-check.md
 drupal.md
 drush.md
 dsniff.md
+dss.md
 dstask.md
 dstat.md
 dtach.md
@@ -3004,6 +3006,7 @@ gum.md
 gummy.md
 gunicorn.md
 gunzip.md
+gup.md
 gurk.md
 guvcview.md
 gv2gml.md
@@ -4226,6 +4229,7 @@ mate-dictionary.md
 mate-screenshot.md
 mate-search-tool.md
 matlab.md
+matrirc.md
 matrix-commander.md
 maven.md
 maxima.md
@@ -4567,6 +4571,7 @@ named.conf.md
 named.md
 namei.md
 namespaces.md
+nano-ffmpeg.md
 nano.md
 nanobot.md
 nanoclaw.md
@@ -5448,6 +5453,7 @@ pg_upgrade.md
 pg_verifybackup.md
 pg_waldump.md
 pg_walsummary.md
+pgbackrest.md
 pgbench.md
 pgcli.md
 pgm.md
@@ -8301,6 +8307,7 @@ yolo.md
 yosys.md
 you-get.md
 youplot.md
+yourmemory.md
 youtube-dl.md
 youtube-viewer.md
 yozefu.md
@@ -8419,6 +8426,7 @@ zstdcat.md
 zstdless.md
 zstdmt.md
 zsteg.md
+zstyle.md
 zsync.md
 zuse.md
 zypper.md

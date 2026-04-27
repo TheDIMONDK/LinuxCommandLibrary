@@ -61,6 +61,24 @@ System-level event capture and analysis
 **-j, --json**
 > Output in JSON format
 
+**-A, --print-ascii**
+> Print event buffers as ASCII (skip non-printable bytes).
+
+**-X, --print-hex-ascii**
+> Print event buffers as hex + ASCII.
+
+**-s** _len_, **--snaplen** _len_
+> Capture the first _len_ bytes of each I/O buffer (default 80).
+
+**-pc**, **-pcontainer**
+> Use container-aware output formatting (host + container.id, container.name).
+
+**-M** _seconds_
+> Stop capturing after the given number of seconds.
+
+**--list-fields**
+> List all filter/format fields available.
+
 # DESCRIPTION
 
 **sysdig** is a system-level exploration and troubleshooting tool. It captures system calls and events, providing deep visibility into system behavior. It supports filtering, chisels (Lua scripts for analysis), and various output formats.

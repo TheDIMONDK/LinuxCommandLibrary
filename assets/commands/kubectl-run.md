@@ -53,7 +53,25 @@ _NAME_
 > Environment variable.
 
 **--dry-run** _MODE_
-> Don't create resource.
+> `none`, `client`, or `server` — `client` prints the manifest without contacting the API; `server` validates against the cluster.
+
+**--restart** _POLICY_
+> `Always` (default), `OnFailure`, or `Never`. `Never` produces a bare Pod; the others adjust the generated PodSpec accordingly.
+
+**--command**
+> Treat extra args after `--` as the container's `command` (entrypoint) instead of arguments to the image entrypoint.
+
+**--labels**, **-l** _KEY=VALUE,..._
+> Comma-separated labels to set on the pod.
+
+**-o** _FORMAT_
+> Output format: yaml, json, name, jsonpath, etc. Combine with `--dry-run=client -o yaml` to template manifests.
+
+**--image-pull-policy** _POLICY_
+> `Always`, `IfNotPresent`, or `Never`.
+
+**--overrides** _JSON_
+> JSON merge patch applied to the generated PodSpec for fields not exposed as flags.
 
 **--help**
 > Display help information.

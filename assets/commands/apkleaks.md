@@ -42,13 +42,16 @@ The tool helps identify accidental exposure of credentials, private keys, URLs w
 > Custom patterns file (JSON)
 
 **-a** _args_
-> Additional jadx arguments
+> Additional arguments to pass to the jadx decompiler.
+
+**--json**
+> Output results in JSON format.
 
 **-v**, **--verbose**
-> Verbose output
+> Verbose output, including matched line numbers.
 
 **--disassemble**
-> Disassemble with jadx (default)
+> Disassemble bytecode (slower, may catch additional secrets).
 
 # DETECTED PATTERNS
 

@@ -91,4 +91,4 @@ Gentoo Linux specific. Compiles from source, which can be time-consuming. Requir
 
 # SEE ALSO
 
-[emaint](/man/emaint)(1), [equery](/man/equery)(1), [eix](/man/eix)(1), [portage](/man/portage)(5)
+[emaint](/man/emaint)(1), [equery](/man/equery)(1), [eix](/man/eix)(1), [portageq](/man/portageq)(1)

@@ -47,28 +47,9 @@ Given `/path/to/file.txt`:
 - **basename** returns `file.txt`
 - **basename** with suffix `.txt` returns `file`
 
-# WORKFLOW
-
-```bash
-# Get filename
-basename /usr/local/bin/command
-# Output: command
-
-# Remove extension
-basename /path/to/document.pdf .pdf
-# Output: document
-
-# In scripts
-filename=$(basename "$filepath")
-name=$(basename "$filepath" .txt)
-
-# Multiple files
-basename -a /path/*.txt
-```
-
 # CAVEATS
 
-Only removes trailing suffix (not all occurrences). Doesn't handle multiple extensions well (use parameter expansion for that). Path doesn't need to exist.
+Only removes a single trailing suffix exactly matching the argument — `basename file.tar.gz .gz` yields `file.tar`, not `file`. The path does not need to exist on disk. The two-argument form (positional suffix) is the POSIX behavior; `-s` plus `-a` is the GNU extension that supports multiple inputs and a non-positional suffix. In Bash scripts the parameter-expansion forms `${filepath##*/}` and `${name%.txt}` are faster than spawning `basename`.
 
 # HISTORY
 

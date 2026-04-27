@@ -30,13 +30,25 @@ _FILE_
 > Python file to execute.
 
 **--vi**
-> Vi editing mode.
+> Use Vi-style key bindings instead of Emacs (default).
 
-**-i**
-> Interactive after file.
+**-i**, **--interactive**
+> Drop into the REPL after running the given script.
+
+**--light-bg**
+> Optimize colors for terminals with a light background.
+
+**--dark-bg**
+> Optimize colors for terminals with a dark background.
 
 **--config-file** _FILE_
-> Configuration file.
+> Use the specified Python configuration file instead of the default.
+
+**--history-file** _FILE_
+> Use a custom history file location.
+
+**-V**, **--version**
+> Display version information.
 
 # DESCRIPTION
 

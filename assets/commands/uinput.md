@@ -23,23 +23,26 @@ Merge from **device** nodes
 # PARAMETERS
 
 **-p**
-> Show resulting YAML device description and exit
+> Print the merged YAML device description and exit (dry-run preview).
 
 **-c** _FILE..._
-> Merge YAML device description files
+> Merge one or more YAML device-description files into the virtual device.
 
 **-d** _DEVICE..._
-> Merge device description from device nodes
+> Merge capabilities cloned from existing `/dev/input/event*` device nodes.
+
+**-h**, **--help**
+> Display help information.
 
 # DESCRIPTION
 
-**uinput** intercepts input events and writes them to a virtual keyboard device using /dev/uinput. It is part of the Interception Tools suite for advanced input event processing.
+**uinput** is the writer half of the Interception Tools pipeline: it reads `input_event` records from stdin and dispatches them through a freshly created virtual input device backed by the kernel's `/dev/uinput` interface. The virtual device's capabilities (keys, axes, LEDs, etc.) are derived from the YAML description files passed via `-c`, optionally merged with capabilities cloned from existing devices via `-d`.
 
-The tool creates virtual input devices from YAML descriptions or by cloning existing device capabilities, enabling event transformation pipelines.
+Typical usage chains it after **udevmon** and per-device transformation tools (such as **caps2esc**) so that remapped events are re-injected into the input stack as if they came from a normal device.
 
 # CAVEATS
 
-Requires root privileges. Access to /dev/uinput is needed. Part of the Interception Tools project. Incorrect configuration can affect input handling.
+Requires CAP_MKNOD and write access to **/dev/uinput** — usually run as root or via a udev rule that grants the executing user access. Loading the `uinput` kernel module is required (`modprobe uinput`). Misconfigured pipelines can leave the system without keyboard input; have a fallback session ready.
 
 # SEE ALSO
 

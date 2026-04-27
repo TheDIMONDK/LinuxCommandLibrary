@@ -85,4 +85,4 @@ Electron was originally developed by **GitHub** as **Atom Shell** for the Atom e
 
 # SEE ALSO
 
-[node](/man/node)(1), [npm](/man/npm)(1), [nw](/man/nw)(1)
+[node](/man/node)(1), [npm](/man/npm)(1), [tauri](/man/tauri)(1)

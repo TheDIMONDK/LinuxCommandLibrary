@@ -64,16 +64,16 @@ unix port of 7-Zip, providing high-ratio compression
 > Update files in archive.
 
 **-mx=** _LEVEL_
-> Compression level (0=store, 9=ultra).
+> Compression level (0=store, 1=fastest, 5=normal, 7=maximum, 9=ultra).
 
-**-p** [_PASSWORD_]
-> Set password (prompts if omitted).
+**-p**_PASSWORD_
+> Set password (no space between switch and value; prompts interactively if omitted).
 
 **-mhe=on**
-> Encrypt header (hide filenames).
+> Encrypt header so filenames inside the archive are also hidden.
 
-**-o** _DIR_
-> Output directory.
+**-o**_DIR_
+> Output directory for `x`/`e` (no space between `-o` and the path).
 
 **-r**
 > Recurse subdirectories.
@@ -107,11 +107,11 @@ Encryption uses AES-256. The -mhe option encrypts filenames in addition to conte
 
 # CAVEATS
 
-7z format doesn't store Unix permissions by default. RAR support is extraction-only. Command-line password visible in process list. Solid archives slow single-file extraction. Maximum compression is memory-intensive. Some 7-Zip features not available in p7zip.
+The 7z format does not store Unix permissions, ownership, or symlinks by default — use `-mtc=on -mta=on -mtm=on` to preserve timestamps, and prefer **tar** (or `tar | 7z`) when POSIX metadata matters. RAR support is extraction-only. Passwords supplied on the command line are visible in `/proc/<pid>/cmdline`. Solid archives (default for `.7z`) make single-file extraction proportional to total preceding data. The original p7zip project has been unmaintained since 2016; many distributions now ship the official **7-Zip** Linux build (`7zz` binary) by Igor Pavlov instead.
 
 # HISTORY
 
-**7-Zip** was created by **Igor Pavlov** in **1999** for Windows. **p7zip** is the POSIX port by various contributors, first released around **2004**. The 7z format and LZMA algorithm became popular for high compression ratios. The software is free under LGPL license and has influenced many other compression tools.
+**7-Zip** was created by **Igor Pavlov** in **1999** for Windows. **p7zip** is the POSIX port begun by Myspace in **2004**. Since 2021, Pavlov publishes official Linux/macOS binaries (`7zz`), making p7zip largely obsolete.
 
 # SEE ALSO
 

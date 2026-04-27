@@ -80,4 +80,4 @@ dvips was written by **Tomas Rokicki** in the late **1980s** and has been a stan
 
 # SEE ALSO
 
-[latex](/man/latex)(1), [ps2pdf](/man/ps2pdf)(1), [dvipdf](/man/dvipdf)(1), [xdvi](/man/xdvi)(1)
+[latex](/man/latex)(1), [ps2pdf](/man/ps2pdf)(1), [pdflatex](/man/pdflatex)(1), [tex](/man/tex)(1)

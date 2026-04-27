@@ -8,9 +8,13 @@ Create an **ISO image** from the given source directory
 
 ```genisoimage -o myimage.iso [path/to/source_directory]```
 
-Create an ISO image with files **larger than 2GiB**
+Create an ISO image with files **larger than 2 GiB**
 
-```genisoimage -o -allow-limited-size myimage.iso [path/to/source_directory]```
+```genisoimage -allow-limited-size -o myimage.iso [path/to/source_directory]```
+
+Create a **bootable ISO** with Rock Ridge and Joliet extensions
+
+```genisoimage -R -J -V "[VOLUME_LABEL]" -b [boot/isolinux.bin] -c [boot/boot.cat] -no-emul-boot -boot-load-size 4 -boot-info-table -o myimage.iso [path/to/source_directory]```
 
 # SYNOPSIS
 
@@ -69,4 +73,4 @@ genisoimage is a fork of mkisofs created in **2006** due to licensing concerns w
 
 # SEE ALSO
 
-[mkisofs](/man/mkisofs)(1), [xorriso](/man/xorriso)(1), [wodim](/man/wodim)(1), [mount](/man/mount)(8)
+[mkisofs](/man/mkisofs)(1), [wodim](/man/wodim)(1), [mount](/man/mount)(8)

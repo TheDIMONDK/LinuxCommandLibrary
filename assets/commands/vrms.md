@@ -18,11 +18,20 @@ Output **names** only
 
 # PARAMETERS
 
-**--sparse**
-> Output only package names without descriptions
+**-s**, **--sparse**
+> Output only package names, suitable for piping to other tools.
 
-**--explain**
-> Show why packages are considered non-free
+**-e**, **--explain**
+> Show why packages are considered non-free (current upstream packaging only — not present in older versions).
+
+**-q**, **--quiet**
+> Suppress non-essential output.
+
+**--help**
+> Display help information.
+
+**--version**
+> Display version information.
 
 # DESCRIPTION
 

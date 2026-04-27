@@ -8,34 +8,47 @@ video Editor
 
 ```openshot-qt```
 
-**Open project file**
+**Open a project file**
 
 ```openshot-qt [project.osp]```
 
-**Import file**
+**Open with a media file** added to the project
 
 ```openshot-qt [video.mp4]```
 
+**Run with debug logging** enabled
+
+```openshot-qt --debug```
+
 # SYNOPSIS
 
-**openshot-qt** [_options_] [_file_]
+**openshot-qt** [_options_] [_file_...]
 
 # PARAMETERS
 
 _FILE_
-> Project or media file.
+> One or more project (.osp) or media files to open at startup.
 
 **-h**, **--help**
 > Display help information.
 
-**--version**
+**-V**, **--version**
 > Display version.
+
+**--debug**
+> Enable verbose debug logging to stdout.
+
+**--lang** _CODE_
+> Force the user-interface language (e.g., `en_US`, `de_DE`).
+
+**--list-languages**
+> List available interface languages.
 
 # DESCRIPTION
 
-**openshot-qt** is OpenShot Video Editor. Non-linear video editing software.
+**openshot-qt** launches the OpenShot Video Editor, a free, cross-platform non-linear video editor built on Qt and the libopenshot rendering library.
 
-The application provides video editing with timeline. Supports many formats.
+The application supports multi-track timeline editing, transitions, animated titles, key-frame animation, and a wide range of audio/video codecs through FFmpeg. Project files use the **.osp** extension and store JSON-serialized clip and timeline metadata.
 
 # CAVEATS
 

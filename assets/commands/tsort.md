@@ -18,7 +18,18 @@ Topological sort of dependency pairs
 
 # SYNOPSIS
 
-**tsort** [_file_]
+**tsort** [_OPTION_] [_FILE_]
+
+# PARAMETERS
+
+_FILE_
+> Input file containing whitespace-separated dependency pairs. With no file (or `-`), reads from standard input.
+
+**--help**
+> Display help information.
+
+**--version**
+> Output version information and exit.
 
 # DESCRIPTION
 

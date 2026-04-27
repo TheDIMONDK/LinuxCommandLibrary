@@ -26,23 +26,23 @@ _FILES_
 > Binary files to inspect.
 
 **-m**
-> Show module info in binary.
+> Print each executable's embedded module version information (added in Go 1.13).
 
 **-v**
-> Verbose output.
+> Report unrecognized files (otherwise non-Go files are silently skipped when scanning a directory).
 
 **--help**
 > Display help information.
 
 # DESCRIPTION
 
-**go version** prints the installed Go version. When given compiled binaries, it reports the Go version used to build them and optionally their embedded module information.
+**go version** prints the Go runtime version of the toolchain when invoked without arguments. When given file arguments — executables or directories of executables — it reports the Go version each binary was built with, and with **-m** also dumps the build-time module dependency graph (`go.mod`-equivalent info) embedded in the binary.
 
-The **-m** flag shows module and dependency versions embedded in the binary, which is useful for debugging and auditing deployed applications.
+Directory arguments are walked recursively; non-Go executables are skipped silently unless **-v** is given.
 
 # CAVEATS
 
-Binary info requires debug symbols. Module info needs Go 1.13+. Stripped binaries may lack info.
+Module info is only embedded for binaries built by Go 1.13+. Heavily stripped binaries (e.g., built with `-ldflags="-w -s"` and then run through external strippers that remove the Go build info section) may not report any version.
 
 # HISTORY
 

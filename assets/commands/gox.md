@@ -43,10 +43,28 @@ _PACKAGES_
 > Target architectures.
 
 **-output** _PATTERN_
-> Output path pattern.
+> Output path template — supports `{{.Dir}}`, `{{.OS}}`, `{{.Arch}}`.
 
 **-parallel** _N_
-> Parallel builds.
+> Number of concurrent build workers (default: number of CPUs).
+
+**-osarch-list-json** _FILE_
+> Override the list of supported OS/arch combinations.
+
+**-cgo**
+> Enable cgo (most cross-builds require an appropriate cross-compiler installed).
+
+**-rebuild**
+> Rebuild the standard library for each target.
+
+**-ldflags** _FLAGS_
+> Linker flags passed through to `go build`.
+
+**-tags** _TAGS_
+> Build tags passed through to `go build`.
+
+**-mod** _MODE_
+> Module download mode passed to `go build`.
 
 **--help**
 > Display help information.
@@ -67,4 +85,4 @@ gox was created by **Mitchell Hashimoto** (HashiCorp) to simplify building Go bi
 
 # SEE ALSO
 
-[go-build](/man/go-build)(1), [goreleaser](/man/goreleaser)(1)
+[go-build](/man/go-build)(1), [goreload](/man/goreload)(1)

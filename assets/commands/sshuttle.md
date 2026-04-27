@@ -1,3 +1,7 @@
+# TAGLINE
+
+Transparent VPN-like tunnel over a plain SSH connection
+
 # TLDR
 
 **Tunnel all traffic**
@@ -49,14 +53,14 @@
 **--auto-nets**
 > Auto-detect server networks.
 
-**--auto-hosts**
-> Scan for hosts.
+**-H**, **--auto-hosts**
+> Scan for hostnames on the remote and add them to `/etc/hosts` for the duration of the tunnel.
 
-**-N**
-> Auto-detect DNS server.
+**-N**, **--auto-nets**
+> Read the remote routing table and tunnel all networks the remote can reach (alias for the long option above).
 
-**-e** _CMD_
-> SSH command.
+**-e** _CMD_, **--ssh-cmd** _CMD_
+> SSH command line to use (default: `ssh`).
 
 **-v**
 > Verbose.
@@ -94,4 +98,4 @@ Requires root locally. Not a full VPN (no UDP by default). Latency added by SSH.
 
 # SEE ALSO
 
-[ssh](/man/ssh)(1), [openvpn](/man/openvpn)(8), [wireguard](/man/wireguard)(8), [proxychains](/man/proxychains)(1)
+[ssh](/man/ssh)(1), [openvpn](/man/openvpn)(8), [wg](/man/wg)(8), [proxychains](/man/proxychains)(1)

@@ -126,4 +126,4 @@ Dagster was created by **Elementl**, founded by **Nick Schrock** (co-creator of 
 
 # SEE ALSO
 
-[prefect](/man/prefect)(1), [airflow](/man/airflow)(1), [dbt](/man/dbt)(1), [argo](/man/argo)(1)
+[prefect](/man/prefect)(1), [airflow](/man/airflow)(1), [dbt](/man/dbt)(1), [argocd](/man/argocd)(1)

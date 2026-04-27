@@ -4,7 +4,7 @@ Initialize a new pyproject.toml file
 
 # TLDR
 
-**Initialize interactively**
+**Initialize interactively** in the current directory
 
 ```poetry init```
 
@@ -16,9 +16,13 @@ Initialize a new pyproject.toml file
 
 ```poetry init --name [myproject] --description "[A cool project]"```
 
-**With dependencies**
+**Add dependencies during init**
 
 ```poetry init --dependency [requests] --dev-dependency [pytest]```
+
+**Pin a Python version**
+
+```poetry init -n --python "[^3.11]"```
 
 # SYNOPSIS
 
@@ -27,74 +31,49 @@ Initialize a new pyproject.toml file
 # PARAMETERS
 
 **-n**, **--no-interaction**
-> Non-interactive mode.
+> Skip the interactive prompts; uses defaults for any value not provided.
 
 **--name** _name_
-> Package name.
+> Package name (defaults to the current directory name).
 
-**--description** _desc_
+**--description** _text_
 > Package description.
 
 **--author** _author_
-> Author name.
+> Author in **"Name <email>"** format. Repeatable.
 
-**--python** _version_
-> Python version constraint.
+**--license** _spdx_
+> SPDX license identifier (e.g. **MIT**, **Apache-2.0**).
 
-**--dependency** _dep_
-> Add dependency.
+**--python** _constraint_
+> Python version constraint (e.g. **^3.11**, **>=3.10,<4**).
 
-**--dev-dependency** _dep_
-> Add dev dependency.
+**--dependency** _name[@version]_
+> Add a runtime dependency. Repeatable.
+
+**--dev-dependency** _name[@version]_
+> Add a development dependency. Repeatable.
+
+**--directory** _path_
+> Run init in a different directory.
+
+**--help**
+> Display help.
 
 # DESCRIPTION
 
-**poetry init** creates a new pyproject.toml file in the current directory. It can run interactively to gather project details or accept command-line arguments.
+**poetry init** creates a new **pyproject.toml** in the target directory describing the project's metadata and dependencies. The interactive flow walks through the project name, version, author, license, Python constraint, and any initial runtime/dev dependencies, validating package names against PyPI as you go.
 
-# EXAMPLES
-
-```bash
-# Interactive initialization
-poetry init
-
-# Non-interactive with values
-poetry init -n --name myproject --author "Name <email>"
-
-# With dependencies
-poetry init --dependency requests --dependency click
-
-# Specify Python version
-poetry init --python "^3.9"
-
-# Full non-interactive
-poetry init -n \
-  --name myproject \
-  --description "My project" \
-  --author "Me <me@example.com>" \
-  --python "^3.10"
-```
-
-# OUTPUT (pyproject.toml)
-
-```toml
-[tool.poetry]
-name = "myproject"
-version = "0.1.0"
-description = ""
-authors = ["Name <email>"]
-
-[tool.poetry.dependencies]
-python = "^3.10"
-```
+It does not create a virtual environment, install dependencies, or write a lock file — run **poetry install** afterwards for that.
 
 # CAVEATS
 
-Creates pyproject.toml only. Run poetry install to create environment.
+Poetry 2.0 (2025) writes pyproject.toml using the standard **[project]** table per PEP 621, while older versions use the legacy **[tool.poetry]** table. The exact layout depends on your installed Poetry version. Run **poetry --version** to check.
 
 # HISTORY
 
-poetry init is part of **Poetry** by **Sébastien Eustace** for initializing Python projects with modern packaging.
+**poetry** was created by **Sébastien Eustace** in **2018** as a dependency manager and packaging tool for Python projects. The **init** subcommand has been part of Poetry since the early releases.
 
 # SEE ALSO
 
-[poetry-install](/man/poetry-install)(1), [poetry-new](/man/poetry-new)(1), [poetry](/man/poetry)(1)
+[poetry-install](/man/poetry-install)(1), [poetry-new](/man/poetry-new)(1), [poetry](/man/poetry)(1), [pip](/man/pip)(1)

@@ -19,17 +19,23 @@ Generate HTML from PPD printer files
 # PARAMETERS
 
 _FILE_
-> Input PPD file.
+> One or more PPD source (`.drv` / `.ppd`) files to render.
+
+**-D** _NAME=VALUE_
+> Define a variable for the PPD compiler (passed through to `ppdc`).
+
+**-I** _DIR_
+> Add a directory to the include search path.
 
 # DESCRIPTION
 
-**ppdhtml** converts CUPS PPD (PostScript Printer Description) files into human-readable HTML documentation. The generated HTML pages describe the printer's supported options, paper sizes, resolutions, and other capabilities defined in the PPD file.
+**ppdhtml** reads a PPD or PPD compiler (`.drv`) source file and writes a human-readable HTML summary to standard output. The generated page documents the printer's options groups, UI constraints, paper sizes, resolutions, and other PPD attributes.
 
-This is useful for creating reference documentation for printer drivers or for reviewing the options available for a particular printer model without manually parsing the PPD file format. Output is written to stdout and can be redirected to an HTML file.
+It is most often used while authoring printer drivers as part of the CUPS DDK toolchain — the same source files that **ppdc** compiles into installable PPDs.
 
 # CAVEATS
 
-CUPS specific. Output to stdout.
+Output goes only to stdout — there is no `-o` flag; redirect with `> output.html`. The CUPS DDK (which ships `ppdhtml`, `ppdc`, `ppdi`, `ppdmerge`, `ppdpo`) was deprecated upstream in CUPS 2.x and may be packaged separately (e.g., `cups-ppdc` on Debian/Ubuntu).
 
 # HISTORY
 

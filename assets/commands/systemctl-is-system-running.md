@@ -36,19 +36,25 @@ Possible states: initializing, starting, running, degraded, maintenance, stoppin
 
 # SYSTEM STATES
 
-**running** - System fully operational
+**initializing** — Early boot, before basic.target reached.
 
-**degraded** - Running but some units failed
+**starting** — Late boot, before all services have finished.
 
-**starting** - Boot in progress
+**running** — System fully operational, all units healthy.
 
-**initializing** - Early boot stage
+**degraded** — System is running but at least one unit has failed.
 
-**maintenance** - Rescue or emergency mode
+**maintenance** — Rescue/emergency mode.
+
+**stopping** — Shutdown in progress.
+
+**offline** — System not booted under systemd (e.g., chroot).
+
+**unknown** — State could not be determined.
 
 # EXIT STATUS
 
-Returns **0** only when the system is fully running. Any other state returns a non-zero exit code.
+Returns **0** only when the system reports `running`. Any other state returns non-zero, so `systemctl is-system-running -q` is a convenient health-check primitive in scripts.
 
 # CAVEATS
 
