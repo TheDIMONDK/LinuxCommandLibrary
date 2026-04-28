@@ -41,6 +41,5 @@ class CommandListViewModel(
 
     fun cancel() {
         loadJob?.cancel()
-        loadJob = null
     }
 }

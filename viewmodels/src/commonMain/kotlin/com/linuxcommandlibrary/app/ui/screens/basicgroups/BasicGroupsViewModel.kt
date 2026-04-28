@@ -33,7 +33,6 @@ class BasicGroupsViewModel(
 
     fun cancel() {
         loadJob?.cancel()
-        loadJob = null
     }
 
     fun toggleCollapse(id: Long) {

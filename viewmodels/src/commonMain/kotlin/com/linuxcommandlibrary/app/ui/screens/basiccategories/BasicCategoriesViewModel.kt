@@ -26,6 +26,5 @@ class BasicCategoriesViewModel(
 
     fun cancel() {
         loadJob?.cancel()
-        loadJob = null
     }
 }

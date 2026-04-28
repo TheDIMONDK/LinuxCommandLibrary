@@ -32,6 +32,5 @@ class BasicEditorViewModel(
 
     fun cancel() {
         loadJob?.cancel()
-        loadJob = null
     }
 }

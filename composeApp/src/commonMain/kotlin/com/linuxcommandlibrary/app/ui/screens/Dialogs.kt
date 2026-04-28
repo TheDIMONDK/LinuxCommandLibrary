@@ -25,7 +25,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,10 +41,8 @@ import com.linuxcommandlibrary.app.resources.af_linode
 import com.linuxcommandlibrary.app.resources.af_proton
 import com.linuxcommandlibrary.app.resources.app_logo
 import com.linuxcommandlibrary.app.ui.composables.AppIcon
-import com.linuxcommandlibrary.app.ui.composables.SectionTitle
 import com.linuxcommandlibrary.app.ui.composables.rememberIconPainter
 import com.linuxcommandlibrary.shared.Version
-import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
@@ -216,34 +213,3 @@ fun AppInfoDialog(
     }
 }
 
-@Composable
-fun BookmarkFeedbackDialog(onDismiss: () -> Unit) {
-    LaunchedEffect(Unit) {
-        delay(600)
-        onDismiss()
-    }
-
-    val bookmarkPainter = rememberIconPainter(AppIcon.BOOKMARK)
-
-    Dialog(onDismissRequest = onDismiss) {
-        Card(
-            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-            shape = RoundedCornerShape(6.dp),
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(16.dp),
-            ) {
-                Icon(
-                    painter = bookmarkPainter,
-                    contentDescription = null,
-                    modifier = Modifier.size(48.dp),
-                )
-
-                Spacer(Modifier.height(8.dp))
-
-                SectionTitle(title = "Bookmarked")
-            }
-        }
-    }
-}

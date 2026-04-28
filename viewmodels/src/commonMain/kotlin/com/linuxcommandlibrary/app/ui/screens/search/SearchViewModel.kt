@@ -24,7 +24,6 @@ class SearchViewModel(
 
     fun cancel() {
         searchJob?.cancel()
-        searchJob = null
     }
 
     fun search(searchText: String) {

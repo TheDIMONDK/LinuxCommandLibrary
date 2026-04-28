@@ -126,9 +126,7 @@ fun BasicsPaneScreen(
                     }
                 } else {
                     val koinScope = currentKoinScope()
-                    val usesCardLayout = remember(selectedId) {
-                        basicsRepository.usesCardLayout(selectedId)
-                    }
+                    val usesCardLayout = basicsRepository.usesCardLayout(selectedId)
                     Column(
                         modifier = Modifier
                             .fillMaxSize()

@@ -68,12 +68,6 @@ struct CommandDetailView: View {
                 )
             }
         }
-        .onChange(of: store.state.showBookmarkDialog) { showing in
-            // The Android VM uses this dialog flag for its own feedback popup;
-            // iOS conveys success through the icon animation + haptic, so we
-            // just consume and dismiss it without showing anything.
-            if showing { store.dismissBookmarkDialog() }
-        }
     }
 }
 
@@ -206,7 +200,6 @@ final class CommandDetailStore: ObservableObject {
         sections: [],
         expandedSectionsMap: [:],
         isBookmarked: false,
-        showBookmarkDialog: false,
         seeAlsoCommands: []
     )
 
@@ -244,10 +237,6 @@ final class CommandDetailStore: ObservableObject {
         } else {
             viewModel.addBookmark()
         }
-    }
-
-    func dismissBookmarkDialog() {
-        viewModel.hideBookmarkDialog()
     }
 
     func tapMan(_ name: String) {

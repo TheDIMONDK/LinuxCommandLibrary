@@ -12,6 +12,7 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -25,7 +26,6 @@ import com.linuxcommandlibrary.app.NavEvent
 import com.linuxcommandlibrary.app.data.BasicCommand
 import com.linuxcommandlibrary.app.data.BasicGroup
 import com.linuxcommandlibrary.app.ui.composables.CommandView
-import com.linuxcommandlibrary.app.ui.composables.HighlightedText
 import com.linuxcommandlibrary.app.ui.composables.WithScrollbar
 import com.linuxcommandlibrary.app.ui.composables.getIconId
 import com.linuxcommandlibrary.app.ui.composables.rememberIconPainter
@@ -101,19 +101,16 @@ fun BasicGroupsContent(
 fun BasicGroupColumn(
     basicGroup: BasicGroup,
     commands: List<BasicCommand> = emptyList(),
-    searchText: String = "",
     isExpanded: Boolean,
     onToggleCollapse: () -> Unit,
     onNavigate: (NavEvent) -> Unit = {},
-    matchingBasicCommandIds: Set<Long> = emptySet(),
 ) {
     val painter = rememberIconPainter(basicGroup.getIconId())
 
     ListItem(
         headlineContent = {
-            HighlightedText(
+            Text(
                 text = basicGroup.description,
-                pattern = searchText,
                 maxLines = 3,
             )
         },
@@ -133,8 +130,6 @@ fun BasicGroupColumn(
         ExpandedGroupContent(
             commands = commands,
             onNavigate = onNavigate,
-            searchText = searchText,
-            matchingBasicCommandIds = matchingBasicCommandIds,
         )
     }
 }
@@ -143,11 +138,8 @@ fun BasicGroupColumn(
 private fun ExpandedGroupContent(
     commands: List<BasicCommand>,
     onNavigate: (NavEvent) -> Unit,
-    searchText: String = "",
-    matchingBasicCommandIds: Set<Long> = emptySet(),
 ) {
     commands.forEach { basicCommand ->
-        val highlightText = if (basicCommand.id in matchingBasicCommandIds) searchText else ""
         val elements = remember(basicCommand.command, basicCommand.mans) {
             basicCommand.command.getCommandList(basicCommand.mans)
         }
@@ -155,7 +147,6 @@ private fun ExpandedGroupContent(
             command = basicCommand.command,
             elements = elements,
             onNavigate = onNavigate,
-            searchText = highlightText,
         )
     }
 }

@@ -35,7 +35,6 @@ class TipsViewModel(
 
     fun cancel() {
         loadJob?.cancel()
-        loadJob = null
     }
 
     private fun createTerminalSetupTip(): TipInfo {

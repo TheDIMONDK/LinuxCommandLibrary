@@ -53,7 +53,6 @@ class CommandDetailViewModel(
 
     fun cancel() {
         loadJob?.cancel()
-        loadJob = null
     }
 
     fun onToggleAllExpanded() {
@@ -83,17 +82,8 @@ class CommandDetailViewModel(
 
     fun addBookmark() {
         _state.update {
-            it.copy(
-                isBookmarked = true,
-                showBookmarkDialog = true,
-            )
+            it.copy(isBookmarked = true)
         }
         dataManager.addBookmark(commandName)
-    }
-
-    fun hideBookmarkDialog() {
-        _state.update {
-            it.copy(showBookmarkDialog = false)
-        }
     }
 }

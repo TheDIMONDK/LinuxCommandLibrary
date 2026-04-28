@@ -85,7 +85,7 @@ private fun BasicCategoriesContent(
                         .pointerHoverIcon(PointerIcon.Hand)
                         .debouncedClickable {
                             onNavigate(
-                                NavEvent.ToBasicGroups(basicCategory.id, basicCategory.title),
+                                NavEvent.ToBasicGroups(basicCategory.id),
                             )
                         },
                 )
