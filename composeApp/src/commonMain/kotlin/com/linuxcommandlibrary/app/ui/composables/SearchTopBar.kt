@@ -10,14 +10,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
@@ -71,7 +68,6 @@ fun SearchTopBar(
     title: String,
     searchState: SearchState,
 ) {
-    val focusRequester = remember { FocusRequester() }
     val topBarContent = LocalCustomColors.current.topBarContent
 
     TopAppBar(
@@ -82,8 +78,7 @@ fun SearchTopBar(
                     value = searchState.currentValue,
                     onValueChange = { searchState.updateText(it) },
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .focusRequester(focusRequester),
+                        .fillMaxWidth(),
                     textStyle = MaterialTheme.typography.titleMedium.copy(color = topBarContent),
                     cursorBrush = SolidColor(topBarContent),
                     singleLine = true,
@@ -148,10 +143,4 @@ fun SearchTopBar(
             }
         },
     )
-
-    LaunchedEffect(searchState.isVisible) {
-        if (searchState.isVisible) {
-            focusRequester.requestFocus()
-        }
-    }
 }

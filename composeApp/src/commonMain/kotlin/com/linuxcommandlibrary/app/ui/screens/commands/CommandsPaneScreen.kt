@@ -67,12 +67,23 @@ fun CommandsPaneScreen(
                 enterTransition = fadeIn(),
                 exitTransition = fadeOut(),
             ) {
-                CommandsListPane(
-                    listViewModel = listViewModel,
-                    searchState = searchState,
-                    selectedName = navigator.currentDestination?.contentKey,
-                    onNavigate = onNavigate,
-                )
+                // While a pendingSelection is being routed to the detail pane,
+                // skip the list to avoid a one-frame flash of the search
+                // overlay when crossing tabs from another search result.
+                if (pendingSelection == null) {
+                    CommandsListPane(
+                        listViewModel = listViewModel,
+                        searchState = searchState,
+                        selectedName = navigator.currentDestination?.contentKey,
+                        onNavigate = onNavigate,
+                    )
+                } else {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(MaterialTheme.colorScheme.surface),
+                    )
+                }
             }
         },
         detailPane = {

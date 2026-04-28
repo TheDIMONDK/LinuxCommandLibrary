@@ -81,19 +81,27 @@ fun BasicsPaneScreen(
                 enterTransition = fadeIn(),
                 exitTransition = fadeOut(),
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.surface),
-                ) {
-                    InlineSearchField(searchState = searchState, placeholder = "Search")
-                    SearchOverlayBox(searchState = searchState, onNavigate = onNavigate) {
-                        BasicCategoriesScreen(
-                            viewModel = categoriesViewModel,
-                            onNavigate = onNavigate,
-                            selectedId = navigator.currentDestination?.contentKey,
-                        )
+                if (pendingSelection == null) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(MaterialTheme.colorScheme.surface),
+                    ) {
+                        InlineSearchField(searchState = searchState, placeholder = "Search")
+                        SearchOverlayBox(searchState = searchState, onNavigate = onNavigate) {
+                            BasicCategoriesScreen(
+                                viewModel = categoriesViewModel,
+                                onNavigate = onNavigate,
+                                selectedId = navigator.currentDestination?.contentKey,
+                            )
+                        }
                     }
+                } else {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(MaterialTheme.colorScheme.surface),
+                    )
                 }
             }
         },

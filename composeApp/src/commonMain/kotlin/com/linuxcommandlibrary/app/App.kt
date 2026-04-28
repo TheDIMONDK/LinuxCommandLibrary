@@ -1,6 +1,7 @@
 package com.linuxcommandlibrary.app
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -13,12 +14,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationItemColors
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteDefaults
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteItem
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldDefaults
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
@@ -35,6 +38,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.backhandler.BackHandler
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.composable
@@ -143,10 +148,6 @@ fun LinuxApp(initialDeeplink: String? = null) {
                         restoreState = true
                     }
                 }
-                // On tablet keep the search results visible in the list pane while
-                // the detail pane shows the tapped item; on phone the detail covers
-                // the screen, so dismiss search to avoid stale state on back.
-                if (!isWideLayout) searchState.clear()
             }
             is NavEvent.ToBasicGroups -> {
                 pendingBasicSelection = event.categoryId
@@ -158,7 +159,6 @@ fun LinuxApp(initialDeeplink: String? = null) {
                         restoreState = true
                     }
                 }
-                if (!isWideLayout) searchState.clear()
             }
             is NavEvent.OpenAction -> openAppAction(event.action)
         }
@@ -191,8 +191,8 @@ fun LinuxApp(initialDeeplink: String? = null) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(ambientColor)
             .windowInsetsPadding(WindowInsets.statusBars)
+            .background(ambientColor)
             .then(
                 if (isWideLayout) {
                     Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)
@@ -201,15 +201,28 @@ fun LinuxApp(initialDeeplink: String? = null) {
                 },
             ),
     ) {
+        val hoverModifier = Modifier.pointerHoverIcon(PointerIcon.Hand)
+        val itemColors = NavigationItemColors(
+            selectedIconColor = MaterialTheme.colorScheme.onSurface,
+            selectedTextColor = MaterialTheme.colorScheme.onSurface,
+            selectedIndicatorColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+            unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            disabledIconColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.38f),
+            disabledTextColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.38f),
+        )
         NavigationSuiteScaffold(
-            layoutType = layoutType,
+            navigationSuiteType = layoutType,
             containerColor = Color.Transparent,
             navigationSuiteColors = NavigationSuiteDefaults.colors(
                 navigationBarContainerColor = navBarBackground,
                 navigationRailContainerColor = Color.Transparent,
             ),
-            navigationSuiteItems = {
-                item(
+            navigationItemVerticalArrangement = Arrangement.Center,
+            navigationItems = {
+                NavigationSuiteItem(
+                    modifier = hoverModifier,
+                    navigationSuiteType = layoutType,
                     selected = isOnBasics,
                     onClick = { onSelectTab(Route.Basics) },
                     icon = {
@@ -220,8 +233,11 @@ fun LinuxApp(initialDeeplink: String? = null) {
                         )
                     },
                     label = { Text("Basics") },
+                    colors = itemColors,
                 )
-                item(
+                NavigationSuiteItem(
+                    modifier = hoverModifier,
+                    navigationSuiteType = layoutType,
                     selected = isOnTips,
                     onClick = { onSelectTab(Route.Tips) },
                     icon = {
@@ -232,8 +248,11 @@ fun LinuxApp(initialDeeplink: String? = null) {
                         )
                     },
                     label = { Text("Tips") },
+                    colors = itemColors,
                 )
-                item(
+                NavigationSuiteItem(
+                    modifier = hoverModifier,
+                    navigationSuiteType = layoutType,
                     selected = isOnCommands,
                     onClick = { onSelectTab(Route.Commands) },
                     icon = {
@@ -244,6 +263,7 @@ fun LinuxApp(initialDeeplink: String? = null) {
                         )
                     },
                     label = { Text("Commands") },
+                    colors = itemColors,
                 )
             },
         ) {
@@ -293,7 +313,10 @@ fun LinuxApp(initialDeeplink: String? = null) {
                             PaneTopBar(
                                 title = "Tips",
                                 actions = {
-                                    IconButton(onClick = { showInfo = true }) {
+                                    IconButton(
+                                        modifier = Modifier.pointerHoverIcon(PointerIcon.Hand),
+                                        onClick = { showInfo = true },
+                                    ) {
                                         Icon(
                                             imageVector = AppIcons.Info,
                                             contentDescription = "Info",
