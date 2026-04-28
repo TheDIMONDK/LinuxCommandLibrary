@@ -83,8 +83,8 @@ final class CommandsStore: ObservableObject {
     @Published private(set) var allCommands: [CommandInfo] = []
     @Published private(set) var bookmarkedNames: Set<String> = []
 
-    // Parallel to allCommands; pre-lowercased once so search doesn't allocate
-    // 7,700+ strings per keystroke.
+    /// Parallel to allCommands; pre-lowercased once so search doesn't allocate
+    /// 7,700+ strings per keystroke.
     private var lowerNames: [String] = []
 
     private var listTask: Task<Void, Never>?

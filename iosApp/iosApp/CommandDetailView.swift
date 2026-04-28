@@ -154,7 +154,7 @@ private struct FlowLayout: Layout {
                 subview.place(
                     at: CGPoint(x: x, y: y),
                     anchor: .topLeading,
-                    proposal: ProposedViewSize(size),
+                    proposal: ProposedViewSize(size)
                 )
                 x += size.width + spacing
                 subviewIndex += 1

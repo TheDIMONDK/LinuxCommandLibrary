@@ -149,6 +149,7 @@ fun LinuxApp(initialDeeplink: String? = null) {
                     }
                 }
             }
+
             is NavEvent.ToBasicGroups -> {
                 pendingBasicSelection = event.categoryId
                 pendingExpandGroupId = event.expandGroupId
@@ -160,6 +161,7 @@ fun LinuxApp(initialDeeplink: String? = null) {
                     }
                 }
             }
+
             is NavEvent.OpenAction -> openAppAction(event.action)
         }
     }

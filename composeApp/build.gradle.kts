@@ -115,9 +115,11 @@ val convertIconsToVectorDrawables by tasks.registering {
 
         svgs.forEach { svg ->
             val xmlOut = xmlOutDir.resolve("${svg.nameWithoutExtension}.xml")
-            val errors = xmlOut.outputStream().use { out ->
-                com.android.ide.common.vectordrawable.Svg2Vector.parseSvgToXml(svg.toPath(), out)
-            }
+            val errors =
+                xmlOut.outputStream().use { out ->
+                    com.android.ide.common.vectordrawable.Svg2Vector
+                        .parseSvgToXml(svg.toPath(), out)
+                }
             if (errors.isNotEmpty()) {
                 logger.warn("[convertIcons] ${svg.name}: $errors")
                 if (errors.contains("ERROR", ignoreCase = true)) failed++
