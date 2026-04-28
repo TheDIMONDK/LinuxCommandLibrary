@@ -61,5 +61,5 @@ Requires a classic GitHub token with public_repo scope to submit pull requests. 
 
 # SEE ALSO
 
-[winget](/man/winget)(1)
+[gh](/man/gh)(1), [brew](/man/brew)(1)
 

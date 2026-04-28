@@ -26,23 +26,29 @@ _PACKAGE_
 > Package name and optional version.
 
 **--force**
-> Force unpublish all versions.
+> Required to unpublish an entire package (all versions) instead of a single version.
 
 **--dry-run**
-> Preview without unpublishing.
+> Show what would be removed without actually unpublishing.
+
+**--workspace** _NAME_
+> Run the command in the context of the specified workspace.
+
+**--workspaces**
+> Run the command across all configured workspaces.
 
 **--help**
 > Display help information.
 
 # DESCRIPTION
 
-**npm unpublish** removes a package from registry. Use with extreme caution.
+**npm unpublish** removes a published package or version from the npm registry. Because removing a package can break consumers anywhere in the dependency graph, the registry restricts what may be removed and when.
 
-The command deletes published packages. Limited by npm policies.
+Within **72 hours** of publication, you may freely unpublish a version or the entire package. After that, the registry only allows unpublishing if no other package depends on it and the package owner is the sole maintainer; otherwise contact npm support. After unpublishing an entire package, the same name cannot be republished for **24 hours**, and any unpublished _name@version_ pair can never be reused.
 
 # CAVEATS
 
-72-hour limit on new packages. Can break dependents. Use deprecate instead.
+May break consumers that depend on the version being removed. Use **npm deprecate** instead when you only want to discourage use without deleting the artifact.
 
 # HISTORY
 

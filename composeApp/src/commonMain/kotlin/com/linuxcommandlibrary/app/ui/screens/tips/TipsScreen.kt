@@ -24,7 +24,6 @@ import com.linuxcommandlibrary.app.ui.composables.SectionTitle
 import com.linuxcommandlibrary.app.ui.composables.TipSectionContent
 import com.linuxcommandlibrary.app.ui.composables.WithScrollbar
 import com.linuxcommandlibrary.shared.TipInfo
-import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun TipsScreen(
@@ -41,7 +40,7 @@ fun TipsScreen(
 
 @Composable
 fun TipsContent(
-    tips: ImmutableList<TipInfo>,
+    tips: List<TipInfo>,
     onNavigate: (NavEvent) -> Unit,
 ) {
     val gridState = rememberLazyStaggeredGridState()

@@ -35,21 +35,10 @@ kotlin {
         }
     }
 
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64(),
-    ).forEach {
-        it.binaries.framework {
-            baseName = "ComposeApp"
-            isStatic = true
-        }
-    }
-
     sourceSets {
         commonMain {
             dependencies {
-                implementation(project(":common"))
+                api(project(":viewmodels"))
                 implementation(libs.compose.runtime)
                 implementation(libs.compose.foundation)
                 implementation(libs.compose.material3)
@@ -91,33 +80,28 @@ compose.resources {
     generateResClass = always
 }
 
-// Task to update iOS Info.plist with the app version from libs.versions.toml
-tasks.register("updateIosVersion") {
-    val appVersion = libs.versions.appVersion.get()
-    val infoPlistFile = file("${rootProject.projectDir}/iosApp/iosApp/Info.plist")
+// Stage shared SVG icons from /assets/icons/ into composeResources/drawable.
+// Single source of truth: /assets/icons/*.svg (also bundled by iOS via Xcode folder ref).
+// The copies in composeResources/drawable are gitignored build artifacts.
+val copySharedIcons by tasks.registering(Copy::class) {
+    from(rootProject.file("assets/icons"))
+    into("$projectDir/src/commonMain/composeResources/drawable")
+    include("*.svg")
+}
 
-    inputs.property("appVersion", appVersion)
-    outputs.file(infoPlistFile)
-
-    doLast {
-        if (infoPlistFile.exists()) {
-            var content = infoPlistFile.readText()
-            // Update CFBundleShortVersionString
-            content =
-                content.replace(
-                    Regex("<key>CFBundleShortVersionString</key>\\s*<string>[^<]*</string>"),
-                    "<key>CFBundleShortVersionString</key>\n\t<string>$appVersion</string>",
-                )
-            infoPlistFile.writeText(content)
-            println("Updated iOS Info.plist with version $appVersion")
-        }
+// Make resource processing depend on the icon copy
+tasks
+    .matching {
+        val n = it.name
+        n.startsWith("prepareComposeResourcesTask") ||
+            n.startsWith("generateResourceAccessors") ||
+            n.startsWith("generateActualResourceCollectors") ||
+            n.startsWith("generateExpectResourceCollectors") ||
+            n.startsWith("convertXmlValueResources") ||
+            n.startsWith("copyNonXmlValueResources")
+    }.configureEach {
+        dependsOn(copySharedIcons)
     }
-}
-
-// Make iOS framework tasks depend on updateIosVersion
-tasks.matching { it.name.contains("link") && it.name.contains("Ios") }.configureEach {
-    dependsOn("updateIosVersion")
-}
 
 // Task to regenerate assets/commands/index.txt from the .md files in that directory
 tasks.register("updateCommandIndex") {

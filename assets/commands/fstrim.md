@@ -46,7 +46,7 @@ Trim with **verbose** output
 
 # CAVEATS
 
-Only works on filesystems mounted with discard support. Running too frequently may reduce SSD lifespan. A weekly or monthly schedule via systemd timer is typically sufficient.
+Only works on filesystems whose underlying storage supports discard (most SSDs, NVMe, thin-provisioned devices). Running too frequently provides no benefit; a weekly schedule via the **fstrim.timer** systemd unit is typical. Continuous **discard** mount option is an alternative but generally less efficient than periodic **fstrim**.
 
 # HISTORY
 

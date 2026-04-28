@@ -1,6 +1,6 @@
 # TAGLINE
 
-modifies properties of existing Matroska files without requiring a complete
+modify Matroska metadata in place, without remuxing
 
 # TLDR
 
@@ -83,4 +83,4 @@ Changes modify the original file in place. Property names must match exactly; us
 
 # SEE ALSO
 
-[mkvmerge](/man/mkvmerge)(1), [mkvinfo](/man/mkvinfo)(1), [mkvextract](/man/mkvextract)(1)
+[mkvmerge](/man/mkvmerge)(1), [ffmpeg](/man/ffmpeg)(1)

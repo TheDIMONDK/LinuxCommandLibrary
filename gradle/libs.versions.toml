@@ -21,6 +21,7 @@ preference = "1.2.1"
 spotless = "8.4.0"
 kotlinxCollectionsImmutable = "0.4.0"
 mordant = "3.0.2"
+skie = "0.10.11"
 
 
 [libraries]
@@ -58,3 +59,4 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+skie = { id = "co.touchlab.skie", version.ref = "skie" }

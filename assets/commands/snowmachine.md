@@ -16,9 +16,42 @@ Make it snow in your terminal
 
 ```snowmachine tree --star=classic```
 
+**Slow down the falling snow** (lower is slower)
+
+```snowmachine snow --speed=[20]```
+
+**Use specific particle characters**
+
+```snowmachine snow --particle="[*]"```
+
 # SYNOPSIS
 
 **snowmachine** _command_ [_options_]
+
+# COMMANDS
+
+**snow**
+> Render falling snow.
+
+**tree**
+> Render a Christmas tree.
+
+# PARAMETERS
+
+**--color** _NAME_
+> Particle colour: _white_, _rainbow_, etc.
+
+**--stack** _MODE_
+> Stack particles at the bottom: _pile_ keeps a growing snow drift; default has none.
+
+**--speed** _N_
+> Frame interval (lower = faster).
+
+**--particle** _CHAR_
+> Override the snowflake character.
+
+**--star** _STYLE_
+> Star atop the tree (e.g., _classic_).
 
 # DESCRIPTION
 

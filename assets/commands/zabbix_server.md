@@ -33,13 +33,16 @@ Central Zabbix monitoring server daemon
 > Foreground.
 
 **-R** _CMD_
-> Runtime command.
+> Send a runtime command to a running server (e.g. _config_cache_reload_, _housekeeper_execute_, _log_level_increase_, _log_level_decrease_, _diaginfo_, _snmp_cache_reload_, _ha_status_).
 
-**-h**
-> Show help.
+**-T**, **--test-config**
+> Validate the configuration file and exit.
 
-**-V**
-> Show version.
+**-h**, **--help**
+> Show help and exit.
+
+**-V**, **--version**
+> Show version information and exit.
 
 # DESCRIPTION
 
@@ -51,7 +54,7 @@ The web frontend is a separate component that connects to the same database, pro
 
 # CAVEATS
 
-Database required. Config needed. Resource intensive.
+Requires a configured database backend (MySQL/MariaDB, PostgreSQL, or TimescaleDB) reachable before startup. The schema must already be loaded with **zabbix_server** SQL files. The web frontend is a separate component. Use **-R log_level_increase** to raise log verbosity at runtime without a restart.
 
 # HISTORY
 

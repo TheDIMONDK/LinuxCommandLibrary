@@ -24,14 +24,26 @@ _width_
 _height_
 > Image height in pixels.
 
-**-headerskip** _bytes_
-> Skip header bytes.
+**-headerskip** _BYTES_
+> Skip the first _BYTES_ bytes of the input before reading pixel data (for files with proprietary headers).
 
-**-maxval** _n_
-> Maximum gray value.
+**-rowskip** _BYTES_
+> Skip _BYTES_ at the end of each scanline (e.g., padding to a row stride).
 
-**-bpp** _n_
-> Bytes per pixel (1 or 2).
+**-bpp** _N_
+> Bytes per pixel: _1_ (default, 8-bit) or _2_ (16-bit big-endian samples).
+
+**-littleendian**
+> When **-bpp 2**, interpret 16-bit samples as little-endian.
+
+**-maxval** _N_
+> Override the maxval written to the output PGM (default _255_, or _65535_ when **-bpp 2**).
+
+**-topbottom**
+> Treat row 0 as the top of the image (default; pair with **-bottomtop** to flip).
+
+**-bottomtop**
+> Treat row 0 as the bottom of the image.
 
 # DESCRIPTION
 

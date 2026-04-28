@@ -32,3 +32,4 @@ commands_improved.txt
 commands_processed.txt
 find_missing_commands.sh
 scripts
+composeApp/src/commonMain/composeResources/drawable/*.svg

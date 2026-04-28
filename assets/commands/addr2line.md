@@ -16,6 +16,14 @@ Display the **function name**, filename, and line number
 
 ```addr2line -e [path/to/executable] -f -C [address]```
 
+**Pretty-print** with inlined frames
+
+```addr2line -e [path/to/executable] -f -C -i -p [address]```
+
+**Read addresses from stdin** (e.g., from a stack trace)
+
+```cat [addresses.txt] | addr2line -e [path/to/executable] -f -C```
+
 # SYNOPSIS
 
 **addr2line** [_-e executable_] [_-f_] [_-C_] [_-s_] [_-i_] [_address_...]
@@ -48,6 +56,15 @@ This is particularly useful for interpreting crash dumps and debugging informati
 
 **-a, --addresses**
 > Display the address before the function name, file, and line
+
+**-j, --section** _NAME_
+> Treat input addresses as offsets within the named section.
+
+**--target** _BFDNAME_
+> Specify the binary format of the object file (auto-detected by default).
+
+**-r, --no-recurse-limit**
+> Disable the demangler's recursion limit.
 
 # CAVEATS
 

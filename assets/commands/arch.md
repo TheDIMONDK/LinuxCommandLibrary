@@ -14,17 +14,19 @@ Print the machine hardware architecture
 
 # DESCRIPTION
 
-**arch** prints the machine hardware architecture. On Linux, this is typically equivalent to **uname -m**.
+**arch** prints the machine hardware architecture. On Linux this is the GNU coreutils command, equivalent to **uname -m**. There are no options other than **--help** and **--version**.
 
 Common outputs include:
 - **x86_64**: 64-bit Intel/AMD
 - **aarch64** or **arm64**: 64-bit ARM
 - **i686** or **i386**: 32-bit Intel
 - **armv7l**: 32-bit ARM
+- **ppc64le**: 64-bit PowerPC little-endian
+- **riscv64**: 64-bit RISC-V
 
 # CAVEATS
 
-Output varies by system and may differ from CPU marketing names. Some systems may return different strings for compatibility modes.
+The reported value depends on the kernel personality, not the silicon — running under **setarch** or in a 32-bit chroot can make a 64-bit machine report **i686**. On macOS the system **arch** binary is unrelated; it _switches_ a process to a different architecture instead of printing one.
 
 # HISTORY
 
@@ -32,4 +34,4 @@ Output varies by system and may differ from CPU marketing names. Some systems ma
 
 # SEE ALSO
 
-[uname](/man/uname)(1), [hostnamectl](/man/hostnamectl)(1)
+[uname](/man/uname)(1), [setarch](/man/setarch)(8), [hostnamectl](/man/hostnamectl)(1)

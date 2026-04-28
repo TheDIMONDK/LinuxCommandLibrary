@@ -30,20 +30,32 @@ Show recent commits for standup meetings
 
 # PARAMETERS
 
-**-d** _days_
-> Number of days back.
+**-d** _DAYS_
+> Show commits from the past _DAYS_ days (default: _1_, with Monday-aware look-back of 3 days).
 
-**-a** _author_
-> Filter by author (or "all").
+**-a** _AUTHOR_
+> Limit to a specific author. Pass _all_ for every author.
 
-**-D** _date_
-> Start date.
+**-D** _DATE_
+> Start of the date range (overrides **-d**).
 
-**-U** _date_
-> End date.
+**-U** _DATE_
+> End of the date range.
 
-**-m** _depth_
-> Recursion depth.
+**-m** _DEPTH_
+> Recursively scan directories up to _DEPTH_ levels deep for git repositories.
+
+**-L**
+> Toggle inclusion of git diff stat for each commit.
+
+**-B** _BRANCH_
+> Restrict to commits on _BRANCH_.
+
+**-f**
+> Fetch from the remote before scanning.
+
+**-g**
+> Show GPG signature info for each commit.
 
 # DESCRIPTION
 

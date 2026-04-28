@@ -72,4 +72,4 @@ Deprecated in favor of client-side font rendering (fontconfig/FreeType). Most mo
 
 # SEE ALSO
 
-[fc-cache](/man/fc-cache)(1), [xlsfonts](/man/xlsfonts)(1), [xset](/man/xset)(1), [mkfontdir](/man/mkfontdir)(1)
+[fc-cache](/man/fc-cache)(1), [xlsfonts](/man/xlsfonts)(1), [xset](/man/xset)(1)

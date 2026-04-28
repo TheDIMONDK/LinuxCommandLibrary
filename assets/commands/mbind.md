@@ -65,4 +65,4 @@ mbind was added to Linux kernel **2.6.7** as part of NUMA memory policy support,
 
 # SEE ALSO
 
-[set_mempolicy](/man/set_mempolicy)(2), [get_mempolicy](/man/get_mempolicy)(2), [numactl](/man/numactl)(8), [numa](/man/numa)(7)
+[numactl](/man/numactl)(8), [numastat](/man/numastat)(8)

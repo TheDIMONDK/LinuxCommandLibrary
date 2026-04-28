@@ -24,7 +24,6 @@ import com.linuxcommandlibrary.app.ui.composables.WithScrollbar
 import com.linuxcommandlibrary.app.ui.composables.debouncedClickable
 import com.linuxcommandlibrary.app.ui.composables.getIconId
 import com.linuxcommandlibrary.app.ui.composables.rememberIconPainter
-import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun BasicCategoriesScreen(
@@ -41,7 +40,7 @@ fun BasicCategoriesScreen(
 
 @Composable
 private fun BasicCategoriesContent(
-    basicCategories: ImmutableList<BasicCategory>,
+    basicCategories: List<BasicCategory>,
     onNavigate: (NavEvent) -> Unit,
 ) {
     val gridState = rememberLazyGridState()

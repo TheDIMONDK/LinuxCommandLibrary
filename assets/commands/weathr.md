@@ -116,4 +116,4 @@ Location auto-detection relies on **ipinfo.io** for IP geolocation, which may be
 
 # SEE ALSO
 
-[wttr](/man/wttr)(1), [curl](/man/curl)(1)
+[ansiweather](/man/ansiweather)(1), [wego](/man/wego)(1), [curl](/man/curl)(1)

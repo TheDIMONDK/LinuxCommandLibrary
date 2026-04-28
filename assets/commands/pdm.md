@@ -76,13 +76,19 @@ python package manager following PEP standards
 > Publish to PyPI.
 
 **use** _python_
-> Switch Python interpreter.
+> Switch the project's Python interpreter.
 
-**venv** create|list|remove
-> Manage virtual environments.
+**venv** create|list|remove|activate
+> Manage virtual environments for the project.
+
+**info**
+> Show project, environment, and Python interpreter information.
+
+**cache** clear|list|info
+> Inspect or clear the package cache.
 
 **config** _key_ [_value_]
-> Get or set configuration.
+> Get or set a PDM configuration option.
 
 # PARAMETERS
 
@@ -121,7 +127,7 @@ python package manager following PEP standards
 
 Dependencies are declared in pyproject.toml and locked in pdm.lock. **add** modifies both; **install** reads the lock file. Dependency groups separate dev, test, and optional dependencies.
 
-PDM supports PEP 582 (__pypackages__) as an alternative to virtual environments. Packages install to a local directory without activation. Enable with **pdm config python.use_venv false**.
+PDM historically supported PEP 582 (__pypackages__) as an alternative to virtual environments, but PEP 582 was rejected in 2023; modern PDM defaults to virtualenvs. Local-package mode can still be enabled with **pdm config python.use_venv false** for users who prefer it.
 
 **pdm run** executes commands with the project environment active. Scripts defined in pyproject.toml under [tool.pdm.scripts] provide shortcuts.
 

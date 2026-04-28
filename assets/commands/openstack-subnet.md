@@ -47,11 +47,29 @@ manages IP subnets within OpenStack networks
 **--gateway** _ip_
 > Gateway IP address.
 
-**--dhcp**
-> Enable DHCP.
+**--dhcp** / **--no-dhcp**
+> Enable or disable DHCP on the subnet (default: _enabled_).
 
 **--dns-nameserver** _ip_
-> DNS server address.
+> DNS server address (repeat for multiple).
+
+**--allocation-pool** _start=IP,end=IP_
+> Restrict DHCP allocation to a range within the subnet (repeatable).
+
+**--ip-version** _4|6_
+> IP version of the subnet (default: _4_).
+
+**--ipv6-address-mode** _MODE_
+> IPv6 address mode: _slaac_, _dhcpv6-stateful_, or _dhcpv6-stateless_.
+
+**--ipv6-ra-mode** _MODE_
+> IPv6 router advertisement mode (same values as **--ipv6-address-mode**).
+
+**--host-route** _destination=CIDR,gateway=IP_
+> Add a static host route (repeatable).
+
+**--subnet-pool** _NAME_
+> Allocate the range from a subnet pool instead of specifying **--subnet-range** directly.
 
 # DESCRIPTION
 

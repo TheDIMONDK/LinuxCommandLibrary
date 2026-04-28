@@ -67,4 +67,4 @@ Apache Hive was developed at **Facebook** and contributed to the **Apache** proj
 
 # SEE ALSO
 
-[beeline](/man/beeline)(1), [hadoop](/man/hadoop)(1), [spark-sql](/man/spark-sql)(1)
+[beeline](/man/beeline)(1), [yarn](/man/yarn)(1), [impala](/man/impala)(1)

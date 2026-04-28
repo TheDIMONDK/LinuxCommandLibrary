@@ -45,21 +45,33 @@ _KEY=VALUE:EFFECT_
 **PreferNoSchedule**
 > Soft no-schedule.
 
-**-**
-> Remove taint (suffix).
+**-** (suffix on the taint key)
+> Remove a taint matching the given _key:effect_ pair (e.g. **node1 dedicated:NoSchedule-**).
+
+**--all**
+> Apply the taint operation to every node in the cluster.
+
+**-l**, **--selector** _SELECTOR_
+> Apply only to nodes matching the label selector (e.g. `--selector=role=worker`).
+
+**--overwrite**
+> Allow updating the value of an existing taint (without it, attempting to add a taint with the same key produces an error).
+
+**--dry-run** _client|server|none_
+> Print what would change without modifying the cluster.
 
 **--help**
 > Display help information.
 
 # DESCRIPTION
 
-**kubectl taint** adds or removes node taints. Taints repel pods unless they have matching tolerations.
+**kubectl taint** adds, updates, or removes node taints. A taint is a _key=value:effect_ tuple attached to a node; pods are scheduled or kept on the node only if they carry a matching **toleration** in their pod spec. The supported effects are **NoSchedule** (block new pods that don't tolerate it), **PreferNoSchedule** (best-effort avoid), and **NoExecute** (evict running pods that don't tolerate it).
 
-The command controls workload placement. Effects determine scheduling behavior and eviction.
+Taints are the standard mechanism for dedicating nodes to a workload class (e.g., GPU nodes), keeping pods off control-plane nodes, and gracefully draining nodes for maintenance in conjunction with **kubectl drain**.
 
 # CAVEATS
 
-Subcommand of kubectl. Requires matching tolerations. NoExecute evicts running pods.
+**NoExecute** evicts already-scheduled pods that lack a matching toleration; ensure tolerations are in place before tainting a populated node. Overwriting an existing taint requires **--overwrite**. Removing a taint uses a trailing **-** on the taint key (no value needed).
 
 # HISTORY
 

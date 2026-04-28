@@ -26,14 +26,26 @@ Terminal user interface for GnuPG key management
 
 # PARAMETERS
 
-**--homedir** _dir_
-> GnuPG home directory.
+**--homedir** _DIR_
+> Use _DIR_ as the GnuPG home directory (overrides **GNUPGHOME**).
 
-**--style** _style_
-> Visual style (colored, plain, minimal).
+**-c**, **--color** _COLOR_
+> Set the accent color (e.g. _gray_, _red_, _green_, _blue_, or a hex value).
 
-**--output-format** _format_
-> Output format for exports.
+**-s**, **--style** _STYLE_
+> Set the table border style: _plain_, _bold_, _double_, or _light_.
+
+**-d**, **--detail-level** _LEVEL_
+> Initial detail level for keys: _minimum_, _standard_, or _full_.
+
+**-r**, **--no-tty**
+> Run without TTY interaction (useful when piping).
+
+**-x**, **--select** _SELECTION_
+> Pre-select rows on startup (key IDs or fingerprints).
+
+**--splash**
+> Show the splash screen at startup.
 
 **-h**, **--help**
 > Show help information.
@@ -49,4 +61,4 @@ The tool reads from the standard GnuPG keyring and supports multiple visual styl
 
 # SEE ALSO
 
-[gpg](/man/gpg)(1), [gpg-agent](/man/gpg-agent)(1)
+[gpg](/man/gpg)(1), [gpg2](/man/gpg2)(1)

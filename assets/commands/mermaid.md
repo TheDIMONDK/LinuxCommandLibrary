@@ -65,7 +65,22 @@ The tool enables automated diagram generation in documentation pipelines and scr
 > Puppeteer config file.
 
 **-s** _scale_
-> Scale factor.
+> Scale factor (puppeteer device pixel ratio).
+
+**-e** _format_
+> Output format: _png_, _svg_, _pdf_, or _md_ (overrides extension).
+
+**-f**, **--pdfFit**
+> Scale PDF to fit the chart on a single page.
+
+**-q**, **--quiet**
+> Suppress informational output.
+
+**-I** / **--svgId** _id_
+> Set the `id` attribute on the generated SVG element.
+
+**--cssFile** _path_
+> Inject a custom CSS stylesheet into the SVG.
 
 # DIAGRAM TYPES
 

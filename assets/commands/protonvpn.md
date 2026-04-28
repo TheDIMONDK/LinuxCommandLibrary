@@ -6,27 +6,35 @@ Official Proton VPN command-line client
 
 **Sign in** to Proton VPN
 
-```protonvpn signin```
+```protonvpn signin [username]```
 
 **Sign out**
 
 ```protonvpn signout```
 
-Display **account info**
-
-```protonvpn info```
-
-**Connect** interactively
+**Connect** to the fastest server
 
 ```protonvpn connect```
+
+Connect to a **specific country**
+
+```protonvpn connect --country [US]```
+
+Connect to a **named server**
+
+```protonvpn connect [US-NY-01]```
 
 **Disconnect**
 
 ```protonvpn disconnect```
 
-Display **help**
+**Enable kill switch**
 
-```protonvpn -h```
+```protonvpn config set kill-switch on```
+
+**List configurable options**
+
+```protonvpn config list```
 
 # SYNOPSIS
 
@@ -34,28 +42,43 @@ Display **help**
 
 # COMMANDS
 
-**signin**
-> Authenticate with Proton VPN credentials
+**signin** [_username_]
+> Authenticate with Proton VPN credentials.
 
 **signout**
-> Remove stored credentials
+> Remove stored credentials.
 
-**connect**
-> Establish VPN connection
+**connect** [_server_]
+> Establish a VPN connection. Without arguments, connects to the fastest available server. Accepts a server name or use **--country** / **--city**.
 
 **disconnect**
-> Terminate VPN connection
+> Terminate the active VPN connection.
 
 **status**
-> Show current connection status
+> Show current connection status.
 
 **info**
-> Display account information
+> Display account information.
+
+**config list**
+> List configurable options.
+
+**config set** _option_ _value_
+> Change a configuration option (e.g., **kill-switch on**, **netshield f1**, **vpn-accelerator on**).
 
 # PARAMETERS
 
+**--country** _CODE_
+> Restrict **connect** to servers in a specific country.
+
+**--city** _CITY_
+> Restrict **connect** to servers in a specific city.
+
+**--protocol** _PROTOCOL_
+> Override the connection protocol (e.g., _wireguard_, _openvpn-tcp_, _openvpn-udp_).
+
 **-h, --help**
-> Display help information
+> Display help information.
 
 # DESCRIPTION
 
@@ -73,4 +96,4 @@ Requires Proton VPN subscription. Some features require paid plans. Network mana
 
 # SEE ALSO
 
-[openvpn](/man/openvpn)(8), [wireguard](/man/wireguard)(8), [nmcli](/man/nmcli)(1)
+[openvpn](/man/openvpn)(8), [wg-quick](/man/wg-quick)(8), [nmcli](/man/nmcli)(1)

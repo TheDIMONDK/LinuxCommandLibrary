@@ -90,6 +90,18 @@ Build and install Rust binary crates
 **--all-features**
 > Enable all features
 
+**--no-default-features**
+> Disable the package's default feature set.
+
+**--target** _TRIPLE_
+> Cross-compile binaries for the specified target triple.
+
+**--profile** _NAME_
+> Build with the named profile (e.g., _release_, _dev_).
+
+**--debug**
+> Build with the dev profile (faster compile, slower binary).
+
 # INSTALLATION ROOT
 
 Determined by (in order): --root, CARGO_INSTALL_ROOT, install.root config, CARGO_HOME, ~/.cargo

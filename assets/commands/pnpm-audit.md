@@ -27,19 +27,31 @@ Check pnpm dependencies for vulnerabilities
 # PARAMETERS
 
 **--fix**
-> Automatically fix vulnerabilities.
+> Add overrides to **package.json** that pin vulnerable transitive dependencies to safe versions.
 
 **--json**
-> Output as JSON.
+> Output the audit report as JSON.
 
-**--prod**
-> Only audit production dependencies.
+**-P**, **--prod**
+> Audit only production dependencies (skip _devDependencies_).
 
-**--dev**
-> Only audit dev dependencies.
+**-D**, **--dev**
+> Audit only development dependencies.
+
+**--no-optional**
+> Skip optional dependencies during the audit.
 
 **--audit-level** _LEVEL_
-> Minimum severity to report.
+> Minimum severity to report: _low_, _moderate_, _high_, or _critical_ (default: _low_).
+
+**--ignore** _CVE_
+> Suppress reporting for a specific advisory by its identifier.
+
+**--ignore-unfixable**
+> Skip advisories that have no available patch.
+
+**--ignore-registry-errors**
+> Exit with code 0 when the registry returns a non-200 status, only failing if real vulnerabilities are found.
 
 # DESCRIPTION
 

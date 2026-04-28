@@ -82,7 +82,7 @@ fun buildTextElementString(
 
 @Composable
 fun TipSectionContent(
-    sections: ImmutableList<TipSectionElement>,
+    sections: List<TipSectionElement>,
     onNavigate: (NavEvent) -> Unit,
     textColor: Color = Color.Unspecified,
     commandVerticalPadding: Dp = 0.dp,

@@ -92,4 +92,4 @@ recordmydesktop was created by **John Googalidis** as a simple, efficient screen
 
 # SEE ALSO
 
-[ffmpeg](/man/ffmpeg)(1), [peek](/man/peek)(1), [obs](/man/obs)(1), [simplescreenrecorder](/man/simplescreenrecorder)(1)
+[ffmpeg](/man/ffmpeg)(1), [peek](/man/peek)(1), [obs](/man/obs)(1)

@@ -22,18 +22,39 @@ enumerates RPC endpoints on a target system
 
 # PARAMETERS
 
-**-port** _port_
-> RPC port (default 135).
+**-port** _PORT_
+> RPC endpoint port (default _135_).
 
-**-hashes** _lm:nt_
-> Use NTLM hashes.
+**-target-ip** _IP_
+> Override the IP used for the connection (useful when the target is given as a hostname).
+
+**-hashes** _LMHASH:NTHASH_
+> Authenticate via Pass-the-Hash instead of supplying a password.
+
+**-no-pass**
+> Don't prompt for a password (use **-hashes** or **-k** alone).
 
 **-k**
-> Use Kerberos.
+> Use Kerberos authentication. Credentials are read from **ccache** (set by **kinit**).
+
+**-aesKey** _HEX_
+> AES key for Kerberos authentication.
+
+**-dc-ip** _IP_
+> IP of the domain controller for Kerberos.
+
+**-debug**
+> Print verbose protocol-level output.
 
 # DESCRIPTION
 
-**impacket-rpcdump** enumerates RPC endpoints on a target system. Part of the Impacket toolkit. Lists available RPC services with UUIDs and bindings. Useful for reconnaissance in penetration testing.
+**impacket-rpcdump** queries the Microsoft RPC endpoint mapper (port 135 by default) and prints every registered endpoint, its UUID, and the bindings (named pipes, TCP/UDP ports) it speaks. It is the Python/Impacket equivalent of Microsoft's classic **rpcdump.exe** and is commonly used to enumerate exposed Active Directory services during authorized engagements.
+
+When credentials are supplied (clear-text password, NTLM hash, or Kerberos ticket), additional services that require authentication may appear in the listing; an unauthenticated dump usually returns only the small set of endpoints reachable anonymously.
+
+# CAVEATS
+
+For **authorized testing only**. Some services restrict anonymous endpoint enumeration on modern Windows builds (e.g., **RestrictRemoteSAM**), so empty output does not mean no services are running.
 
 # SEE ALSO
 

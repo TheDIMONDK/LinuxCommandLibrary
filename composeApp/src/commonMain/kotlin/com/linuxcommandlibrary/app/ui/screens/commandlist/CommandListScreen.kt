@@ -24,8 +24,6 @@ import com.linuxcommandlibrary.app.ui.composables.HighlightedText
 import com.linuxcommandlibrary.app.ui.composables.WithScrollbar
 import com.linuxcommandlibrary.app.ui.composables.debouncedClickable
 import com.linuxcommandlibrary.app.ui.composables.rememberIconPainter
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.ImmutableSet
 
 @Composable
 fun CommandListScreen(
@@ -44,8 +42,8 @@ fun CommandListScreen(
 
 @Composable
 private fun ComposeListContent(
-    commands: ImmutableList<CommandInfo>,
-    bookmarkedNames: ImmutableSet<String>,
+    commands: List<CommandInfo>,
+    bookmarkedNames: Set<String>,
     onNavigate: (NavEvent) -> Unit,
 ) {
     val listState = rememberLazyListState()

@@ -59,6 +59,12 @@ Start with **Wayland** backend
 **shell**
 > Open interactive Python shell for qtile control
 
+**migrate**
+> Migrate the user's config.py to a newer Qtile API version
+
+**repl**
+> Connect a Python REPL into the running Qtile instance for live introspection
+
 **--group** _GROUP_
 > Specify the group (workspace) for run-cmd
 

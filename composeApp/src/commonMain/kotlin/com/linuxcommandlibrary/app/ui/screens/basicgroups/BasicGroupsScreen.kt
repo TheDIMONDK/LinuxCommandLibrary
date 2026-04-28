@@ -28,11 +28,6 @@ import com.linuxcommandlibrary.app.ui.composables.WithScrollbar
 import com.linuxcommandlibrary.app.ui.composables.getIconId
 import com.linuxcommandlibrary.app.ui.composables.rememberIconPainter
 import com.linuxcommandlibrary.shared.getCommandList
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.ImmutableSet
-import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.persistentSetOf
-import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun BasicGroupsScreen(
@@ -74,7 +69,7 @@ fun BasicGroupsContent(
                 ) { basicGroup ->
                     BasicGroupColumn(
                         basicGroup = basicGroup,
-                        commands = uiState.commandsByGroupId[basicGroup.id] ?: persistentListOf(),
+                        commands = uiState.commandsByGroupId[basicGroup.id] ?: emptyList(),
                         isExpanded = !(uiState.collapsedMap[basicGroup.id] ?: true),
                         onToggleCollapse = { toggleCollapse(basicGroup.id) },
                         onNavigate = onNavigate,
@@ -88,12 +83,12 @@ fun BasicGroupsContent(
 @Composable
 fun BasicGroupColumn(
     basicGroup: BasicGroup,
-    commands: ImmutableList<BasicCommand> = persistentListOf(),
+    commands: List<BasicCommand> = emptyList(),
     searchText: String = "",
     isExpanded: Boolean,
     onToggleCollapse: () -> Unit,
     onNavigate: (NavEvent) -> Unit = {},
-    matchingBasicCommandIds: ImmutableSet<Long> = persistentSetOf(),
+    matchingBasicCommandIds: Set<Long> = emptySet(),
 ) {
     val painter = rememberIconPainter(basicGroup.getIconId())
 
@@ -129,15 +124,15 @@ fun BasicGroupColumn(
 
 @Composable
 private fun ExpandedGroupContent(
-    commands: ImmutableList<BasicCommand>,
+    commands: List<BasicCommand>,
     onNavigate: (NavEvent) -> Unit,
     searchText: String = "",
-    matchingBasicCommandIds: ImmutableSet<Long> = persistentSetOf(),
+    matchingBasicCommandIds: Set<Long> = emptySet(),
 ) {
     commands.forEach { basicCommand ->
         val highlightText = if (basicCommand.id in matchingBasicCommandIds) searchText else ""
         val elements = remember(basicCommand.command, basicCommand.mans) {
-            basicCommand.command.getCommandList(basicCommand.mans).toImmutableList()
+            basicCommand.command.getCommandList(basicCommand.mans)
         }
         CommandView(
             command = basicCommand.command,

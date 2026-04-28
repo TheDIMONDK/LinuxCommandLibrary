@@ -39,4 +39,4 @@ Requires PAM for authentication. Session scripts must be executable. Some deskto
 
 # SEE ALSO
 
-[ly](/man/ly)(1), [lightdm](/man/lightdm)(1), [startx](/man/startx)(1)
+[ly](/man/ly)(1), [gdm](/man/gdm)(1), [startx](/man/startx)(1)

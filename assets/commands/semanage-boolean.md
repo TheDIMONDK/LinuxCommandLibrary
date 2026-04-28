@@ -52,4 +52,4 @@ Requires root privileges. Boolean changes take effect immediately but are also s
 
 # SEE ALSO
 
-[semanage](/man/semanage)(8), [getsebool](/man/getsebool)(8), [setsebool](/man/setsebool)(8), [selinux](/man/selinux)(8)
+[semanage](/man/semanage)(8), [getsebool](/man/getsebool)(8), [setsebool](/man/setsebool)(8), [sestatus](/man/sestatus)(8), [selinuxenabled](/man/selinuxenabled)(8)

@@ -1,3 +1,5 @@
+import java.io.File
+
 plugins {
     alias(libs.plugins.spotless)
     alias(libs.plugins.kotlin.multiplatform) apply false
@@ -6,6 +8,14 @@ plugins {
 }
 
 group = "com.inspiredandroid"
+
+// Discover swiftformat in the usual Homebrew locations. Skip Swift formatting
+// silently on machines that don't have it (e.g. Linux CI doing Android-only builds).
+val swiftformatPath: String? =
+    listOf(
+        "/opt/homebrew/bin/swiftformat",
+        "/usr/local/bin/swiftformat",
+    ).firstOrNull { File(it).exists() }
 
 configure<com.diffplug.gradle.spotless.SpotlessExtension> {
     kotlin {
@@ -23,5 +33,22 @@ configure<com.diffplug.gradle.spotless.SpotlessExtension> {
     kotlinGradle {
         target("**/*.gradle.kts")
         ktlint()
+    }
+
+    if (swiftformatPath != null) {
+        format("swift") {
+            target("iosApp/**/*.swift")
+            targetExclude("iosApp/**/.build/**", "iosApp/**/Pods/**", "iosApp/**/build/**")
+            nativeCmd(
+                "swiftformat",
+                swiftformatPath,
+                emptyList(),
+            )
+        }
+    } else {
+        logger.lifecycle(
+            "Spotless: swiftformat not found in /opt/homebrew/bin or /usr/local/bin — Swift formatting skipped. " +
+                "Install with: brew install swiftformat",
+        )
     }
 }

@@ -18,14 +18,23 @@ Search **computer** terms
 
 # PARAMETERS
 
+_ACRONYM_
+> One or more acronyms to look up. Multiple words are joined; case is ignored.
+
+**-f** _FILE_
+> Use _FILE_ as an additional acronym database (one _ACRONYM<TAB>expansion_ per line).
+
+**-o**
+> Print expansions even when running in the **is** alias mode (_what is_ acronym).
+
 **-t** _TYPE_
-> Specify search type (comp for computer-related)
+> Restrict the lookup to a named acronym category. Default categories include _comp_ (computers), and any extra files installed under **/usr/share/games/bsdgames/wtf/** or your local **acronyms** files.
 
 # DESCRIPTION
 
-**wtf** shows the expansions of acronyms. It looks up acronyms in a local database and displays their meanings.
+**wtf** expands acronyms by looking them up in a local database, returning all known meanings. It is part of **bsdgames** and ships with both a general acronym list and topical lists (e.g., **comp** for computer jargon).
 
-The tool includes general acronyms and specialized categories like computer terminology.
+A bare invocation searches the default database; **-t** narrows the search to a particular acronym list. To extend the database, drop additional acronym files into the same directory or pass them with **-f**.
 
 # CAVEATS
 
@@ -37,4 +46,4 @@ Database may not include all acronyms. Some acronyms have multiple meanings. Pri
 
 # SEE ALSO
 
-[whatis](/man/whatis)(1)
+[whatis](/man/whatis)(1), [apropos](/man/apropos)(1)

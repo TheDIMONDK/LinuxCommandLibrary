@@ -1,15 +1,21 @@
-import SwiftUI
 import ComposeApp
+import SwiftUI
 
 @main
 struct iOSApp: App {
+    @StateObject private var router = AppRouter()
+
     init() {
-        MainViewControllerKt.doInitKoin()
+        KoinHelperKt.doInitKoin()
     }
 
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(router)
+                .onOpenURL { url in
+                    router.handle(url: url)
+                }
         }
     }
 }

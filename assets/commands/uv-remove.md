@@ -23,16 +23,28 @@ Remove dependencies from a uv project
 # PARAMETERS
 
 **--dev**
-> Remove from dev dependencies.
+> Remove the package from the **[tool.uv.dev-dependencies]** group.
 
-**--optional** _group_
-> Remove from optional group.
+**--optional** _GROUP_
+> Remove from the named optional dependency group in **pyproject.toml**.
+
+**--group** _GROUP_
+> Remove from the named PEP 735 dependency group.
+
+**--script** _SCRIPT.PY_
+> Operate on the dependency block of a single-file PEP 723 script instead of the project.
+
+**--package** _PACKAGE_
+> In a workspace, target the package member named _PACKAGE_.
 
 **--frozen**
-> Don't update lockfile.
+> Update **pyproject.toml** but leave **uv.lock** unchanged.
+
+**--locked**
+> Fail if **uv.lock** would need to change (CI guard).
 
 **--no-sync**
-> Don't sync environment.
+> Skip syncing the project's virtual environment after the change.
 
 # DESCRIPTION
 

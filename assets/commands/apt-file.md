@@ -54,6 +54,12 @@ Search for packages that match a **regex**
 **-a, --architecture arch**
 > Search for a specific architecture
 
+**-D, --dummy**
+> Run without taking action (used for testing)
+
+**-N, --non-interactive**
+> Do not prompt for input; suitable for scripts
+
 # CONFIGURATION
 
 **/etc/apt/apt-file.conf**

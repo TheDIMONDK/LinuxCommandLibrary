@@ -38,19 +38,37 @@ _COMMAND_
 > Container Registry command.
 
 **login**
-> Authenticate to registry.
+> Log the local Docker daemon in to the IBM Cloud registry.
 
 **image-list**
-> List images.
+> List images in your account/namespaces.
 
-**namespace-add**
-> Create namespace.
+**image-rm** _IMAGE_
+> Remove one or more images from the registry.
 
-**build**
-> Build and push image.
+**image-tag** _SRC_ _DST_
+> Add a new tag to an existing image.
 
-**image-rm**
-> Remove image.
+**namespace-add** _NAME_
+> Create a namespace.
+
+**namespace-list**
+> List namespaces in the targeted account.
+
+**namespace-rm** _NAME_
+> Delete a namespace (must be empty).
+
+**build** _CONTEXT_
+> Build a container image with IBM Cloud's remote builder and push the result.
+
+**va** _IMAGE_
+> Show Vulnerability Advisor results for an image.
+
+**quota**
+> Display storage and pull-traffic quota for the account.
+
+**region-set** _REGION_
+> Switch the registry region (e.g., _us-south_, _eu-de_, _jp-tok_).
 
 **--help**
 > Display help information.

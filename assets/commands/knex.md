@@ -59,11 +59,29 @@ SQL query builder for Node
 **seed:run**
 > Run seed files.
 
-**--env** _environment_
-> Target environment.
+**migrate:up** [_filename_]
+> Run the next pending migration (or a named one).
 
-**--knexfile** _path_
-> Specify knexfile path.
+**migrate:down** [_filename_]
+> Roll back the last completed migration (or a named one).
+
+**migrate:list**
+> List completed and pending migrations.
+
+**migrate:unlock**
+> Forcibly release the migration lock (use after a crashed run).
+
+**--env** _ENVIRONMENT_
+> Pick the section of **knexfile** to use (default: _development_, or **NODE_ENV**).
+
+**--knexfile** _PATH_
+> Specify a custom knexfile path.
+
+**--client** _DIALECT_
+> Override the database client dialect.
+
+**--debug**
+> Print SQL statements as they execute.
 
 # DESCRIPTION
 

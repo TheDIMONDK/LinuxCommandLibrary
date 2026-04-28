@@ -55,6 +55,12 @@ Brokers can be deployed in **single-instance** mode for development or **active/
 **describe-broker**
 > Get broker configuration, status, and endpoints
 
+**describe-broker-engine-types**
+> List supported ActiveMQ and RabbitMQ engine versions
+
+**describe-broker-instance-options**
+> List broker instance type options for a given engine and storage type
+
 **list-brokers**
 > List all brokers in the account
 
@@ -64,20 +70,32 @@ Brokers can be deployed in **single-instance** mode for development or **active/
 **update-broker**
 > Modify broker configuration and maintenance settings
 
+**promote**
+> Promote a data replication replica broker to be the primary
+
 **create-configuration**
 > Create a broker configuration (ActiveMQ XML or RabbitMQ Cuttlefish)
 
 **describe-configuration**
 > Get details of a configuration
 
+**describe-configuration-revision**
+> Get a specific configuration revision
+
 **list-configurations**
 > List all configurations
+
+**list-configuration-revisions**
+> List revisions of a configuration
 
 **update-configuration**
 > Update a configuration with a new revision
 
 **create-user**
 > Create a new ActiveMQ user on a broker
+
+**update-user**
+> Update an existing ActiveMQ user (groups, password, console access)
 
 **delete-user**
 > Delete an ActiveMQ user
@@ -87,6 +105,9 @@ Brokers can be deployed in **single-instance** mode for development or **active/
 
 **describe-user**
 > Get details of an ActiveMQ user
+
+**create-tags** / **delete-tags** / **list-tags**
+> Manage resource tags on brokers and configurations
 
 # CAVEATS
 

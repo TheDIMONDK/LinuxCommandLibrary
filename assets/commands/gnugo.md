@@ -20,6 +20,14 @@ play the game of Go against the computer
 
 ```gnugo --mode ascii```
 
+**Replay an SGF game file**
+
+```gnugo -l [game.sgf] --mode ascii```
+
+**Score a finished game**
+
+```gnugo -l [game.sgf] --score finish```
+
 # SYNOPSIS
 
 **gnugo** [_options_]
@@ -44,11 +52,23 @@ play the game of Go against the computer
 **--komi** _N_
 > Set komi (compensation points, default: 5.5).
 
-**-l** _FILE_
-> Load SGF game file.
+**-l**, **--infile** _FILE_
+> Load an SGF game file for analysis or replay.
 
-**-o** _FILE_
-> Save game to SGF file.
+**-L**, **--until** _MOVE_
+> Stop loading the SGF file just before the specified move is played.
+
+**-o**, **--outfile** _FILE_
+> Save the game to an SGF file.
+
+**--score** _MODE_
+> Estimate or finalize the score of a loaded game (_estimate_, _finish_, _aftermath_).
+
+**--printboard**
+> Print the board after each move.
+
+**--quiet**
+> Suppress informational messages.
 
 # PREVIEW
 

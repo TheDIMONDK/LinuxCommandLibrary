@@ -27,28 +27,13 @@ detects edges in a PGM grayscale image using the Sobel edge detection algorithm
 
 # DESCRIPTION
 
-**pgmedge** detects edges in a PGM grayscale image using the Sobel edge detection algorithm. Output is a PGM where bright pixels indicate edges.
+**pgmedge** detects edges in a PGM grayscale image using the Sobel edge detection algorithm. Output is a PGM where bright pixels indicate strong edges.
 
-# Basic edge detection
-pgmedge photo.pgm > edges.pgm
-
-# From JPEG
-jpegtopnm photo.jpg | ppmtopgm | pgmedge > edges.pgm
-
-# Complete pipeline
-jpegtopnm photo.jpg | ppmtopgm | pgmedge | pnmtopng > edges.png
-```
-
-# ALGORITHM
-
-Uses Sobel operator:
-- Computes horizontal and vertical gradients
-- Combines to detect edges
-- Brighter output = stronger edge
+The algorithm computes the horizontal and vertical image gradients using Sobel kernels and combines them, producing a single intensity per pixel proportional to the local gradient magnitude.
 
 # CAVEATS
 
-Input must be grayscale PGM. For color images, convert first with ppmtopgm. Consider pamedge for more options.
+Input must be a grayscale PGM. Convert color images with **ppmtopgm** first. **pgmedge** is the legacy tool — **pamedge** offers more options including thresholding and direction output.
 
 # HISTORY
 

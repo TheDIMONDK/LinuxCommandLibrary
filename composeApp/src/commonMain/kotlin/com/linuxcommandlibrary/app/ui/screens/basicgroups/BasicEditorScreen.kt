@@ -24,7 +24,6 @@ import com.linuxcommandlibrary.app.ui.composables.SectionTitle
 import com.linuxcommandlibrary.app.ui.composables.TipSectionContent
 import com.linuxcommandlibrary.app.ui.composables.WithScrollbar
 import com.linuxcommandlibrary.shared.BasicGroup
-import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun BasicEditorScreen(
@@ -43,7 +42,7 @@ fun BasicEditorScreen(
 
 @Composable
 fun BasicEditorContent(
-    groups: ImmutableList<BasicGroup>,
+    groups: List<BasicGroup>,
     showTitles: Boolean,
     onNavigate: (NavEvent) -> Unit,
 ) {

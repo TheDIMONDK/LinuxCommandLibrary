@@ -12,9 +12,9 @@ distributed search and analytics engine
 
 ```elasticsearch -Epath.conf=[/etc/elasticsearch]```
 
-**Start in foreground**
+**Start as a background daemon**
 
-```elasticsearch -d```
+```elasticsearch -d -p [/var/run/elasticsearch.pid]```
 
 **Check cluster health**
 
@@ -82,4 +82,4 @@ Elasticsearch was created by **Shay Banon** and first released in **2010**. It g
 
 # SEE ALSO
 
-[kibana](/man/kibana)(1), [logstash](/man/logstash)(1), [curl](/man/curl)(1)
+[opensearch](/man/opensearch)(1), [logstash](/man/logstash)(1), [curl](/man/curl)(1)

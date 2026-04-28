@@ -38,20 +38,11 @@ converts PDF files to Scalable Vector Graphics format
 
 **pdf2svg** converts PDF files to Scalable Vector Graphics (SVG) format. It preserves vector graphics, text, and formatting, making the output suitable for web use and editing.
 
-Uses Poppler and Cairo libraries for high-quality conversion.
-# Convert first page
-pdf2svg document.pdf page1.svg
-
-# Convert page 3
-pdf2svg document.pdf page3.svg 3
-
-# Convert all pages (output_1.svg, output_2.svg, ...)
-pdf2svg document.pdf page_%d.svg all
-```
+The tool uses **Poppler** for PDF parsing and **Cairo** for SVG rendering. To convert every page in a single run, use **all** as the page argument and include the **%d** placeholder in the output filename — pdf2svg substitutes the page number at write time (e.g. `pdf2svg book.pdf page_%d.svg all` produces `page_1.svg`, `page_2.svg`, …).
 
 # CAVEATS
 
-One page per SVG file. Complex PDFs may produce large SVGs. Fonts may be converted to paths.
+One page per SVG file (no multi-page SVG output). Complex PDFs may produce very large SVGs. Fonts are typically converted to outline paths, which preserves rendering fidelity but loses selectable text.
 
 # HISTORY
 

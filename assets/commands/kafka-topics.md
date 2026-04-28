@@ -89,4 +89,4 @@ Partitions can only be increased, not decreased. Replication factor limited by b
 
 # SEE ALSO
 
-[kafka](/man/kafka)(1), [kafka-console-producer](/man/kafka-console-producer)(1), [kafkacat](/man/kafkacat)(1)
+[kafka](/man/kafka)(1), [kafkacat](/man/kafkacat)(1)

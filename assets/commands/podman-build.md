@@ -70,6 +70,27 @@ _CONTEXT_
 **--label** _LABEL_
 > Add a label to the image in KEY=value format.
 
+**-v**, **--volume** _SRC:DST[:OPT]_
+> Bind-mount a host path into containers during RUN instructions (not persisted in the image).
+
+**--network** _MODE_
+> Configure the network mode for RUN instructions (e.g., _host_, _none_, _bridge_).
+
+**--secret** _ID=src=PATH_
+> Pass a secret file or environment variable for use during RUN, not stored in the image.
+
+**--mount** _TYPE,...,_
+> Attach a filesystem mount (e.g., **type=cache** or **type=secret**) to RUN commands.
+
+**--env** _KEY=VAL_
+> Set an environment variable on the resulting image.
+
+**-m**, **--memory** _LIMIT_
+> Limit memory available to RUN containers during the build.
+
+**--security-opt** _OPTION_
+> Apply a security option (SELinux label, AppArmor profile, seccomp profile).
+
 # DESCRIPTION
 
 **podman build** creates container images from a Containerfile (or Dockerfile) in the specified build context directory. It is compatible with Docker build syntax and supports multi-stage builds, build arguments, and layer caching.

@@ -14,13 +14,13 @@ Restore file timestamps from commit history
 
 # DESCRIPTION
 
-**git utimes** updates file modification times to match their last commit time. Git does not preserve file timestamps during checkout, so this command restores them from commit history.
+**git utimes** sets each tracked file's mtime to the timestamp of the last commit that modified it. Git intentionally stores no timestamps in the index — every checkout writes files with the time of the operation — and this command reverses that for tooling that depends on file dates (Make, find, sitemap generators, archive tools).
 
-The command is useful for build systems that rely on timestamps or when file dates matter for deployment or archival purposes.
+The command walks all tracked paths in the working tree and runs **touch -t** with the matching commit time, so subsequent **make**-style "modified since" comparisons match the commit history rather than the moment the repo was cloned.
 
 # CAVEATS
 
-Part of git-extras package. Only affects tracked files. May affect build systems.
+Part of **git-extras**. Affects only tracked files; ignored and untracked paths keep their current mtime. **Will invalidate any incremental build cache** that fingerprints by mtime — re-run after each rebuild rather than once per workday. Submodule contents are not touched.
 
 # HISTORY
 

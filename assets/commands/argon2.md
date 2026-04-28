@@ -16,13 +16,17 @@ Hash with **custom parameters**
 
 ```echo -n "password" | argon2 [salt] -t [3] -m [16] -p [4] -e```
 
-**Verify** a password
+**Output raw bytes** instead of encoded form
 
-```echo -n "password" | argon2 [salt] -v```
+```echo -n "password" | argon2 [salt] -r```
+
+**Pin to Argon2 version 13** (current standard)
+
+```echo -n "password" | argon2 [salt] -v [13] -e```
 
 # SYNOPSIS
 
-**argon2** _salt_ [_-d_|_-i_|_-id_] [_-t iterations_] [_-m memory_] [_-p parallelism_] [_-l length_] [_-e_|_-r_]
+**argon2** _salt_ [_-d_|_-i_|_-id_] [_-t iterations_] [_-m memory_] [_-p parallelism_] [_-l length_] [_-e_|_-r_] [_-v_ _10|13_]
 
 # DESCRIPTION
 
@@ -33,38 +37,41 @@ The tool supports Argon2d (data-dependent), Argon2i (data-independent), and Argo
 # PARAMETERS
 
 **-d**
-> Use Argon2d (faster, GPU-resistant)
+> Use Argon2d (data-dependent, GPU-resistant). Default is Argon2i.
 
 **-i**
-> Use Argon2i (side-channel resistant)
+> Use Argon2i (data-independent, side-channel resistant). This is the default if no variant flag is given.
 
 **-id**
-> Use Argon2id (recommended, hybrid)
+> Use Argon2id (hybrid; recommended for password hashing).
 
-**-t** _n_
-> Time cost (iterations)
+**-t** _N_
+> Time cost (iterations). Default: _3_.
 
-**-m** _n_
-> Memory cost (2^n KiB)
+**-m** _N_
+> Memory cost expressed as 2^_N_ KiB. Default: _12_ (4 MiB).
 
-**-p** _n_
-> Parallelism (threads)
+**-p** _N_
+> Parallelism (threads). Default: _1_.
 
-**-l** _n_
-> Output length in bytes
+**-l** _N_
+> Output hash length in bytes. Default: _32_.
 
 **-e**
-> Output encoded hash
+> Print only the encoded hash (PHC string format).
 
 **-r**
-> Output raw hash bytes
+> Print only the raw hash bytes.
 
-**-v**
-> Verbose output
+**-v** _10|13_
+> Argon2 algorithm version. Default: _13_.
+
+**-h**
+> Display tool usage and exit.
 
 # CAVEATS
 
-Salt must be provided and should be random. Higher memory/time costs improve security but increase computation time. Argon2id is recommended for most uses.
+Salt must be provided as a positional argument and should be at least 8 random bytes. Higher memory/time costs improve security but increase computation time. Argon2id is recommended for password hashing. The CLI hashes only — there is no built-in verification mode; verify hashes from a library that understands the PHC-encoded output.
 
 # HISTORY
 

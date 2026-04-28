@@ -52,7 +52,16 @@ _COMMAND_
 > Show outdated packages.
 
 **deps**
-> Show dependency tree.
+> Show the dependency tree.
+
+**publish**
+> Publish the package to **pub.dev**.
+
+**downgrade**
+> Downgrade dependencies to the lowest versions allowed by **pubspec.yaml**.
+
+**cache**
+> Inspect, repair, or clean the local pub package cache.
 
 **--help**
 > Display help information.
@@ -75,7 +84,7 @@ flutter pub enables code reuse through thousands of community packages for netwo
 
 # CAVEATS
 
-Version conflicts may require manual resolution. Some packages are platform-specific. Large dependency trees slow first build.
+Version conflicts may require manual resolution. Some packages are platform-specific. Large dependency trees slow first build. **flutter pub run** is deprecated for executable scripts — prefer **dart run** (or **flutter pub run** only when the executable depends on the Flutter SDK).
 
 # HISTORY
 

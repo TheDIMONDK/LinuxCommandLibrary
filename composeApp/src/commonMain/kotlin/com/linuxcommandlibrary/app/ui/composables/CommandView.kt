@@ -33,7 +33,7 @@ import org.koin.compose.koinInject
 @Composable
 fun CommandView(
     command: String,
-    elements: ImmutableList<CommandElement>,
+    elements: List<CommandElement>,
     onNavigate: (NavEvent) -> Unit = {},
     verticalPadding: Dp = 6.dp,
     searchText: String = "",

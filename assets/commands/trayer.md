@@ -35,28 +35,58 @@ Set icon **spacing**
 # PARAMETERS
 
 **--edge** _POSITION_
-> Position panel at left, right, top, or bottom
-
-**--width** _N_
-> Panel width (pixels or percent)
-
-**--height** _N_
-> Panel height in pixels
-
-**--widthtype** _TYPE_
-> Width unit: pixel or percent
+> Position panel at _left_, _right_, _top_, _bottom_, or _none_ (default: _bottom_)
 
 **--align** _DIRECTION_
-> Align panel: left, center, or right
+> Align icons: _left_, _center_, _right_, or _none_ (default: _center_)
+
+**--widthtype** _TYPE_
+> Width interpretation: _request_, _pixel_, _percent_, or _none_ (default: _percent_)
+
+**--width** _N_
+> Panel width as a number, interpreted per **--widthtype** (default: _100_)
+
+**--heighttype** _TYPE_
+> Height interpretation: _request_, _pixel_, _percent_, or _none_ (default: _pixel_)
+
+**--height** _N_
+> Panel height value (default: _26_)
+
+**--margin** _N_
+> Margin from the screen edge in pixels (default: _0_)
+
+**--distance** _N_
+> Distance between trayer's window and screen edge in pixels (default: _0_)
+
+**--distancefrom** _EDGE_
+> Edge to measure **--distance** from: _top_, _bottom_, _left_, _right_ (default: _top_)
+
+**--padding** _N_
+> Extra pixel spacing between frame and icons (default: _0_)
 
 **--iconspacing** _N_
 > Spacing between icons in pixels
 
+**--monitor** _N_
+> Target monitor by index (0..N) or _primary_ (default: _0_)
+
 **--transparent** _BOOL_
-> Enable transparency
+> Enable transparency: _true_ or _false_ (default: _false_)
 
 **--alpha** _N_
-> Transparency level (0-255)
+> Transparency level (0 = opaque, 255 = fully transparent; default: _127_)
+
+**--tint** _COLOR_
+> Background tint as a hex value, e.g. _0xFFFFFFFF_
+
+**--expand** _BOOL_
+> Allow trayer to expand to use extra space (default: _true_)
+
+**--SetDockType** _BOOL_
+> Identify panel window as a dock type window (default: _true_)
+
+**--SetPartialStrut** _BOOL_
+> Reserve panel space so other windows do not overlap it (default: _false_)
 
 # DESCRIPTION
 

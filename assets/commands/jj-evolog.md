@@ -8,9 +8,9 @@ shows the evolution history of a change
 
 ```jj evolog```
 
-**Evolog for specific revision**
+**Evolog for specific revision(s)**
 
-```jj evolog -r [rev]```
+```jj evolog -r [revset]```
 
 **Show with diff**
 
@@ -20,20 +20,49 @@ shows the evolution history of a change
 
 ```jj evolog -n [10]```
 
+**Flat list (no graph)**
+
+```jj evolog --no-graph```
+
+**Show oldest entries first**
+
+```jj evolog --reversed```
+
 # SYNOPSIS
 
 **jj evolog** [_options_]
 
 # PARAMETERS
 
-**-r** _REV_
-> Revision to show evolution for.
+**-r**, **--revisions** _REVSETS_
+> Follow evolution of these revisions (default: _@_, the working-copy commit).
+
+**-n**, **--limit** _LIMIT_
+> Limit the number of revisions to show.
+
+**--reversed**
+> Show revisions in opposite order (older first).
+
+**-G**, **--no-graph**
+> Hide the ASCII graph and show a flat list of revisions.
+
+**-T**, **--template** _TEMPLATE_
+> Render output using a custom template expression.
 
 **-p**, **--patch**
-> Show diff for each version.
+> Show a diff against the previous version of each change.
 
-**-n** _LIMIT_
-> Number of entries to show.
+**-s**, **--summary**
+> For each path, show only whether it was modified, added, or deleted.
+
+**--stat**
+> Show a histogram of the changes per file.
+
+**--git**
+> Format diffs in Git-compatible form.
+
+**--name-only**
+> Show only path names of changed files.
 
 **--help**
 > Display help information.

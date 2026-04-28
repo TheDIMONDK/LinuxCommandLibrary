@@ -16,9 +16,9 @@ captures screenshots of websites at specified viewport sizes
 
 ```pageres [https://example.com] [1024x768] [1920x1080]```
 
-**Capture full page**
+**Crop to viewport** (default is full page)
 
-```pageres [https://example.com] --crop=false```
+```pageres [https://example.com] [1024x768] --crop```
 
 **Set output filename**
 
@@ -31,6 +31,14 @@ captures screenshots of websites at specified viewport sizes
 **Set output directory**
 
 ```pageres [https://example.com] -d [./screenshots]```
+
+**Capture a specific element**
+
+```pageres [https://example.com] --selector=[.header]```
+
+**Hide an element before capture**
+
+```pageres [https://example.com] --hide=[.cookie-banner]```
 
 # SYNOPSIS
 
@@ -47,29 +55,56 @@ captures screenshots of websites at specified viewport sizes
 **--delay** _SECONDS_
 > Delay before screenshot.
 
-**--crop**
-> Crop to viewport size.
+**-c**, **--crop**
+> Crop image to the specified viewport height (default captures the full scrolling page).
 
 **--overwrite**
 > Overwrite existing files.
 
 **--format** _FORMAT_
-> Image format (png/jpg).
+> Image format: _png_ (default) or _jpg_.
 
 **--scale** _FACTOR_
-> Scale factor.
+> Pixel-density scale multiplier.
+
+**--selector** _SELECTOR_
+> Capture only the DOM element matching the CSS selector.
+
+**--hide** _SELECTOR_
+> Hide elements matching the selector before capture (repeatable).
+
+**--clickElement** _SELECTOR_
+> Click the matched element before capture.
 
 **--css** _CSS_
-> Custom CSS.
+> Inject custom CSS before capture.
 
 **--cookie** _COOKIE_
-> Cookie string.
+> Cookie string (repeatable).
 
 **--header** _HEADER_
-> HTTP header.
+> HTTP header (repeatable).
+
+**--username** _USER_
+> HTTP basic auth username.
+
+**--password** _PASS_
+> HTTP basic auth password.
 
 **--user-agent** _UA_
 > User agent string.
+
+**--transparent**
+> Use a transparent background instead of white.
+
+**--darkMode**
+> Emulate the user's dark color scheme preference.
+
+**--timeout** _SECONDS_
+> Request timeout in seconds.
+
+**-v**, **--verbose**
+> Print detailed error output.
 
 # DESCRIPTION
 

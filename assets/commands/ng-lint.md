@@ -38,9 +38,21 @@ runs linting on Angular project source code
 **--silent**
 > Suppress output.
 
+**--cache**
+> Reuse the lint cache to skip files unchanged since the last run.
+
+**--max-warnings** _N_
+> Fail (exit code 1) if more than _N_ warnings are reported.
+
 # DESCRIPTION
 
-**ng lint** runs linting on Angular project source code. Uses ESLint by default in modern Angular versions. Checks code style and potential errors. Part of Angular CLI.
+**ng lint** runs the configured linter on the Angular workspace. Since Angular 12, the default linter is **ESLint** (via the **@angular-eslint** plugin); earlier versions used **TSLint**, which is deprecated.
+
+The command honours the **lint** target defined in **angular.json**, so per-project overrides (custom rule sets, tsconfig variants, file globs) are picked up automatically. Running without a project name lints every project that has a **lint** target.
+
+# CAVEATS
+
+Requires a configured lint target in **angular.json** (created by **ng add @angular-eslint/schematics** when migrating from TSLint). **--fix** rewrites source files in place; commit or stash beforehand. **--force** still allows the build pipeline to continue but does not silence the report.
 
 # SEE ALSO
 

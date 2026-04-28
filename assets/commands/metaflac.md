@@ -57,10 +57,25 @@ command-line FLAC metadata editor
 > Remove all tags.
 
 **--export-picture-to** _file_
-> Export artwork.
+> Export the embedded picture (cover art) to file.
 
 **--import-picture-from** _file_
-> Import artwork.
+> Import a picture into the file (PNG/JPEG; specification syntax allows _TYPE\|MIME\|DESC\|WIDTHxHEIGHTxDEPTH/COLORS\|FILE_).
+
+**--show-md5sum**
+> Print the unencoded MD5 sum of the audio data.
+
+**--show-min-blocksize** / **--show-max-blocksize** / **--show-sample-rate** / **--show-channels** / **--show-bps** / **--show-total-samples**
+> Print individual STREAMINFO fields useful for scripting.
+
+**--add-replay-gain**
+> Compute and add ReplayGain tags for one or more files (treated as one album when multiple files are passed).
+
+**--remove-replay-gain**
+> Remove ReplayGain tags.
+
+**--block-type** / **--except-block-type** _types_
+> Restrict subsequent operations to specific metadata block types (e.g. _VORBIS\_COMMENT_, _PICTURE_, _SEEKTABLE_).
 
 # DESCRIPTION
 

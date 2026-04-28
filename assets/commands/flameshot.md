@@ -99,4 +99,4 @@ Flameshot was created by **lupoDharkael** and first released in **2017**. It was
 
 # SEE ALSO
 
-[gnome-screenshot](/man/gnome-screenshot)(1), [scrot](/man/scrot)(1), [maim](/man/maim)(1), [spectacle](/man/spectacle)(1), [shutter](/man/shutter)(1)
+[gnome-screenshot](/man/gnome-screenshot)(1), [scrot](/man/scrot)(1), [maim](/man/maim)(1), [spectacle](/man/spectacle)(1)

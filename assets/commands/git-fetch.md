@@ -59,6 +59,27 @@ Download objects and refs from remote repositories
 **--unshallow**
 > Convert shallow to full.
 
+**-f**, **--force**
+> Allow non-fast-forward updates of remote-tracking branches.
+
+**--no-tags**
+> Do not download any tags (overrides remote.<name>.tagOpt).
+
+**-t**, **--tags**
+> Fetch all tags from the remote, in addition to whatever else would be fetched.
+
+**--update-shallow**
+> Accept refs that update **.git/shallow**, deepening the shallow clone.
+
+**--filter** _SPEC_
+> Partial-clone filter, e.g. `blob:none` (omit blobs) or `tree:0` (commits only).
+
+**--recurse-submodules** [_=on-demand_|_yes_|_no_]
+> Control submodule fetching behavior.
+
+**-q**, **--quiet** / **-v**, **--verbose**
+> Suppress / increase progress output.
+
 # DESCRIPTION
 
 **git fetch** retrieves commits, files, and references from a remote repository, updating your local repository's knowledge of remote branches without modifying your working directory or current branch. This makes it a safe operation for staying synchronized with remote changes.

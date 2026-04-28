@@ -76,4 +76,4 @@ dh was introduced in **debhelper v7** (2008) by **Joey Hess** to simplify Debian
 
 # SEE ALSO
 
-[debhelper](/man/debhelper)(7), [dpkg-buildpackage](/man/dpkg-buildpackage)(1), [dh_make](/man/dh_make)(8)
+[debhelper](/man/debhelper)(7), [dpkg-buildpackage](/man/dpkg-buildpackage)(1), [lintian](/man/lintian)(1)

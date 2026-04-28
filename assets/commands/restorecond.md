@@ -65,7 +65,7 @@ The daemon reads its configuration from /etc/selinux/restorecond.conf, which lis
 
 # CAVEATS
 
-Requires SELinux to be enabled in enforcing or permissive mode. Must be run as root. Only watches paths specified in the configuration file. Uses inotify, so kernel must have inotify support compiled in.
+Requires SELinux to be enabled in enforcing or permissive mode. Must be run as root for the system-wide configuration. Only watches paths explicitly listed in the configuration file (no glob expansion). On modern systemd-based distros **restorecond** is largely deprecated in favor of **systemd file restore** rules and **restorecon -R** during package installation; check whether your distro still ships it before relying on the daemon.
 
 # HISTORY
 

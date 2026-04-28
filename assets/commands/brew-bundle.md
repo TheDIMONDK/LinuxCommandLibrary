@@ -106,4 +106,4 @@ Mac App Store packages (mas) require the mas CLI and being signed into the App S
 
 # SEE ALSO
 
-[brew](/man/brew)(1), [brew-cask](/man/brew-cask)(1), [mas](/man/mas)(1)
+[brew](/man/brew)(1), [brew-cask](/man/brew-cask)(1)

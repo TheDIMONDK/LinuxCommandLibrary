@@ -1,0 +1,47 @@
+package com.linuxcommandlibrary.app.ui.screens.basicgroups
+
+import com.linuxcommandlibrary.app.data.BasicsRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+
+class BasicGroupsViewModel(
+    categoryId: String,
+    basicsRepository: BasicsRepository,
+    scope: CoroutineScope,
+) {
+    private val _uiState = MutableStateFlow(BasicGroupsUiState())
+    val uiState = _uiState.asStateFlow()
+
+    private var loadJob: Job? = null
+
+    init {
+        loadJob = scope.launch(Dispatchers.Default) {
+            val (groups, commandsMap) = basicsRepository.getGroupsAndCommands(categoryId)
+            _uiState.update {
+                it.copy(
+                    basicGroups = groups,
+                    commandsByGroupId = commandsMap,
+                )
+            }
+        }
+    }
+
+    fun cancel() {
+        loadJob?.cancel()
+        loadJob = null
+    }
+
+    fun toggleCollapse(id: Long) {
+        _uiState.update { currentState ->
+            val newMap = currentState.collapsedMap.toMutableMap()
+            val currentValue = currentState.collapsedMap[id] ?: true
+            newMap[id] = !currentValue
+            currentState.copy(collapsedMap = newMap.toMap())
+        }
+    }
+}

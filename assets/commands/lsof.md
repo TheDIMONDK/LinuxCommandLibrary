@@ -32,6 +32,18 @@ lists open files
 
 ```lsof [/path/to/file]```
 
+**Find unlinked-but-open files** (useful when disk is full)
+
+```sudo lsof +L1```
+
+**Get only PIDs** for piping to kill
+
+```lsof -t -i :[port]```
+
+**Watch a connection** every 5 seconds
+
+```lsof -i :[port] -r [5]```
+
 # SYNOPSIS
 
 **lsof** [_options_] [_files_]
@@ -54,7 +66,25 @@ _FILES_
 > Files in directory.
 
 **-c** _COMMAND_
-> Files opened by command.
+> Files opened by processes whose command name starts with _COMMAND_.
+
+**-n**
+> Inhibit conversion of network numbers to host names (faster).
+
+**-P**
+> Inhibit conversion of port numbers to service names.
+
+**-t**
+> Terse output: list PIDs only (useful for piping to **kill**).
+
+**-F** _FIELDS_
+> Field-formatted output for machine parsing (e.g., **-Fpcu** for PID, command, user).
+
+**-r** [_seconds_]
+> Repeat mode: re-list every _seconds_ (default 15) until interrupted.
+
+**+L1**
+> Show only files with link count less than 1 (i.e. unlinked but still open — useful for finding "deleted but open" files filling a disk).
 
 **--help**
 > Display help information.
@@ -67,7 +97,7 @@ This makes lsof an essential troubleshooting tool for a wide range of scenarios.
 
 # CAVEATS
 
-Requires root for all files. Output can be verbose. Performance impact on large systems.
+Without root, **lsof** only sees files opened by your own processes. Output can be very long; combine with **-c**, **-u**, or **-i** to filter. **+D** descends recursively and may be slow on large trees — prefer **+d** for non-recursive listing.
 
 # HISTORY
 

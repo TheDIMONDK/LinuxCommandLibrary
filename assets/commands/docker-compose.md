@@ -199,4 +199,4 @@ Not for production orchestration (use Kubernetes). File format versions matter. 
 
 # SEE ALSO
 
-[docker](/man/docker)(1), [kubernetes](/man/kubernetes)(1), [podman-compose](/man/podman-compose)(1)
+[docker](/man/docker)(1), [kubectl](/man/kubectl)(1), [podman-compose](/man/podman-compose)(1)

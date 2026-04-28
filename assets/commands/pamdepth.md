@@ -4,17 +4,21 @@ changes image bit depth
 
 # TLDR
 
-**Change bit depth**
+**Reduce to 8-bit** (maxval 255)
 
-```pamdepth [8] [input.pam] > [output.pam]```
+```pamdepth [255] [input.pam] > [output.pam]```
 
-**Convert to 16-bit**
+**Promote to 16-bit** (maxval 65535)
 
-```pamdepth 65535 [input.pam] > [output.pam]```
+```pamdepth [65535] [input.pam] > [output.pam]```
 
-**Convert to 1-bit**
+**Reduce to 1-bit** (black-and-white)
 
-```pamdepth 1 [input.pam] > [output.pam]```
+```pamdepth [1] [input.pam] > [output.pam]```
+
+**Read from stdin via pipe**
+
+```pnmtopam [input.ppm] | pamdepth [255] > [output.pam]```
 
 # SYNOPSIS
 
@@ -23,20 +27,20 @@ changes image bit depth
 # PARAMETERS
 
 _MAXVAL_
-> Maximum pixel value (determines bit depth).
+> New maxval (1–65535). Each sample is rescaled by the ratio _new\_maxval / old\_maxval_; the resulting bit depth is the smallest power of two that holds _MAXVAL_ (e.g. _255_ → 8-bit, _65535_ → 16-bit).
 
 _FILE_
-> Input PAM/PNM file.
+> Input PAM, PPM, PGM, or PBM image. Defaults to standard input when omitted.
 
 # DESCRIPTION
 
-**pamdepth** changes image bit depth. Rescales pixel values.
+**pamdepth** rescales the maxval (per-sample resolution) of a Netpbm/PAM image. Increasing the maxval is lossless; decreasing it loses precision but never changes the image's tuple type or width/height.
 
-The tool converts between depths. Part of Netpbm.
+If the input already has the requested maxval, **pamdepth** copies it through unchanged. Use **pamdepth 1** to drop a grayscale image down to bilevel, or **pamdepth 65535** to widen an 8-bit image so subsequent processing avoids quantization.
 
 # CAVEATS
 
-Part of Netpbm. Rescales values. May lose precision.
+Reducing maxval truncates precision. To convert between tuple types (e.g. RGB to grayscale), use **pamtopnm** or related tools, not **pamdepth**.
 
 # HISTORY
 

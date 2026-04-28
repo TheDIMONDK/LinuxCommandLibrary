@@ -34,22 +34,70 @@ _HOST_
 > Target hostname.
 
 **-ssh**
-> SSH connection.
+> Use the SSH protocol.
 
 **-telnet**
-> Telnet connection.
+> Use the Telnet protocol.
 
 **-serial**
-> Serial connection.
+> Open a serial connection.
+
+**-raw**
+> Use raw TCP (no protocol-level processing).
+
+**-rlogin**
+> Use the Rlogin protocol.
+
+**-l** _USER_
+> Specify login username.
+
+**-pw** _PASSWORD_
+> Provide password on the command line (insecure; prefer **-pwfile**).
+
+**-pwfile** _FILE_
+> Read password from the first line of _FILE_.
 
 **-P** _PORT_
 > Port number.
 
 **-i** _KEY_
-> Private key file.
+> Private key file (PPK format).
 
 **-load** _SESSION_
-> Load saved session.
+> Load a saved session by name.
+
+**-X** / **-x**
+> Enable / disable X11 forwarding.
+
+**-A** / **-a**
+> Enable / disable agent forwarding.
+
+**-C**
+> Enable compression.
+
+**-L** _local:host:port_
+> Forward a local port to a remote destination.
+
+**-R** _remote:host:port_
+> Forward a remote port back to the local machine.
+
+**-D** _port_
+> Open a SOCKS dynamic-port-forwarding listener.
+
+**-m** _FILE_
+> Execute the contents of _FILE_ on the remote host instead of an interactive shell.
+
+**-N**
+> Do not start a shell or command (useful for port-forwarding only).
+
+**-nc** _host:port_
+> Make a TCP connection through the SSH server instead of a shell.
+
+**-t** / **-T**
+> Force / suppress pseudo-terminal allocation.
+
+**-agent** / **-noagent**
+> Enable / disable Pageant authentication.
 
 # DESCRIPTION
 
@@ -70,7 +118,7 @@ PuTTY stores connection profiles as saved sessions, allowing quick access to fre
 
 # CAVEATS
 
-Uses PPK key format. Also available on Linux.
+Uses the PPK key format; convert OpenSSH keys with **puttygen**. The **-pw** flag exposes the password to anyone who can read the process list — prefer **-pwfile** or key-based auth. PuTTY is also available on Linux and macOS.
 
 # HISTORY
 

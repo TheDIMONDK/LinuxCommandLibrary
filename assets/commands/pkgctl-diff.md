@@ -40,13 +40,13 @@ Compare package **.BUILDINFO** files
 
 # DESCRIPTION
 
-**pkgctl diff** compares package files using different comparison modes. It can show differences in package contents, metadata, and build information between package versions.
+**pkgctl diff** compares a locally built **.pkg.tar.zst** against the same package as currently published in the official Arch repositories (or against another local package file). It is the standard pre-release sanity check for Arch package maintainers, exposing accidental file moves, dropped binaries, soname bumps, or unintended **.PKGINFO**/**.BUILDINFO** drift.
 
-This is useful for package maintainers to review changes before releasing updates and for verifying reproducible builds.
+Without flags it runs in **--list** mode, which compares the tar manifest. Use **--diffoscope** for byte-level differences (slow but exhaustive), **--pkginfo** for runtime metadata, or **--buildinfo** to verify reproducibility-relevant fields like compiler flags and installed build dependencies.
 
 # CAVEATS
 
-Diffoscope mode requires the diffoscope package to be installed. Large packages may take time to compare.
+**--diffoscope** requires the **diffoscope** package and can be very slow on packages with large compiled artifacts. When passed a bare _pkgname_, **pkgctl diff** downloads the published package from the mirrors, so a working network and configured Pacman mirrorlist are required.
 
 # HISTORY
 

@@ -30,17 +30,17 @@ Remove non-deterministic data for reproducible builds
 
 # PARAMETERS
 
-**--type** _TYPE_
-> File type.
+**-t**, **--type** _TYPE_
+> Force the input to be treated as a particular file format (e.g., _zip_, _jar_, _png_, _gzip_, _ar_, _javadoc_) instead of letting the filename suffix decide.
 
-**--timestamp** _TS_
-> Set timestamp.
+**-T**, **--timestamp** _TS_
+> Replace embedded timestamps with the given Unix epoch value. If unset, **strip-nondeterminism** falls back to the **SOURCE_DATE_EPOCH** environment variable.
 
-**-v**
-> Verbose output.
+**-v**, **--verbose**
+> Print each modification.
 
-**-n**
-> Dry run.
+**-n**, **--dry-run**
+> Show what would change without writing to disk.
 
 **--help**
 > Show help.
@@ -63,4 +63,4 @@ Format-specific. May need type hint. Part of Debian reproducible builds.
 
 # SEE ALSO
 
-[touch](/man/touch)(1), [zip](/man/zip)(1), [ar](/man/ar)(1)
+[touch](/man/touch)(1), [zip](/man/zip)(1), [ar](/man/ar)(1), [diffoscope](/man/diffoscope)(1)

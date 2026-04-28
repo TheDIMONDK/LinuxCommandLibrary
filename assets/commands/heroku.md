@@ -40,6 +40,22 @@ CLI for Heroku platform-as-a-service
 
 ```heroku apps```
 
+**Show release history**
+
+```heroku releases -a [app-name]```
+
+**Rollback to a previous release**
+
+```heroku rollback [v42] -a [app-name]```
+
+**Connect to Postgres**
+
+```heroku pg:psql -a [app-name]```
+
+**Toggle maintenance mode**
+
+```heroku maintenance:on -a [app-name]```
+
 # SYNOPSIS
 
 **heroku** _command_ [_options_]
@@ -73,11 +89,35 @@ _COMMAND_
 **apps**
 > Manage applications.
 
+**releases**
+> Show app release history; **rollback** to revert.
+
+**maintenance**
+> Toggle maintenance mode (**:on** / **:off**).
+
+**pg**
+> Manage Heroku Postgres databases.
+
+**redis**
+> Manage Heroku Redis instances.
+
+**domains**
+> List, add, or remove custom domains.
+
+**certs**
+> Manage SSL/TLS certificates.
+
+**buildpacks**
+> Manage buildpacks for an app.
+
 **-a**, **--app** _APP_
 > Target application name.
 
 **-r**, **--remote** _REMOTE_
 > Git remote of app to use.
+
+**-j**, **--json**
+> Format output as JSON.
 
 **--help**
 > Display help information.

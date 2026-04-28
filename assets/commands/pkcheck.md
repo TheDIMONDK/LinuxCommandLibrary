@@ -22,26 +22,44 @@ Check PolicyKit authorization for actions
 
 # PARAMETERS
 
-**--action-id** _ACTION_
-> PolicyKit action ID.
+**-a**, **--action-id** _ACTION_
+> The polkit action identifier to authorize against (e.g., _org.freedesktop.systemd1.manage-units_).
 
-**--process** _PID_
-> Process ID to check.
+**-p**, **--process** _PID_[,_START-TIME_,_UID_]
+> Authorize the named process. Supplying _start-time_ and _uid_ closes a TOCTOU window where a PID can be reused.
 
-**--user** _USER_
-> User to check.
+**-u**, **--user** _USER_
+> Authorize as a specific user (only callable by **root**).
+
+**-s**, **--system-bus-name** _NAME_
+> Authorize the D-Bus connection identified by _NAME_.
 
 **--allow-user-interaction**
-> Enable authentication dialog.
+> Permit polkit to prompt the user via the registered authentication agent.
+
+**--enable-internal-agent**
+> Use a built-in text-mode agent when no graphical agent is registered (useful in TTY scripts).
+
+**--detail** _KEY_ _VALUE_
+> Pass extra detail key/value pairs to the polkit policy (used by some action rules).
 
 **--help**
 > Display help.
 
 # DESCRIPTION
 
-**pkcheck** queries the PolicyKit (polkit) daemon to determine whether a specific process or user is authorized to perform a given action. It returns an exit code indicating whether the authorization is granted, denied, or requires authentication.
+**pkcheck** queries the polkit daemon to determine whether a specific process, user, or D-Bus connection is authorized to perform a given action. It is the standard programmatic entry point for non-graphical authorization checks.
 
-The tool is primarily used in scripts and system services to check permissions before performing privileged operations. With **--allow-user-interaction**, it can trigger an authentication dialog, prompting the user for credentials when the action requires it.
+# EXIT STATUS
+
+| Code | Meaning |
+| --- | --- |
+| **0** | Authorization granted. |
+| **1** | Not authorized. |
+| **2** | Help shown / invocation error. |
+| **3** | Authentication is required but **--allow-user-interaction** was not given. |
+
+Scripts can branch on these codes to decide whether to escalate via **pkexec** or skip the operation.
 
 # CAVEATS
 

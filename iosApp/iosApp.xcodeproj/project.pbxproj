@@ -12,6 +12,19 @@
 		058557E0273AAF0600C9ED63 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557DF273AAF0600C9ED63 /* Assets.xcassets */; };
 		058557E2273AAF0600C9ED64 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 058557E3273AAF0600C9ED64 /* assets */; };
 		F416129C2F2BECAC0088127B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F416129B2F2BECAC0088127B /* LaunchScreen.storyboard */; };
+		F4FF7502270101010088127D /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = F4FF7501270101010088127C /* Fonts */; };
+		F4FF80020000000000000002 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF80010000000000000001 /* Theme.swift */; };
+		F4FF80060000000000000006 /* CommandsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF80050000000000000005 /* CommandsTabView.swift */; };
+		F4FF80080000000000000008 /* MarkdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF80070000000000000007 /* MarkdownView.swift */; };
+		F4FF800A000000000000000A /* CommandDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF80090000000000000009 /* CommandDetailView.swift */; };
+		F4FF800C000000000000000C /* BasicCategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF800B000000000000000B /* BasicCategoriesView.swift */; };
+		F4FF800E000000000000000E /* BasicGroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF800D000000000000000D /* BasicGroupsView.swift */; };
+		F4FF8010000000000000000F /* TipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF800F000000000000000F /* TipsView.swift */; };
+		F4FF80120000000000000012 /* BasicEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF80110000000000000011 /* BasicEditorView.swift */; };
+		F4FF80140000000000000014 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF80130000000000000013 /* Haptics.swift */; };
+		F4FF80160000000000000016 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF80150000000000000015 /* IconView.swift */; };
+		F4FF80180000000000000018 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF80170000000000000017 /* AppRouter.swift */; };
+		F4FF801A000000000000001A /* DetailPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF80190000000000000019 /* DetailPlaceholder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +35,19 @@
 		058557E3273AAF0600C9ED64 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = ../assets; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F416129B2F2BECAC0088127B /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F4FF7501270101010088127C /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
+		F4FF80010000000000000001 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		F4FF80050000000000000005 /* CommandsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandsTabView.swift; sourceTree = "<group>"; };
+		F4FF80070000000000000007 /* MarkdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownView.swift; sourceTree = "<group>"; };
+		F4FF80090000000000000009 /* CommandDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandDetailView.swift; sourceTree = "<group>"; };
+		F4FF800B000000000000000B /* BasicCategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCategoriesView.swift; sourceTree = "<group>"; };
+		F4FF800D000000000000000D /* BasicGroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicGroupsView.swift; sourceTree = "<group>"; };
+		F4FF800F000000000000000F /* TipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsView.swift; sourceTree = "<group>"; };
+		F4FF80110000000000000011 /* BasicEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicEditorView.swift; sourceTree = "<group>"; };
+		F4FF80130000000000000013 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
+		F4FF80150000000000000015 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
+		F4FF80170000000000000017 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+		F4FF80190000000000000019 /* DetailPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPlaceholder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +69,19 @@
 				058557D7273AAEEB00C9ED63 /* ContentView.swift */,
 				058557DF273AAF0600C9ED63 /* Assets.xcassets */,
 				058557E1273AAF0600C9ED63 /* Info.plist */,
+				F4FF7501270101010088127C /* Fonts */,
+				F4FF80010000000000000001 /* Theme.swift */,
+				F4FF80050000000000000005 /* CommandsTabView.swift */,
+				F4FF80070000000000000007 /* MarkdownView.swift */,
+				F4FF80090000000000000009 /* CommandDetailView.swift */,
+				F4FF800B000000000000000B /* BasicCategoriesView.swift */,
+				F4FF800D000000000000000D /* BasicGroupsView.swift */,
+				F4FF800F000000000000000F /* TipsView.swift */,
+				F4FF80110000000000000011 /* BasicEditorView.swift */,
+				F4FF80130000000000000013 /* Haptics.swift */,
+				F4FF80150000000000000015 /* IconView.swift */,
+				F4FF80170000000000000017 /* AppRouter.swift */,
+				F4FF80190000000000000019 /* DetailPlaceholder.swift */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -128,6 +167,7 @@
 				F416129C2F2BECAC0088127B /* LaunchScreen.storyboard in Resources */,
 				058557E0273AAF0600C9ED63 /* Assets.xcassets in Resources */,
 				058557E2273AAF0600C9ED64 /* assets in Resources */,
+				F4FF7502270101010088127D /* Fonts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,7 +190,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :composeApp:embedAndSignAppleFrameworkForXcode\n";
+			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :viewmodels:embedAndSignAppleFrameworkForXcode\n";
 		};
 		7555FFB6242A651A00829872 /* Run Script - Embed Framework */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -179,6 +219,18 @@
 			files = (
 				058557D8273AAEEB00C9ED63 /* ContentView.swift in Sources */,
 				058557BB273AAA2400C9ED63 /* iOSApp.swift in Sources */,
+				F4FF80020000000000000002 /* Theme.swift in Sources */,
+				F4FF80060000000000000006 /* CommandsTabView.swift in Sources */,
+				F4FF80080000000000000008 /* MarkdownView.swift in Sources */,
+				F4FF800A000000000000000A /* CommandDetailView.swift in Sources */,
+				F4FF800C000000000000000C /* BasicCategoriesView.swift in Sources */,
+				F4FF800E000000000000000E /* BasicGroupsView.swift in Sources */,
+				F4FF8010000000000000000F /* TipsView.swift in Sources */,
+				F4FF80120000000000000012 /* BasicEditorView.swift in Sources */,
+				F4FF80140000000000000014 /* Haptics.swift in Sources */,
+				F4FF80160000000000000016 /* IconView.swift in Sources */,
+				F4FF80180000000000000018 /* AppRouter.swift in Sources */,
+				F4FF801A000000000000001A /* DetailPlaceholder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,7 +288,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -291,7 +343,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

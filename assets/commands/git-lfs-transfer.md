@@ -19,13 +19,13 @@ Low-level LFS transfer protocol
 
 # DESCRIPTION
 
-**git lfs transfer** is a low-level Git LFS protocol helper that handles object transfer between the LFS client and server. It implements the LFS transfer protocol, managing authentication, batch requests, and object upload/download.
+**git lfs transfer** is a low-level Git LFS protocol helper that implements the **pure-SSH transfer protocol** introduced in Git LFS 3.0. When a Git LFS server is reached over **git+ssh://**, the LFS client invokes **git lfs transfer** on the remote shell to negotiate batch requests, exchange OIDs, and stream object content over the SSH channel — bypassing the HTTP-based "ssh-as-auth" flow used by older LFS deployments.
 
-Direct invocation is rare as the command is typically called internally by `git lfs push` and `git lfs pull`. It provides the underlying transfer mechanism that makes LFS file synchronization work.
+Direct invocation is rare; users normally interact with the protocol indirectly through **git lfs push**, **git lfs pull**, **git lfs fetch**, or any operation that materialises LFS objects.
 
 # CAVEATS
 
-Internal command. Usually not called directly. Part of Git LFS transfer protocol.
+Internal helper — invoked by Git LFS over an SSH connection, not by users directly. Requires both client and server to support the pure-SSH transfer protocol (Git LFS ≥ 3.0 on both sides).
 
 # HISTORY
 
@@ -33,4 +33,4 @@ git lfs transfer is part of **Git LFS**, implementing the transfer protocol for 
 
 # SEE ALSO
 
-[git-lfs](/man/git-lfs)(1), [git-lfs-push](/man/git-lfs-push)(1)
+[git-lfs](/man/git-lfs)(1), [git](/man/git)(1)

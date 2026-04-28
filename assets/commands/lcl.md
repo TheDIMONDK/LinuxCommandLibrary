@@ -1,6 +1,6 @@
 # TAGLINE
 
-native CLI application that provides offline access to over **6200 Linux
+native CLI for offline access to thousands of Linux command references
 
 # TLDR
 

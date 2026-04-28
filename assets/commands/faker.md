@@ -66,4 +66,4 @@ Faker originated as a **PHP library** inspired by Perl's Data::Faker. The Python
 
 # SEE ALSO
 
-[python](/man/python)(1), [mimesis](/man/mimesis)(1)
+[python](/man/python)(1), [pip](/man/pip)(1)

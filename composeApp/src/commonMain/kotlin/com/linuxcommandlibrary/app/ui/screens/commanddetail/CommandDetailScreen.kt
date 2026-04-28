@@ -35,7 +35,6 @@ import com.linuxcommandlibrary.app.ui.composables.TipSectionContent
 import com.linuxcommandlibrary.app.ui.composables.WithScrollbar
 import com.linuxcommandlibrary.app.ui.composables.rememberDebouncedClick
 import com.linuxcommandlibrary.shared.TipSectionElement
-import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun CommandDetailScreen(
@@ -92,7 +91,7 @@ private fun CommandDetailContent(
 private fun CommandSectionColumn(
     section: CommandSectionInfo,
     isExpanded: Boolean,
-    seeAlsoCommands: ImmutableList<String>,
+    seeAlsoCommands: List<String>,
     onToggleExpanded: (Long) -> Unit,
     onNavigate: (NavEvent) -> Unit,
 ) {
@@ -126,8 +125,8 @@ private fun CommandSectionColumn(
 
 @Composable
 private fun SeeAlsoSectionContent(
-    parsedContent: ImmutableList<TipSectionElement>,
-    seeAlsoCommands: ImmutableList<String>,
+    parsedContent: List<TipSectionElement>,
+    seeAlsoCommands: List<String>,
     onNavigate: (NavEvent) -> Unit,
 ) {
     if (seeAlsoCommands.isNotEmpty()) {
@@ -157,7 +156,7 @@ private fun SeeAlsoSectionContent(
 
 @Composable
 private fun DefaultSectionContent(
-    parsedContent: ImmutableList<TipSectionElement>,
+    parsedContent: List<TipSectionElement>,
     onNavigate: (NavEvent) -> Unit,
 ) {
     Column(

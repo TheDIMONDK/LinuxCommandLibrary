@@ -44,4 +44,4 @@ Processes are terminated when mprocs exits. Not intended as a replacement for tm
 
 # SEE ALSO
 
-[tmux](/man/tmux)(1), [screen](/man/screen)(1), [concurrently](/man/concurrently)(1)
+[tmux](/man/tmux)(1), [screen](/man/screen)(1), [foreman](/man/foreman)(1)

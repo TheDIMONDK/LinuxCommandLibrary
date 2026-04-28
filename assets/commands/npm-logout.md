@@ -33,13 +33,13 @@ removes authentication token
 
 # DESCRIPTION
 
-**npm logout** removes authentication token. Logs out from npm registry.
+**npm logout** invalidates and removes the authentication token for the configured registry. For tokens issued by **npm login**, the registry is also notified to revoke the token server-side. The local **.npmrc** entry for the registry is then deleted.
 
-The command clears credentials. Affects specified registry or default.
+When the configured auth was a legacy username/password (basic auth), only the local credential is removed — there is nothing to revoke on the server.
 
 # CAVEATS
 
-Removes token from .npmrc. Per-registry logout. Affects publishing.
+Operates on a single registry at a time; pass **--registry** or **--scope** to log out of a non-default registry. Subsequent **npm publish** or **npm install** of private packages will fail until you log in again. Tokens stored manually in **.npmrc** (e.g., `_authToken=...`) without a matching server-side credential will be removed locally but cannot be revoked.
 
 # HISTORY
 

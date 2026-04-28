@@ -31,13 +31,16 @@ schedules files to be added to the repository on the next commit
 # PARAMETERS
 
 **-n**, **--dry-run**
-> Do not perform actions, preview only.
+> Show what would be added without modifying state.
 
-**-I**, **--include** _pattern_
-> Include files matching pattern.
+**-I**, **--include** _PATTERN_
+> Add only files matching the pattern (repeatable).
 
-**-X**, **--exclude** _pattern_
-> Exclude files matching pattern.
+**-X**, **--exclude** _PATTERN_
+> Skip files matching the pattern (repeatable).
+
+**-S**, **--subrepos**
+> Recurse into subrepositories.
 
 # DESCRIPTION
 

@@ -102,4 +102,4 @@ Only works with FAT12, FAT16, and FAT32 filesystems. The device must not be moun
 
 # SEE ALSO
 
-[extlinux](/man/extlinux)(1), [isolinux](/man/isolinux)(1), [grub-install](/man/grub-install)(1), [dd](/man/dd)(1)
+[grub-install](/man/grub-install)(1), [dd](/man/dd)(1), [mkfs.fat](/man/mkfs.fat)(8), [parted](/man/parted)(8)

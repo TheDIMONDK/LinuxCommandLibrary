@@ -27,13 +27,13 @@ Execute and **forward stdin** to guest
 # PARAMETERS
 
 **--synchronous** _0|1_
-> Run synchronously (default) or asynchronously
+> Wait for the command to complete (default _1_). With _0_, **qm guest exec** returns a PID immediately; collect output later with **qm guest exec-status**.
 
 **--timeout** _seconds_
-> Command timeout in seconds
+> Maximum time to wait for synchronous completion (default _30_). Forces an asynchronous run when exceeded.
 
 **--pass-stdin** _0|1_
-> Forward stdin to guest agent
+> Forward the host's stdin to the guest command (default _0_).
 
 # DESCRIPTION
 

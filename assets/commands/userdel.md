@@ -43,7 +43,10 @@ Remove user from **chroot** environment
 > Apply changes in a prefix directory
 
 **-Z, --selinux-user**
-> Remove SELinux user mappings
+> Remove any SELinux user mapping for the user
+
+**--selinux-range**
+> Remove the SELinux MLS range mapping for the user
 
 **-h, --help**
 > Display help message

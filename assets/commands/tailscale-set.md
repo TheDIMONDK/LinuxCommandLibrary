@@ -4,21 +4,25 @@ Configure persistent Tailscale options
 
 # TLDR
 
-**Set accept routes**
+**Accept routes** advertised by other tailnet nodes
 
 ```tailscale set --accept-routes```
 
-**Enable exit node**
+**Advertise this device as an exit node**
 
 ```tailscale set --advertise-exit-node```
 
-**Set hostname**
+**Set the device hostname**
 
 ```tailscale set --hostname [name]```
 
-**Disable key expiry**
+**Allow a non-root user to control tailscaled**
 
-```tailscale set --operator=$USER```
+```tailscale set --operator=[$USER]```
+
+**Route this device's traffic through an exit node**
+
+```tailscale set --exit-node [node-name-or-ip]```
 
 # SYNOPSIS
 
@@ -27,26 +31,44 @@ Configure persistent Tailscale options
 # PARAMETERS
 
 **--accept-routes**
-> Accept subnet routes.
+> Accept subnet routes advertised by other nodes.
+
+**--accept-dns**
+> Accept DNS configuration from the admin console.
+
+**--advertise-routes** _CIDRS_
+> Expose physical subnet routes to the tailnet.
 
 **--advertise-exit-node**
-> Offer as exit node.
+> Offer this node as an exit node.
 
-**--exit-node** _node_
-> Use exit node.
+**--advertise-tags** _TAGS_
+> Apply ACL tags to this device.
 
-**--hostname** _name_
-> Set device hostname.
+**--exit-node** _NODE_
+> Route traffic through the named exit node (empty string clears it).
+
+**--exit-node-allow-lan-access**
+> Allow LAN access while connected to an exit node.
+
+**--hostname** _NAME_
+> Override the device hostname.
 
 **--shields-up**
-> Block incoming connections.
+> Block all incoming connections.
 
 **--ssh**
-> Enable Tailscale SSH.
+> Enable Tailscale SSH on this device.
+
+**--operator** _USER_
+> Allow the named local user to operate **tailscaled** without sudo.
+
+**--auto-update**
+> Enable automatic Tailscale client updates (where supported).
 
 # DESCRIPTION
 
-**tailscale set** configures Tailscale options persistently. Changes settings that survive restarts. Alternative to passing options to tailscale up.
+**tailscale set** changes per-node Tailscale options without disrupting the existing connection. Unlike **tailscale up**, which resets every unspecified flag back to its default, **set** modifies only the flags you pass — making it the safer choice for incremental changes.
 
 # SEE ALSO
 
