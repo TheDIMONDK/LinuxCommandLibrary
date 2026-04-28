@@ -1596,6 +1596,7 @@ dig.md
 dijkstra.md
 dillo.md
 dir.md
+dirac.md
 dirb.md
 dirbuster.md
 dircolors.md
@@ -2786,6 +2787,7 @@ glxgears.md
 glxinfo.md
 gml2gv.md
 gmssl.md
+gn.md
 gnat.md
 gnatmake.md
 gnatprep.md
@@ -3830,6 +3832,7 @@ kwrite.md
 kwriteconfig5.md
 kyanos.md
 kyma.md
+l123.md
 l2ping.md
 labcoat.md
 lambo-new.md
