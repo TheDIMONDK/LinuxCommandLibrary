@@ -41,34 +41,6 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
-
-        // Platform-specific source sets
-        val linuxMain by creating {
-            dependsOn(commonMain.get())
-        }
-        val linuxX64Main by getting {
-            dependsOn(linuxMain)
-        }
-        val linuxArm64Main by getting {
-            dependsOn(linuxMain)
-        }
-
-        val macosMain by creating {
-            dependsOn(commonMain.get())
-        }
-        val macosX64Main by getting {
-            dependsOn(macosMain)
-        }
-        val macosArm64Main by getting {
-            dependsOn(macosMain)
-        }
-
-        val mingwMain by creating {
-            dependsOn(commonMain.get())
-        }
-        val mingwX64Main by getting {
-            dependsOn(mingwMain)
-        }
     }
 }
 

@@ -21,6 +21,7 @@ kotlin {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
         }
+        withHostTest {}
     }
     jvm("desktop") {
         compilerOptions {
@@ -65,15 +66,6 @@ kotlin {
             dependencies {
             }
         }
-        // Native CLI targets source sets
-        val nativeCliMain by creating {
-            dependsOn(commonMain.get())
-        }
-        val linuxX64Main by getting { dependsOn(nativeCliMain) }
-        val linuxArm64Main by getting { dependsOn(nativeCliMain) }
-        val macosX64Main by getting { dependsOn(nativeCliMain) }
-        val macosArm64Main by getting { dependsOn(nativeCliMain) }
-        val mingwX64Main by getting { dependsOn(nativeCliMain) }
     }
 }
 
