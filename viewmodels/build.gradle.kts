@@ -66,11 +66,11 @@ kotlin {
     }
 }
 
-// Regenerate iOS Asset Catalog imagesets whenever /assets/icons/ changes.
+// Regenerate iOS Asset Catalog imagesets whenever /icons/ changes.
 // Runs scripts/svg_to_imageset.py which builds iosApp/iosApp/Assets.xcassets/Icons/
 val syncIconImageSets by tasks.registering(Exec::class) {
     val scriptFile = rootProject.file("scripts/svg_to_imageset.py")
-    val sourceDir = rootProject.file("assets/icons")
+    val sourceDir = rootProject.file("icons")
     val outputDir = rootProject.file("iosApp/iosApp/Assets.xcassets/Icons")
     inputs.file(scriptFile)
     inputs.dir(sourceDir)
