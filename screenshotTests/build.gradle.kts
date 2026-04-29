@@ -28,9 +28,14 @@ android {
 
 val preparePaparazzi by tasks.registering {
     dependsOn(":composeApp:prepareComposeResourcesTaskForCommonMain")
+    dependsOn(":composeApp:copyNonXmlValueResourcesForCommonMain")
+    dependsOn(":composeApp:convertXmlValueResourcesForCommonMain")
 }
 
-tasks.matching { it.name.startsWith("testDebug") }.configureEach {
+tasks.matching {
+    it.name.startsWith("testDebug") ||
+        (it.name.startsWith("merge") && it.name.endsWith("Assets"))
+}.configureEach {
     dependsOn(preparePaparazzi)
 }
 
