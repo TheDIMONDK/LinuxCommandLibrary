@@ -1,3 +1,19 @@
+## v4.0.0 — 2026-04-29
+
+### Features
+- Native SwiftUI iOS app — full migration from the Compose-based iOS shell
+- New Linux commands added
+- Additional Ctrl+b prefix group keys, separated by command type
+- Bookmark data migrations
+
+### Improvements
+- Modernized Material 3 layouts for phone and large screens
+- Improved overall UI/UX and mobile navigation
+- Faster search performance
+- Better icon sharing logic
+- Simplified actual/expect navigation implementations
+- Upgraded Gradle and fixed warnings
+
 ## v3.7.10 — 2026-04-24
 
 ### Features

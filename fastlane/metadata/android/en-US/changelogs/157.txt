@@ -1,0 +1,6 @@
+Added new Linux commands
+Modernized Material 3 phone and large screen layouts
+Improved mobile navigation and overall UI/UX
+Faster search performance
+Migrated iOS app to native SwiftUI
+Upgraded Gradle and dependencies
