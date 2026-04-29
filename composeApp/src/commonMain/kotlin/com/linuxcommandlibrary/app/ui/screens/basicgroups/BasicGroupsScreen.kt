@@ -1,6 +1,5 @@
 package com.linuxcommandlibrary.app.ui.screens.basicgroups
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -148,7 +147,7 @@ fun BasicGroupColumn(
         )
     }
 
-    AnimatedVisibility(visible = isExpanded) {
+    if (isExpanded) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()

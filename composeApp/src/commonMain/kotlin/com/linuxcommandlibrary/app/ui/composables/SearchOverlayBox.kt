@@ -1,9 +1,5 @@
 package com.linuxcommandlibrary.app.ui.composables
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,11 +21,7 @@ fun SearchOverlayBox(
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         content()
-        AnimatedVisibility(
-            visible = searchState.searchText.isNotEmpty(),
-            enter = fadeIn(animationSpec = tween(300)),
-            exit = fadeOut(animationSpec = tween(durationMillis = 300, delayMillis = 300)),
-        ) {
+        if (searchState.searchText.isNotEmpty()) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()

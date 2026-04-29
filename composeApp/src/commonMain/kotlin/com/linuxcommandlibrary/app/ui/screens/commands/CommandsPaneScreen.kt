@@ -1,7 +1,7 @@
 package com.linuxcommandlibrary.app.ui.screens.commands
 
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -74,8 +74,8 @@ internal fun CommandsPaneScreen(
         scaffoldState = navigator.scaffoldState,
         listPane = {
             AnimatedPane(
-                enterTransition = fadeIn(),
-                exitTransition = fadeOut(),
+                enterTransition = EnterTransition.None,
+                exitTransition = ExitTransition.None,
             ) {
                 CommandsListPane(
                     listViewModel = listViewModel,
@@ -89,8 +89,8 @@ internal fun CommandsPaneScreen(
         },
         detailPane = {
             AnimatedPane(
-                enterTransition = fadeIn(),
-                exitTransition = fadeOut(),
+                enterTransition = EnterTransition.None,
+                exitTransition = ExitTransition.None,
             ) {
                 if (stackTop != null) {
                     TabStackEntryContent(entry = stackTop, onBack = onPopStack, onNavigate = onNavigate)
