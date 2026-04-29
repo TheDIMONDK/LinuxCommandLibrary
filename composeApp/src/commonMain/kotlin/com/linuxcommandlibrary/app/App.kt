@@ -6,10 +6,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -18,15 +20,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationItemColors
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.WindowAdaptiveInfo
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
 import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldDestinationItem
+import androidx.compose.material3.adaptive.layout.calculatePaneScaffoldDirective
 import androidx.compose.material3.adaptive.navigation.BackNavigationBehavior
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteDefaults
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteItem
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
-import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldDefaults
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -53,6 +56,7 @@ import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.window.core.layout.WindowSizeClass
 import com.linuxcommandlibrary.app.data.CommandsRepository
 import com.linuxcommandlibrary.app.platform.AppNavHost
 import com.linuxcommandlibrary.app.platform.rememberOpenAppAction
@@ -135,6 +139,22 @@ fun App(
     }
 }
 
+// Material's default keeps a NavigationBar whenever height is compact (<480 dp), which on a
+// landscape phone (e.g. Pixel 9a, ~873x411 dp) wastes the scarce vertical pixels. Promote to
+// the rail purely on width so landscape phones, foldables, and tablets get the same side nav.
+// Tabletop posture stays as a bottom bar — that surface is meant to be the input area.
+private fun navigationSuiteTypeFor(info: WindowAdaptiveInfo): NavigationSuiteType {
+    val wsc = info.windowSizeClass
+    return when {
+        info.windowPosture.isTabletop -> NavigationSuiteType.NavigationBar
+
+        wsc.isWidthAtLeastBreakpoint(WindowSizeClass.WIDTH_DP_MEDIUM_LOWER_BOUND) ->
+            NavigationSuiteType.NavigationRail
+
+        else -> NavigationSuiteType.NavigationBar
+    }
+}
+
 @OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun LinuxApp(initialDeeplink: String? = null) {
@@ -149,12 +169,23 @@ fun LinuxApp(initialDeeplink: String? = null) {
     val openAppAction = rememberOpenAppAction()
     val scope = rememberCoroutineScope()
 
+    val adaptiveInfo = currentWindowAdaptiveInfo()
+    // Default list pane is 360dp; 320dp gives the detail pane ~40dp more on a typical
+    // landscape phone window without truncating list rows.
+    // Default inter-pane spacer is 24dp at expanded width — tighter at 8dp avoids the wide
+    // dead column between list and detail.
+    val listDetailDirective = calculatePaneScaffoldDirective(adaptiveInfo).copy(
+        defaultPanePreferredWidth = 320.dp,
+        horizontalPartitionSpacerSize = 8.dp,
+    )
+
     // Initialize navigators with the deep-linked detail pane up-front so we don't flash the
     // list pane for one frame before navigating; this also makes the first composition
     // render the final UI, which screenshot tooling depends on.
     val initialCommandName = (deeplinkResult.selection as? InitialSelection.Command)?.name
     val initialBasicId = (deeplinkResult.selection as? InitialSelection.Basics)?.id
     val commandsNavigator = rememberListDetailPaneScaffoldNavigator(
+        scaffoldDirective = listDetailDirective,
         initialDestinationHistory = if (initialCommandName != null) {
             listOf(
                 ThreePaneScaffoldDestinationItem(ListDetailPaneScaffoldRole.List, null),
@@ -165,6 +196,7 @@ fun LinuxApp(initialDeeplink: String? = null) {
         },
     )
     val basicsNavigator = rememberListDetailPaneScaffoldNavigator(
+        scaffoldDirective = listDetailDirective,
         initialDestinationHistory = if (initialBasicId != null) {
             listOf(
                 ThreePaneScaffoldDestinationItem(ListDetailPaneScaffoldRole.List, null),
@@ -206,8 +238,7 @@ fun LinuxApp(initialDeeplink: String? = null) {
     val isOnCommands = currentRoute?.hasRoute<Route.Commands>() ?: (initialRoute is Route.Commands)
     val isOnBasics = currentRoute?.hasRoute<Route.Basics>() ?: (initialRoute is Route.Basics)
 
-    val adaptiveInfo = currentWindowAdaptiveInfo()
-    val layoutType = NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(adaptiveInfo)
+    val layoutType = navigationSuiteTypeFor(adaptiveInfo)
     val isWideLayout = layoutType != NavigationSuiteType.NavigationBar
 
     // First-level detail in the originating tab routes through that tab's navigator
@@ -335,14 +366,25 @@ fun LinuxApp(initialDeeplink: String? = null) {
         searchState.clear()
     }
 
+    // Wide: pad every edge inside safeDrawing so the rail floats with margin and ambientColor
+    // fills the cutout/system-bar regions behind it.
+    // Compact: leave the bottom unpadded so NavigationBar can extend its own navBarBackground
+    // through the gesture-bar inset; only the top status bar needs root-level padding, and it
+    // should blend into the content surface rather than show the rail-only ambientColor.
+    val safeAreaSides = if (isWideLayout) {
+        WindowInsetsSides.Horizontal + WindowInsetsSides.Vertical
+    } else {
+        WindowInsetsSides.Top
+    }
+    val rootBackground = if (isWideLayout) ambientColor else MaterialTheme.colorScheme.surface
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .windowInsetsPadding(WindowInsets.statusBars)
-            .background(ambientColor)
+            .background(rootBackground)
+            .windowInsetsPadding(WindowInsets.safeDrawing.only(safeAreaSides))
             .then(
                 if (isWideLayout) {
-                    Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)
+                    Modifier.padding(start = 4.dp, top = 16.dp, end = 16.dp)
                 } else {
                     Modifier
                 },
@@ -416,7 +458,7 @@ fun LinuxApp(initialDeeplink: String? = null) {
         ) {
             val contentModifier = if (isWideLayout) {
                 Modifier
-                    .padding(start = 16.dp)
+                    .padding(start = 8.dp)
                     .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
             } else {
                 Modifier

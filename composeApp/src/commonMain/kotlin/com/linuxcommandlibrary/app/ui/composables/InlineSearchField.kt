@@ -57,7 +57,7 @@ fun InlineSearchField(
             onValueChange = { searchState.updateText(it) },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .padding(start = 8.dp, top = 8.dp, end = 8.dp)
                 .focusRequester(textFieldFocus),
             shape = RoundedCornerShape(28.dp),
             placeholder = { Text(placeholder) },
