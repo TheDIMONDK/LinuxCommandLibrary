@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "17"
+          java-version: "21"
       - name: Set execution flag for gradlew
         run: chmod +x gradlew
       - name: Setup Android SDK
@@ -54,7 +54,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "17"
+          java-version: "21"
       - name: Set execution flag for gradlew
         run: chmod +x gradlew
       - name: Build Linux CLI binaries
@@ -92,7 +92,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "17"
+          java-version: "21"
       - name: Set execution flag for gradlew
         run: chmod +x gradlew
       - name: Build macOS CLI binaries
@@ -130,7 +130,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "17"
+          java-version: "21"
       - name: Build Windows CLI binary
         run: ./gradlew :cli:linkReleaseExecutableMingwX64 --stacktrace
       - name: Package Windows CLI
@@ -155,7 +155,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "17"
+          java-version: "21"
       - name: Set execution flag for gradlew
         run: chmod +x gradlew
       - name: Build DMG
@@ -176,7 +176,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "17"
+          java-version: "21"
       - name: Build MSI
         run: ./gradlew :desktopApp:packageReleaseMsi --stacktrace
       - name: Upload MSI Artifact
@@ -195,7 +195,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "17"
+          java-version: "21"
       - name: Set execution flag for gradlew
         run: chmod +x gradlew
       - name: Build DEB
@@ -216,7 +216,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "17"
+          java-version: "21"
       - name: Set execution flag for gradlew
         run: chmod +x gradlew
       - name: Install RPM build tools
@@ -239,7 +239,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "17"
+          java-version: "21"
       - name: Set execution flag for gradlew
         run: chmod +x gradlew
       - name: Build application distribution
@@ -266,7 +266,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "17"
+          java-version: "21"
       - name: Set execution flag for gradlew
         run: chmod +x gradlew
       - name: Install AppImage tools
@@ -372,7 +372,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "17"
+          java-version: "21"
       - name: Set execution flag for gradlew
         run: chmod +x gradlew
       - name: Setup Android SDK
