@@ -1,16 +1,24 @@
 package com.linuxcommandlibrary.app.ui.screens.basicgroups
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,13 +26,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.dp
 import com.linuxcommandlibrary.app.NavEvent
 import com.linuxcommandlibrary.app.data.BasicCommand
 import com.linuxcommandlibrary.app.data.BasicGroup
+import com.linuxcommandlibrary.app.ui.AppIcons
 import com.linuxcommandlibrary.app.ui.composables.CommandView
 import com.linuxcommandlibrary.app.ui.composables.WithScrollbar
 import com.linuxcommandlibrary.app.ui.composables.getIconId
@@ -106,31 +117,53 @@ fun BasicGroupColumn(
     onNavigate: (NavEvent) -> Unit = {},
 ) {
     val painter = rememberIconPainter(basicGroup.getIconId())
+    val chevronRotation by animateFloatAsState(targetValue = if (isExpanded) 180f else 0f)
 
-    ListItem(
-        headlineContent = {
-            Text(
-                text = basicGroup.description,
-                maxLines = 3,
-            )
-        },
-        leadingContent = {
-            Icon(
-                painter = painter,
-                contentDescription = null,
-                modifier = Modifier.size(40.dp),
-            )
-        },
+    Row(
         modifier = Modifier
+            .fillMaxWidth()
             .pointerHoverIcon(PointerIcon.Hand)
-            .clickable { onToggleCollapse() },
-    )
-
-    if (isExpanded) {
-        ExpandedGroupContent(
-            commands = commands,
-            onNavigate = onNavigate,
+            .clickable { onToggleCollapse() }
+            .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            painter = painter,
+            contentDescription = null,
+            modifier = Modifier.size(40.dp),
         )
+        Text(
+            text = basicGroup.description,
+            maxLines = 3,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier
+                .weight(1f)
+                .padding(horizontal = 16.dp),
+        )
+        Icon(
+            imageVector = AppIcons.ExpandMore,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.rotate(chevronRotation),
+        )
+    }
+
+    AnimatedVisibility(visible = isExpanded) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 4.dp),
+            shape = RoundedCornerShape(16.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceContainer,
+            ),
+            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+        ) {
+            ExpandedGroupContent(
+                commands = commands,
+                onNavigate = onNavigate,
+            )
+        }
     }
 }
 
@@ -139,14 +172,16 @@ private fun ExpandedGroupContent(
     commands: List<BasicCommand>,
     onNavigate: (NavEvent) -> Unit,
 ) {
-    commands.forEach { basicCommand ->
-        val elements = remember(basicCommand.command, basicCommand.mans) {
-            basicCommand.command.getCommandList(basicCommand.mans)
+    Column(modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)) {
+        commands.forEach { basicCommand ->
+            val elements = remember(basicCommand.command, basicCommand.mans) {
+                basicCommand.command.getCommandList(basicCommand.mans)
+            }
+            CommandView(
+                command = basicCommand.command,
+                elements = elements,
+                onNavigate = onNavigate,
+            )
         }
-        CommandView(
-            command = basicCommand.command,
-            elements = elements,
-            onNavigate = onNavigate,
-        )
     }
 }

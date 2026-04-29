@@ -2,20 +2,26 @@
 
 package com.linuxcommandlibrary.app.ui.screens.commanddetail
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material3.ListItem
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Text
@@ -23,14 +29,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.linuxcommandlibrary.app.NavEvent
 import com.linuxcommandlibrary.app.data.CommandSectionInfo
+import com.linuxcommandlibrary.app.ui.AppIcons
 import com.linuxcommandlibrary.app.ui.composables.TipSectionContent
 import com.linuxcommandlibrary.app.ui.composables.WithScrollbar
 import com.linuxcommandlibrary.app.ui.composables.rememberDebouncedClick
@@ -95,30 +102,50 @@ private fun CommandSectionColumn(
     onToggleExpanded: (Long) -> Unit,
     onNavigate: (NavEvent) -> Unit,
 ) {
-    ListItem(
-        headlineContent = {
-            Text(
-                section.title.uppercase(),
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-            )
-        },
+    val chevronRotation by animateFloatAsState(targetValue = if (isExpanded) 180f else 0f)
+
+    Row(
         modifier = Modifier
+            .fillMaxWidth()
             .pointerHoverIcon(PointerIcon.Hand)
-            .clickable {
-                onToggleExpanded(section.id)
-            },
-    )
+            .clickable { onToggleExpanded(section.id) }
+            .padding(start = 24.dp, end = 16.dp, top = 16.dp, bottom = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = section.title.uppercase(),
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.weight(1f),
+        )
+        Icon(
+            imageVector = AppIcons.ExpandMore,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.rotate(chevronRotation),
+        )
+    }
 
-    if (isExpanded) {
-        when (section.title) {
-            "SEE ALSO" -> SeeAlsoSectionContent(
-                parsedContent = section.parsedContent,
-                seeAlsoCommands = seeAlsoCommands,
-                onNavigate = onNavigate,
-            )
+    AnimatedVisibility(visible = isExpanded) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 4.dp),
+            shape = RoundedCornerShape(16.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceContainer,
+            ),
+            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+        ) {
+            when (section.title) {
+                "SEE ALSO" -> SeeAlsoSectionContent(
+                    parsedContent = section.parsedContent,
+                    seeAlsoCommands = seeAlsoCommands,
+                    onNavigate = onNavigate,
+                )
 
-            else -> DefaultSectionContent(parsedContent = section.parsedContent, onNavigate = onNavigate)
+                else -> DefaultSectionContent(parsedContent = section.parsedContent, onNavigate = onNavigate)
+            }
         }
     }
 }
@@ -131,7 +158,7 @@ private fun SeeAlsoSectionContent(
 ) {
     if (seeAlsoCommands.isNotEmpty()) {
         FlowRow(
-            modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp),
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             seeAlsoCommands.forEach { name ->
@@ -161,7 +188,7 @@ private fun DefaultSectionContent(
 ) {
     Column(
         modifier = Modifier.fillMaxWidth()
-            .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 8.dp),
+            .padding(horizontal = 12.dp, vertical = 8.dp),
     ) {
         TipSectionContent(
             sections = parsedContent,

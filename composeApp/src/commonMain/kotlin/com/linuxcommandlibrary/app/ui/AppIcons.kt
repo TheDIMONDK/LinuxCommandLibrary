@@ -117,6 +117,26 @@ object AppIcons {
         }.build()
     }
 
+    val ExpandMore: ImageVector by lazy {
+        ImageVector.Builder(
+            name = "ExpandMore",
+            defaultWidth = 24.dp,
+            defaultHeight = 24.dp,
+            viewportWidth = 24f,
+            viewportHeight = 24f,
+        ).apply {
+            path(fill = SolidColor(Color.Black)) {
+                moveTo(16.59f, 8.59f)
+                lineTo(12.0f, 13.17f)
+                lineTo(7.41f, 8.59f)
+                lineTo(6.0f, 10.0f)
+                lineToRelative(6.0f, 6.0f)
+                lineToRelative(6.0f, -6.0f)
+                close()
+            }
+        }.build()
+    }
+
     val Info: ImageVector by lazy {
         ImageVector.Builder(
             name = "Info",
