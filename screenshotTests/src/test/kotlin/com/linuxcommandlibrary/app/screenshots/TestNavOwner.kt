@@ -15,7 +15,10 @@ import androidx.savedstate.SavedStateRegistryController
 import androidx.savedstate.SavedStateRegistryOwner
 import androidx.savedstate.compose.LocalSavedStateRegistryOwner
 
-private class TestNavOwner : ViewModelStoreOwner, LifecycleOwner, SavedStateRegistryOwner {
+private class TestNavOwner :
+    ViewModelStoreOwner,
+    LifecycleOwner,
+    SavedStateRegistryOwner {
     override val viewModelStore: ViewModelStore = ViewModelStore()
     private val lifecycleRegistry = LifecycleRegistry(this)
     override val lifecycle: Lifecycle = lifecycleRegistry

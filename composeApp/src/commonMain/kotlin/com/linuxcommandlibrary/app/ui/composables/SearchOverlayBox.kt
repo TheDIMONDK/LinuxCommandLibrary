@@ -19,6 +19,8 @@ import org.koin.compose.koinInject
 fun SearchOverlayBox(
     searchState: SearchState,
     onNavigate: (NavEvent) -> Unit,
+    selectedCommandName: String? = null,
+    selectedBasicGroupId: Long? = null,
     content: @Composable () -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
@@ -38,6 +40,8 @@ fun SearchOverlayBox(
                     searchText = searchState.searchText,
                     viewModel = searchViewModel,
                     onNavigate = onNavigate,
+                    selectedCommandName = selectedCommandName,
+                    selectedBasicGroupId = selectedBasicGroupId,
                 )
             }
         }

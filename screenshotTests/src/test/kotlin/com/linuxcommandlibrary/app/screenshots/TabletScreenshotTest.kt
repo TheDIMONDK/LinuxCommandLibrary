@@ -43,7 +43,10 @@ class TabletScreenshotTest {
     }
 
     @Test fun screen01_mkdir() = snap(dark = true, deeplink = "/man/mkdir")
+
     @Test fun screen02_tips() = snap(dark = false, deeplink = "/tips")
+
     @Test fun screen03_systemInfo() = snap(dark = true, deeplink = "/basic/systeminformation")
+
     @Test fun screen04_search() = snap(dark = false, deeplink = "/search/mk")
 }

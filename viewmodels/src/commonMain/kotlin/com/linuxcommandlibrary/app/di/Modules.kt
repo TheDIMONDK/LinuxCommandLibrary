@@ -29,7 +29,11 @@ val commonModule = module {
     factory { params -> BasicGroupsViewModel(params.get(), get(), get()) }
     factory { params -> CommandDetailViewModel(params.get(), get(), get(), get()) }
     factory { TipsViewModel(get(), get()) }
-    factory { CommandListViewModel(get(), get(), get()) }
+    // Single so the loaded commands list survives a navigate-to-detail/back round-trip.
+    // With a factory, the list pane gets a fresh instance whose `commands` starts as
+    // emptyList() and populates asynchronously — restoring LazyListState during that
+    // empty window coerces firstVisibleItemIndex to 0, so scroll position is lost.
+    single { CommandListViewModel(get(), get(), get()) }
     // Single so its uiState survives a navigate-to-detail/back round-trip;
     // otherwise SearchScreen briefly flashes "404 command not found" while the
     // async search re-runs against an empty initial state.

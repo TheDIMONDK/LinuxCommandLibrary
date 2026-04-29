@@ -31,11 +31,15 @@ import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.backhandler.BackHandler
@@ -58,7 +62,9 @@ import com.linuxcommandlibrary.app.ui.composables.PaneTopBar
 import com.linuxcommandlibrary.app.ui.composables.rememberIconPainter
 import com.linuxcommandlibrary.app.ui.composables.rememberSearchState
 import com.linuxcommandlibrary.app.ui.screens.AppInfoDialog
+import com.linuxcommandlibrary.app.ui.screens.basicgroups.BasicGroupDetailPane
 import com.linuxcommandlibrary.app.ui.screens.basics.BasicsPaneScreen
+import com.linuxcommandlibrary.app.ui.screens.commanddetail.CommandDetailPane
 import com.linuxcommandlibrary.app.ui.screens.commands.CommandsPaneScreen
 import com.linuxcommandlibrary.app.ui.screens.tips.TipsScreen
 import com.linuxcommandlibrary.app.ui.screens.tips.TipsViewModel
@@ -77,6 +83,29 @@ private sealed class InitialSelection {
 }
 
 private data class DeeplinkResult(val route: Route, val selection: InitialSelection?)
+
+internal sealed class TabStackEntry {
+    internal data class Command(val name: String) : TabStackEntry()
+    internal data class BasicGroup(val categoryId: String, val expandGroupId: Long?) : TabStackEntry()
+}
+
+// '|'-separated encoding relies on slugs never containing '|'.
+internal fun TabStackEntry.encode(): String = when (this) {
+    is TabStackEntry.Command -> "c|$name"
+    is TabStackEntry.BasicGroup -> "b|$categoryId|${expandGroupId ?: ""}"
+}
+
+internal fun decodeTabStackEntry(s: String): TabStackEntry {
+    val parts = s.split('|')
+    return when (parts[0]) {
+        "c" -> TabStackEntry.Command(parts[1])
+        "b" -> TabStackEntry.BasicGroup(
+            parts[1],
+            parts.getOrNull(2)?.takeIf { it.isNotEmpty() }?.toLongOrNull(),
+        )
+        else -> error("invalid tab stack entry: $s")
+    }
+}
 
 @Composable
 fun App(
@@ -147,41 +176,90 @@ fun LinuxApp(initialDeeplink: String? = null) {
     var pendingBasicSelection by rememberSaveable { mutableStateOf<String?>(null) }
     var pendingExpandGroupId by rememberSaveable { mutableStateOf<Long?>(null) }
 
+    // Survives consume/clear of pendingExpandGroupId so the search overlay can still
+    // highlight the matching result on the basicsNavigator path.
+    var lastBasicsGroupId by rememberSaveable { mutableStateOf<Long?>(null) }
+
+    // Per-tab cross-type detail stack: opening a different-type detail (e.g. a command
+    // from the basics tab) layers on top of the originating tab so back returns to the
+    // previous screen of that tab. Wide layouts prefer tab-switching, so stacks stay empty there.
+    val tabStackSaver = remember {
+        listSaver<SnapshotStateList<TabStackEntry>, String>(
+            save = { it.map { entry -> entry.encode() } },
+            restore = { saved ->
+                mutableStateListOf<TabStackEntry>().apply { addAll(saved.map { decodeTabStackEntry(it) }) }
+            },
+        )
+    }
+    val tipsStack = rememberSaveable(saver = tabStackSaver) { mutableStateListOf<TabStackEntry>() }
+    val basicsStack = rememberSaveable(saver = tabStackSaver) { mutableStateListOf<TabStackEntry>() }
+    val commandsStack = rememberSaveable(saver = tabStackSaver) { mutableStateListOf<TabStackEntry>() }
+
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination
-    val isOnTips = currentRoute?.hasRoute<Route.Tips>() == true
-    val isOnCommands = currentRoute?.hasRoute<Route.Commands>() == true
-    val isOnBasics = currentRoute?.hasRoute<Route.Basics>() == true
+    // Before the NavHost processes startDestination the backstack is empty, which would
+    // leave every tab unselected on the first frame (visible to screenshot tooling and as
+    // a brief flash on launch). Fall back to initialRoute until the NavController catches up.
+    val isOnTips = currentRoute?.hasRoute<Route.Tips>() ?: (initialRoute is Route.Tips)
+    val isOnCommands = currentRoute?.hasRoute<Route.Commands>() ?: (initialRoute is Route.Commands)
+    val isOnBasics = currentRoute?.hasRoute<Route.Basics>() ?: (initialRoute is Route.Basics)
 
     val adaptiveInfo = currentWindowAdaptiveInfo()
     val layoutType = NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(adaptiveInfo)
     val isWideLayout = layoutType != NavigationSuiteType.NavigationBar
 
+    // First-level detail in the originating tab routes through that tab's navigator
+    // (via pending* state); once a cross-type entry is on the stack, further details of
+    // either type layer on top via the stack so chained "see also" stays in the tab.
     val onNavigate: (NavEvent) -> Unit = { event ->
         when (event) {
-            is NavEvent.ToCommand -> {
-                // The pane screen's LaunchedEffect picks this up after mount and calls
-                // navigator.navigateTo. Going through state instead of inlining the
-                // suspend call avoids cross-recomposition timing issues when the tab
-                // switch happens before the suspending navigator update propagates.
-                pendingCommandSelection = event.commandName
-                if (currentRoute?.hasRoute<Route.Commands>() != true) {
-                    navController.navigate(Route.Commands) {
-                        popUpTo(navController.graph.startDestinationId) { saveState = true }
-                        launchSingleTop = true
-                        restoreState = true
+            is NavEvent.ToCommand -> when {
+                isOnCommands -> if (commandsStack.isEmpty()) {
+                    pendingCommandSelection = event.commandName
+                } else {
+                    commandsStack.add(TabStackEntry.Command(event.commandName))
+                }
+                isOnBasics -> basicsStack.add(TabStackEntry.Command(event.commandName))
+                isOnTips -> tipsStack.add(TabStackEntry.Command(event.commandName))
+                // currentRoute not yet resolved — race during init.
+                else -> {
+                    pendingCommandSelection = event.commandName
+                    if (currentRoute?.hasRoute<Route.Commands>() != true) {
+                        navController.navigate(Route.Commands) {
+                            popUpTo(navController.graph.startDestinationId) { saveState = true }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
                     }
                 }
             }
 
             is NavEvent.ToBasicGroups -> {
-                pendingBasicSelection = event.categoryId
-                pendingExpandGroupId = event.expandGroupId
-                if (currentRoute?.hasRoute<Route.Basics>() != true) {
-                    navController.navigate(Route.Basics) {
-                        popUpTo(navController.graph.startDestinationId) { saveState = true }
-                        launchSingleTop = true
-                        restoreState = true
+                lastBasicsGroupId = event.expandGroupId
+                when {
+                    isOnBasics -> if (basicsStack.isEmpty()) {
+                        pendingBasicSelection = event.categoryId
+                        pendingExpandGroupId = event.expandGroupId
+                    } else {
+                        basicsStack.add(TabStackEntry.BasicGroup(event.categoryId, event.expandGroupId))
+                    }
+                    isOnTips -> tipsStack.add(
+                        TabStackEntry.BasicGroup(event.categoryId, event.expandGroupId),
+                    )
+                    isOnCommands -> commandsStack.add(
+                        TabStackEntry.BasicGroup(event.categoryId, event.expandGroupId),
+                    )
+                    // currentRoute not yet resolved — race during init.
+                    else -> {
+                        pendingBasicSelection = event.categoryId
+                        pendingExpandGroupId = event.expandGroupId
+                        if (currentRoute?.hasRoute<Route.Basics>() != true) {
+                            navController.navigate(Route.Basics) {
+                                popUpTo(navController.graph.startDestinationId) { saveState = true }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }
                     }
                 }
             }
@@ -194,15 +272,20 @@ fun LinuxApp(initialDeeplink: String? = null) {
     // the default PopUntilScaffoldValueChange treats Detail("ls") and Detail("rm")
     // as the same scaffold value and pops both together.
     val backBehavior = BackNavigationBehavior.PopUntilContentChange
+    val tipsStackBack = isOnTips && tipsStack.isNotEmpty()
+    val basicsStackBack = isOnBasics && basicsStack.isNotEmpty()
+    val commandsStackBack = isOnCommands && commandsStack.isNotEmpty()
+    val basicsNavBack = isOnBasics && basicsStack.isEmpty() && basicsNavigator.canNavigateBack(backBehavior)
+    val commandsNavBack = isOnCommands && commandsStack.isEmpty() && commandsNavigator.canNavigateBack(backBehavior)
     BackHandler(
-        enabled = (isOnCommands && commandsNavigator.canNavigateBack(backBehavior)) ||
-            (isOnBasics && basicsNavigator.canNavigateBack(backBehavior)),
+        enabled = tipsStackBack || basicsStackBack || commandsStackBack || basicsNavBack || commandsNavBack,
     ) {
-        scope.launch {
-            when {
-                isOnCommands -> commandsNavigator.navigateBack(backBehavior)
-                isOnBasics -> basicsNavigator.navigateBack(backBehavior)
-            }
+        when {
+            tipsStackBack -> tipsStack.removeAt(tipsStack.lastIndex)
+            basicsStackBack -> basicsStack.removeAt(basicsStack.lastIndex)
+            commandsStackBack -> commandsStack.removeAt(commandsStack.lastIndex)
+            basicsNavBack -> scope.launch { basicsNavigator.navigateBack(backBehavior) }
+            commandsNavBack -> scope.launch { commandsNavigator.navigateBack(backBehavior) }
         }
     }
 
@@ -314,55 +397,122 @@ fun LinuxApp(initialDeeplink: String? = null) {
                     startDestination = initialRoute,
                 ) {
                     composable<Route.Basics> {
-                        BasicsPaneScreen(
-                            navigator = basicsNavigator,
-                            searchState = searchState,
-                            pendingSelection = pendingBasicSelection,
-                            onSelectionConsumed = { pendingBasicSelection = null },
-                            pendingExpandGroupId = pendingExpandGroupId,
-                            onExpandConsumed = { pendingExpandGroupId = null },
-                            scope = scope,
-                            onNavigate = onNavigate,
-                        )
+                        Box(modifier = Modifier.fillMaxSize()) {
+                            BasicsPaneScreen(
+                                navigator = basicsNavigator,
+                                searchState = searchState,
+                                pendingSelection = pendingBasicSelection,
+                                onSelectionConsumed = { pendingBasicSelection = null },
+                                pendingExpandGroupId = pendingExpandGroupId,
+                                onExpandConsumed = { pendingExpandGroupId = null },
+                                scope = scope,
+                                onNavigate = onNavigate,
+                                stack = basicsStack,
+                                onPopStack = { basicsStack.removeAt(basicsStack.lastIndex) },
+                                lastBasicsGroupId = lastBasicsGroupId,
+                            )
+                            // Wide layouts render the stack inside the detail pane; mobile overlays the full pane.
+                            if (!isWideLayout) {
+                                TabStackTop(
+                                    stack = basicsStack,
+                                    onPop = { basicsStack.removeAt(basicsStack.lastIndex) },
+                                    onNavigate = onNavigate,
+                                )
+                            }
+                        }
                     }
 
                     composable<Route.Commands> {
-                        CommandsPaneScreen(
-                            navigator = commandsNavigator,
-                            searchState = searchState,
-                            pendingSelection = pendingCommandSelection,
-                            onSelectionConsumed = { pendingCommandSelection = null },
-                            scope = scope,
-                            onNavigate = onNavigate,
-                        )
+                        Box(modifier = Modifier.fillMaxSize()) {
+                            CommandsPaneScreen(
+                                navigator = commandsNavigator,
+                                searchState = searchState,
+                                pendingSelection = pendingCommandSelection,
+                                onSelectionConsumed = { pendingCommandSelection = null },
+                                scope = scope,
+                                onNavigate = onNavigate,
+                                stack = commandsStack,
+                                onPopStack = { commandsStack.removeAt(commandsStack.lastIndex) },
+                            )
+                            if (!isWideLayout) {
+                                TabStackTop(
+                                    stack = commandsStack,
+                                    onPop = { commandsStack.removeAt(commandsStack.lastIndex) },
+                                    onNavigate = onNavigate,
+                                )
+                            }
+                        }
                     }
 
                     composable<Route.Tips> {
-                        var showInfo by rememberSaveable { mutableStateOf(false) }
-                        Column(modifier = Modifier.fillMaxSize()) {
-                            PaneTopBar(
-                                title = "Tips",
-                                actions = {
-                                    IconButton(
-                                        modifier = Modifier.pointerHoverIcon(PointerIcon.Hand),
-                                        onClick = { showInfo = true },
-                                    ) {
-                                        Icon(
-                                            imageVector = AppIcons.Info,
-                                            contentDescription = "Info",
-                                        )
-                                    }
-                                },
+                        Box(modifier = Modifier.fillMaxSize()) {
+                            var showInfo by rememberSaveable { mutableStateOf(false) }
+                            Column(modifier = Modifier.fillMaxSize()) {
+                                PaneTopBar(
+                                    title = "Tips",
+                                    actions = {
+                                        IconButton(
+                                            modifier = Modifier.pointerHoverIcon(PointerIcon.Hand),
+                                            onClick = { showInfo = true },
+                                        ) {
+                                            Icon(
+                                                imageVector = AppIcons.Info,
+                                                contentDescription = "Info",
+                                            )
+                                        }
+                                    },
+                                )
+                                val viewModel: TipsViewModel = koinInject()
+                                TipsScreen(viewModel = viewModel, onNavigate = onNavigate)
+                            }
+                            if (showInfo) {
+                                AppInfoDialog(onDismiss = { showInfo = false })
+                            }
+                            TabStackTop(
+                                stack = tipsStack,
+                                onPop = { tipsStack.removeAt(tipsStack.lastIndex) },
+                                onNavigate = onNavigate,
                             )
-                            val viewModel: TipsViewModel = koinInject()
-                            TipsScreen(viewModel = viewModel, onNavigate = onNavigate)
-                        }
-                        if (showInfo) {
-                            AppInfoDialog(onDismiss = { showInfo = false })
                         }
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+internal fun TabStackTop(
+    stack: SnapshotStateList<TabStackEntry>,
+    onPop: () -> Unit,
+    onNavigate: (NavEvent) -> Unit,
+) {
+    val top = stack.lastOrNull() ?: return
+    TabStackEntryContent(entry = top, onBack = onPop, onNavigate = onNavigate)
+}
+
+// Keyed by encoded identity so popping back restores per-entry state (scroll, etc.)
+// instead of leaking it into the next entry.
+@Composable
+internal fun TabStackEntryContent(
+    entry: TabStackEntry,
+    onBack: () -> Unit,
+    onNavigate: (NavEvent) -> Unit,
+) {
+    val stateHolder = rememberSaveableStateHolder()
+    stateHolder.SaveableStateProvider(entry.encode()) {
+        when (entry) {
+            is TabStackEntry.Command -> CommandDetailPane(
+                commandName = entry.name,
+                onBack = onBack,
+                onNavigate = onNavigate,
+            )
+            is TabStackEntry.BasicGroup -> BasicGroupDetailPane(
+                categoryId = entry.categoryId,
+                expandGroupId = entry.expandGroupId,
+                onBack = onBack,
+                onNavigate = onNavigate,
+            )
         }
     }
 }

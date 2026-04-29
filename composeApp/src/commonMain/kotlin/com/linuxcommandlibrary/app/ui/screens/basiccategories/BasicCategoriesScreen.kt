@@ -4,12 +4,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,16 +24,19 @@ import com.linuxcommandlibrary.app.ui.composables.WithScrollbar
 import com.linuxcommandlibrary.app.ui.composables.debouncedClickable
 import com.linuxcommandlibrary.app.ui.composables.getIconId
 import com.linuxcommandlibrary.app.ui.composables.rememberIconPainter
+import com.linuxcommandlibrary.app.ui.composables.selectableListItemColors
 
 @Composable
 fun BasicCategoriesScreen(
     viewModel: BasicCategoriesViewModel,
+    gridState: LazyGridState,
     onNavigate: (NavEvent) -> Unit,
     selectedId: String? = null,
 ) {
     val basicCategories by viewModel.basicCategories.collectAsState()
 
     BasicCategoriesContent(
+        gridState = gridState,
         basicCategories = basicCategories,
         onNavigate = onNavigate,
         selectedId = selectedId,
@@ -43,11 +45,11 @@ fun BasicCategoriesScreen(
 
 @Composable
 private fun BasicCategoriesContent(
+    gridState: LazyGridState,
     basicCategories: List<BasicCategory>,
     onNavigate: (NavEvent) -> Unit,
     selectedId: String?,
 ) {
-    val gridState = rememberLazyGridState()
     WithScrollbar(
         state = gridState,
         modifier = Modifier
@@ -64,12 +66,6 @@ private fun BasicCategoriesContent(
                 key = { it.id },
                 contentType = { "basic_category_item" },
             ) { basicCategory ->
-                val isSelected = basicCategory.id == selectedId
-                val containerColor = if (isSelected) {
-                    MaterialTheme.colorScheme.secondaryContainer
-                } else {
-                    MaterialTheme.colorScheme.surface
-                }
                 ListItem(
                     headlineContent = { Text(basicCategory.title) },
                     leadingContent = {
@@ -80,7 +76,7 @@ private fun BasicCategoriesContent(
                             modifier = Modifier.size(40.dp),
                         )
                     },
-                    colors = ListItemDefaults.colors(containerColor = containerColor),
+                    colors = selectableListItemColors(basicCategory.id == selectedId),
                     modifier = Modifier
                         .pointerHoverIcon(PointerIcon.Hand)
                         .debouncedClickable {

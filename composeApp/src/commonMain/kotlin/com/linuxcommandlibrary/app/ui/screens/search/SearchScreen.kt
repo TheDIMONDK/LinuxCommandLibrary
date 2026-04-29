@@ -30,6 +30,7 @@ import com.linuxcommandlibrary.app.ui.composables.WithScrollbar
 import com.linuxcommandlibrary.app.ui.composables.debouncedClickable
 import com.linuxcommandlibrary.app.ui.composables.getIconId
 import com.linuxcommandlibrary.app.ui.composables.rememberIconPainter
+import com.linuxcommandlibrary.app.ui.composables.selectableListItemColors
 import com.linuxcommandlibrary.app.ui.screens.commandlist.CommandListItem
 
 @Composable
@@ -37,6 +38,8 @@ fun SearchScreen(
     searchText: String,
     viewModel: SearchViewModel,
     onNavigate: (NavEvent) -> Unit,
+    selectedCommandName: String? = null,
+    selectedBasicGroupId: Long? = null,
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -48,6 +51,8 @@ fun SearchScreen(
         uiState = uiState,
         searchText = searchText,
         onNavigate = onNavigate,
+        selectedCommandName = selectedCommandName,
+        selectedBasicGroupId = selectedBasicGroupId,
     )
 }
 
@@ -56,6 +61,8 @@ fun SearchContent(
     uiState: SearchUiState,
     searchText: String,
     onNavigate: (NavEvent) -> Unit,
+    selectedCommandName: String? = null,
+    selectedBasicGroupId: Long? = null,
 ) {
     val lazyListState = rememberLazyListState()
     val showEmptyMessage = uiState.filteredCommands.isEmpty() && uiState.filteredBasicGroups.isEmpty()
@@ -94,6 +101,7 @@ fun SearchContent(
                             searchText = searchText,
                             onNavigate = onNavigate,
                             isBookmarked = false,
+                            isSelected = command.name == selectedCommandName,
                         )
                     }
                 }
@@ -110,6 +118,7 @@ fun SearchContent(
                             match = match,
                             searchText = searchText,
                             onNavigate = onNavigate,
+                            isSelected = match.groupId == selectedBasicGroupId,
                         )
                     }
                 }
@@ -133,6 +142,7 @@ private fun BasicGroupSearchItem(
     match: BasicGroupMatch,
     searchText: String,
     onNavigate: (NavEvent) -> Unit,
+    isSelected: Boolean = false,
 ) {
     val iconPainter = rememberIconPainter(
         BasicGroup(id = match.groupId, description = match.description).getIconId(),
@@ -157,6 +167,7 @@ private fun BasicGroupSearchItem(
                 modifier = Modifier.size(40.dp),
             )
         },
+        colors = selectableListItemColors(isSelected),
         modifier = Modifier
             .pointerHoverIcon(PointerIcon.Hand)
             .debouncedClickable {

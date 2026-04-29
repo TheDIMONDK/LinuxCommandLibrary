@@ -61,7 +61,7 @@ yay -S lcl-bin
 </p>
 
 
-### Tablet screenshots
+### Desktop/Tablet screenshots
 
 <p>
 <img src="https://raw.githubusercontent.com/SimonSchubert/LinuxCommandBibliotheca/master/art/screen-tablet-1.png" height="410">

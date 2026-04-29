@@ -3,11 +3,10 @@ package com.linuxcommandlibrary.app.ui.screens.commandlist
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -25,10 +24,12 @@ import com.linuxcommandlibrary.app.ui.composables.HighlightedText
 import com.linuxcommandlibrary.app.ui.composables.WithScrollbar
 import com.linuxcommandlibrary.app.ui.composables.debouncedClickable
 import com.linuxcommandlibrary.app.ui.composables.rememberIconPainter
+import com.linuxcommandlibrary.app.ui.composables.selectableListItemColors
 
 @Composable
 fun CommandListScreen(
     viewModel: CommandListViewModel,
+    listState: LazyListState,
     onNavigate: (NavEvent) -> Unit,
     selectedName: String? = null,
 ) {
@@ -36,6 +37,7 @@ fun CommandListScreen(
     val bookmarkedNames by viewModel.bookmarkedNames.collectAsState()
 
     ComposeListContent(
+        listState = listState,
         commands = commands,
         bookmarkedNames = bookmarkedNames,
         onNavigate = onNavigate,
@@ -45,12 +47,12 @@ fun CommandListScreen(
 
 @Composable
 private fun ComposeListContent(
+    listState: LazyListState,
     commands: List<CommandInfo>,
     bookmarkedNames: Set<String>,
     onNavigate: (NavEvent) -> Unit,
     selectedName: String?,
 ) {
-    val listState = rememberLazyListState()
     WithScrollbar(
         state = listState,
         modifier = Modifier
@@ -94,11 +96,6 @@ fun CommandListItem(
     isSelected: Boolean = false,
 ) {
     val bookmarkPainter = rememberIconPainter(AppIcon.BOOKMARK)
-    val containerColor = if (isSelected) {
-        MaterialTheme.colorScheme.secondaryContainer
-    } else {
-        MaterialTheme.colorScheme.surface
-    }
 
     ListItem(
         headlineContent = {
@@ -107,7 +104,7 @@ fun CommandListItem(
                 pattern = searchText,
             )
         },
-        colors = ListItemDefaults.colors(containerColor = containerColor),
+        colors = selectableListItemColors(isSelected),
         trailingContent = if (isBookmarked) {
             {
                 Icon(
