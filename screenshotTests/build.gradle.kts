@@ -66,10 +66,12 @@ tasks.register("updateScreenshots") {
     doLast {
         val phoneMap =
             mapOf(
-                "screen01_mkdir" to "01",
+                "screen01_openclaw" to "01",
                 "screen02_tips" to "02",
                 "screen03_systemInfo" to "03",
                 "screen04_search" to "04",
+                "screen05_basics" to "05",
+                "screen06_commands" to "06",
             )
 
         val allSnapshots = snapshotsDirFile.listFiles()?.toList().orEmpty()
