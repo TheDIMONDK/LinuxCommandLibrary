@@ -27,9 +27,9 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.linuxcommandlibrary.app.NavEvent
-import com.linuxcommandlibrary.app.TabStackEntry
-import com.linuxcommandlibrary.app.TabStackEntryContent
 import com.linuxcommandlibrary.app.data.BasicsRepository
+import com.linuxcommandlibrary.app.nav.TabStackEntry
+import com.linuxcommandlibrary.app.nav.TabStackEntryContent
 import com.linuxcommandlibrary.app.ui.composables.InlineSearchField
 import com.linuxcommandlibrary.app.ui.composables.PaneTopBar
 import com.linuxcommandlibrary.app.ui.composables.SearchOverlayBox

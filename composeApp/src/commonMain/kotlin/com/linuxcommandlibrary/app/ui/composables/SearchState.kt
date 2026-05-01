@@ -44,6 +44,8 @@ fun rememberSearchState(initialText: String = ""): SearchState {
         mutableStateOf(TextFieldValue(text = initialText, selection = TextRange(initialText.length)))
     }
     val isVisible = rememberSaveable { mutableStateOf(initialText.isNotEmpty()) }
+    // Transient request signal, not state — `remember` only. After process death the user
+    // returns to a focused-but-not-keyboard-raised search field, which is fine.
     val focusEpoch = remember { mutableStateOf(0) }
     return remember { SearchState(textFieldValue, isVisible, focusEpoch) }
 }
