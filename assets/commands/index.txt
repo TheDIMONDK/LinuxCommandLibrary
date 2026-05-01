@@ -6828,6 +6828,7 @@ sidecar.md
 siege.md
 sieve.md
 sig.md
+sigmap.md
 signal-desktop.md
 silentcast.md
 silicon.md
@@ -8061,6 +8062,7 @@ winecfg.md
 winetricks.md
 winicontopam.md
 winicontoppm.md
+winpodx.md
 winrm.md
 wipe.md
 wipeclean.md
